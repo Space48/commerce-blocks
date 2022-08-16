@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Services\Bigcommerce\Request\CreateCategoryMetafieldRequest;
+use App\Services\Bigcommerce\Request\CreateStorefrontApiTokenRequest;
 use App\Services\Bigcommerce\Request\CreateWebhookRequest;
 use App\Services\Bigcommerce\Request\CreateWidgetTemplateRequest;
 use App\Services\Bigcommerce\Request\DeleteWidgetTemplateRequest;
@@ -15,12 +16,15 @@ use App\Services\Bigcommerce\Request\FetchChannelsRequest;
 use App\Services\Bigcommerce\Request\FetchCountryRequest;
 use App\Services\Bigcommerce\Request\FetchProductRequest;
 use App\Services\Bigcommerce\Request\FetchProductsRequest;
+use App\Services\Bigcommerce\Request\FetchStorefrontApiTokensRequest;
 use App\Services\Bigcommerce\Request\FetchStoreInformationRequest;
 use App\Services\Bigcommerce\Request\FetchWebhooksRequest;
 use App\Services\Bigcommerce\Request\FetchWidgetTemplatesRequest;
+use App\Services\Bigcommerce\Request\Payload\StorefrontApiTokenPayload;
 use App\Services\Bigcommerce\Request\Payload\WidgetTemplatePayload;
 use App\Services\Bigcommerce\Request\PermanentTokenRequest;
 use App\Services\Bigcommerce\Request\ProxyRequest;
+use App\Services\Bigcommerce\Request\RevokeStorefrontApiTokenRequest;
 use App\Services\Bigcommerce\Request\UpdateCategoryMetafieldRequest;
 use App\Services\Bigcommerce\Request\UpdateCategoryProductsSortOrderRequest;
 use App\Services\Bigcommerce\Request\UpdateProductsRequest;
@@ -389,6 +393,33 @@ class Bigcommerce
         return $response->getData();
     }
 
+    /**
+     * @throws Bigcommerce\Response\Exception
+     * @throws Bigcommerce\Response\NotFoundException
+     * @throws Bigcommerce\Response\TooManyRequestsException
+     * @throws Bigcommerce\Response\UnauthorizedException
+     * @throws Bigcommerce\Response\UnprocessableException
+     */
+    public function createStoreFrontApiToken(string $accessToken, string $storeHash, StorefrontApiTokenPayload $payload): array
+    {
+        $request = new CreateStorefrontApiTokenRequest($this->clientId, $accessToken, $storeHash, $payload);
+        $response = $request->send();
+        return $response->getData();
+    }
+
+    /**
+     * @throws Bigcommerce\Response\Exception
+     * @throws Bigcommerce\Response\NotFoundException
+     * @throws Bigcommerce\Response\TooManyRequestsException
+     * @throws Bigcommerce\Response\UnauthorizedException
+     * @throws Bigcommerce\Response\UnprocessableException
+     */
+    public function revokeStoreFrontApiToken(string $accessToken, string $storeHash, string $token): array
+    {
+        $request = new RevokeStorefrontApiTokenRequest($this->clientId, $accessToken, $storeHash, $token);
+        $response = $request->send();
+        return $response->getData();
+    }
 
     /**
      * Send an API request to BC without validating the message or decoding the response.
