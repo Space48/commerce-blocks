@@ -3,9 +3,7 @@
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\Bigcommerce\InstallController;
 use App\Http\Controllers\Bigcommerce\LoadController;
-use App\Http\Controllers\Bigcommerce\ProxyController;
-use App\Http\Controllers\BigcommerceStore\BigcommerceStoreCollectionController;
-use App\Http\Controllers\BigcommerceStore\BigcommerceStoreViewController;
+use App\Http\Controllers\Bigcommerce\ProxyController;;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +14,11 @@ Route::get('/stores/{store}', AppController::class)->name('store.home');
 Route::get('/stores/{store}/installed', AppController::class)->name('store.installed');
 Route::get('/stores/{store}/welcome', AppController::class)->name('store.welcome');
 Route::get('/account/loggedout', AppController::class)->name('account.loggedout');
+
+Route::get('/blocks', function () {
+    return view('frontend');
+})->name('account.loggedout');
+
 
 Route::middleware('auth')->group(function () {
     // your custom app routes should go here.
