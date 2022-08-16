@@ -17,7 +17,7 @@ Route::get('/account/loggedout', AppController::class)->name('account.loggedout'
 
 Route::get('/blocks', function () {
     return view('frontend');
-})->name('account.loggedout');
+});
 
 
 Route::middleware('auth')->group(function () {
