@@ -5,7 +5,7 @@ import basicSsl from '@vitejs/plugin-basic-ssl'
 export default defineConfig({
     esbuild: {
         jsxFactory: 'h',
-        jsxFragment: 'Fragment'
+        jsxFragment: 'Fragment',
     },
     plugins: [
         laravel({
