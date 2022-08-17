@@ -3,7 +3,7 @@ import App from './App';
 import { createClient, Provider } from '@urql/preact';
 
 const getToken = () => {
-  // todo
+  console.log('Get Token');
   return '';
 };
 

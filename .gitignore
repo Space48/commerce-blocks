@@ -2,7 +2,7 @@
 /public/build
 /public/frontend/build
 /public/hot
-/public/hot
+/public/fronted/hot
 /public/storage
 /storage/*.key
 /vendor
