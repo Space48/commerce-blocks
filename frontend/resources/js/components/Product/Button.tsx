@@ -1,4 +1,5 @@
 import { h } from 'preact';
+import styled from 'styled-components';
 
 /** @jsx h */
 
@@ -7,12 +8,15 @@ interface Props {
   url: string;
 }
 
+const StyledButton = styled.a`
+  padding: 20px;
+`;
 
 const Button = ({ label, url }: Props) => (
   <div>
-    <a href={url} target="_blank" rel="noreferrer">
+    <StyledButton href={url} target="_blank" rel="noreferrer">
       {label}
-    </a>
+    </StyledButton>
   </div>
 
 );

@@ -26,6 +26,6 @@ if (root) {
     <Provider value={client}>
       <App />
     </Provider>,
-    document.body,
+    root,
   );
 }
