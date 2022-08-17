@@ -7,6 +7,7 @@ import Image from './Product/Image';
 import Sku from './Product/Sku';
 import Prices from './Product/Prices';
 import { Product } from '../types';
+import PlaceholderImage from './Product/PlaceholderImage';
 
 /** @jsx h */
 
@@ -32,7 +33,9 @@ const ProductCard = ({ product }: Props) => {
     <StyledProductCard>
       {image ? (
         <Image src={image.url} altText={image.altText} />
-      ) : null}
+      ) : (
+        <PlaceholderImage />
+      )}
       <div>
         <Sku sku={product.sku} />
         <Name name={product.name} />
