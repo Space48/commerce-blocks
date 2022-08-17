@@ -3,7 +3,8 @@ import App from './App';
 import { createClient, Provider } from '@urql/preact';
 
 const getToken = () => {
-  return '';
+  const root = document.getElementsByClassName('s48-your-products-anywhere');
+  return root.length > 0 ? root[0]?.dataset?.token : '';
 };
 
 const getConfig = () => ({
