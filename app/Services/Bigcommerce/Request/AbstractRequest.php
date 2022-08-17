@@ -14,6 +14,8 @@ abstract class AbstractRequest implements RequestInterface
     /** Request Body */
     protected $data = [];
 
+    protected $headers = [];
+
     /** Bigcommerce URLs */
     protected string $apiBaseUrl = 'https://api.bigcommerce.com/stores/';
     protected string $authUrl = 'https://login.bigcommerce.com/oauth2/token';
@@ -54,9 +56,15 @@ abstract class AbstractRequest implements RequestInterface
             );
     }
 
+    public function setHeaders($headers): void
+    {
+        $this->headers = $headers;
+    }
+
     public function getHeaders(): array
     {
         $headers = [];
+
         if ($this->getClientId()) {
             $headers['X-Auth-Client'] = $this->getClientId();
         }
@@ -65,7 +73,7 @@ abstract class AbstractRequest implements RequestInterface
             $headers['X-Auth-Token'] = $this->getAccessToken();
         }
 
-        return $headers;
+        return array_merge($headers, $this->headers);
     }
 
     abstract public function getPath(): string;
