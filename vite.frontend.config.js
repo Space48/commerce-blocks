@@ -18,6 +18,7 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
+                'frontend/resources/sass/app.scss',
                 'frontend/resources/js/index.tsx',
             ],
             publicDirectory: 'public/frontend',

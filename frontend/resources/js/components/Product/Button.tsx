@@ -9,16 +9,21 @@ interface Props {
 }
 
 const StyledButton = styled.a`
-  padding: 20px;
+  padding: 10px 20px;
+  display: block;
+  background-color: cornflowerblue;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
 `;
 
 const Button = ({ label, url }: Props) => (
-  <div>
-    <StyledButton href={url} target="_blank" rel="noreferrer">
-      {label}
-    </StyledButton>
-  </div>
-
+  <StyledButton href={url} target="_blank" rel="noreferrer">
+    {label}
+  </StyledButton>
 );
 
 export default Button;

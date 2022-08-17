@@ -1,26 +1,33 @@
-
 export interface Product {
   name: string;
   sku: string;
   path: string;
   addToCartUrl: string;
-  images: {
-    edges: {
-      node: {
-        url: string;
-        altText: string;
-        isDefault: boolean;
-      }
-    }[];
-  }[];
+  images: ImageEdge;
   prices: {
-    salePrice: {
-      value: string;
-    },
-    basePrice: {
-      value: string;
-    }
+    price: Price,
+    salePrice: Price,
+    basePrice: Price,
+    retailPrice: Price,
   }
+}
+
+export interface Price {
+  value: number;
+}
+
+export interface Image {
+  url: string;
+  altText: string;
+  isDefault: boolean;
+}
+
+export interface ImageNode {
+  node: Image;
+}
+
+export interface ImageEdge {
+  edges: ImageNode[]
 }
 
 export interface ProductNode {

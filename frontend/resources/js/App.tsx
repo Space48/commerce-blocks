@@ -3,6 +3,7 @@ import { useQuery } from '@urql/preact';
 import Loading from './components/Loading';
 import Error from './components/Error';
 import ProductsGrid from './components/ProductsGrid';
+import Container from './components/Container';
 
 /** @jsx h */
 
@@ -23,9 +24,10 @@ const App = () => {
          cursor
          node {
            entityId
-           name,
-           sku,
-           path,
+           name
+           sku
+           path
+           addToCartUrl
            images {
             edges {
               node {
@@ -35,15 +37,20 @@ const App = () => {
               }
             }
            }
-           prices(includeTax: true, currencyCode: USD) {
-             salePrice {
+           prices(includeTax: true, currencyCode: GBP) {
+            price {
+              value
+            }
+            salePrice {
+              value
+            }
+            basePrice {
               value
             }
             basePrice {
               value
             }
            }
-           addToCartUrl
          }
        }
      }
@@ -65,7 +72,9 @@ const App = () => {
   }
 
   return (
-    <ProductsGrid products={data?.site?.products?.edges} />
+    <Container>
+      <ProductsGrid products={data?.site?.products?.edges} />
+    </Container>
   );
 };
 
