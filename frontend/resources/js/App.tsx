@@ -1,22 +1,32 @@
 import { h } from 'preact';
+import {useCallback, useEffect, useState} from 'preact/compat';
 import { useQuery } from '@urql/preact';
 import Loading from './components/Loading';
 import Error from './components/Error';
 import ProductsGrid from './components/ProductsGrid';
 import Container from './components/Container';
+import { Config } from './types';
 
 /** @jsx h */
 
-const App = () => {
+interface Props {
+  config: Config
+}
+
+const App = ({ config }: Props) => {
+  const [pagination, setPagination] = useState<string[]>([]);
+  const [currentPageCursor, setCurrentPageCursor] = useState<string>('');
 
   const ProductsQuery = `
   query paginateProducts(
-   $pageSize: Int = 12
-   $cursor: String
+   $pageSize: Int = ${config.perPage}
+   $cursor: String = "${currentPageCursor}"
  ) {
    site {
      products (first: $pageSize, after:$cursor) {
        pageInfo {
+         hasNextPage
+         hasPreviousPage
          startCursor
          endCursor
        }
@@ -71,9 +81,37 @@ const App = () => {
     return <Error error={error} />;
   }
 
+  const handlePaginateBack = useCallback(() => {
+    setPagination(prev => {
+      prev.pop();
+      return [...prev];
+    });
+
+  }, [pagination]);
+
+  const handlePaginateForward = useCallback(() => {
+    if (data?.site?.products?.pageInfo?.hasNextPage) {
+      setPagination(prev => {
+        prev.push(data?.site?.products?.pageInfo?.endCursor);
+        return [...prev];
+      });
+    }
+  }, [pagination, data?.site?.products?.pageInfo?.hasNextPage, data?.site?.products?.pageInfo?.endCursor]);
+
+  useEffect(() => {
+    setCurrentPageCursor(pagination.length > 0 ? pagination[pagination.length - 1] : '');
+  }, [pagination]);
+
   return (
     <Container>
-      <ProductsGrid products={data?.site?.products?.edges} />
+      <ProductsGrid
+        products={data?.site?.products?.edges}
+        pages={pagination}
+        showPreviousPageBtn={pagination.length > 0}
+        showNextPageBtn={data?.site?.products?.pageInfo?.hasNextPage}
+        onPaginatePrevious={handlePaginateBack}
+        onPaginateNext={handlePaginateForward}
+      />
     </Container>
   );
 };

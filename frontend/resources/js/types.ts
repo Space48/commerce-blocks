@@ -33,3 +33,15 @@ export interface ImageEdge {
 export interface ProductNode {
   node: Product
 }
+
+export interface Config {
+  type: string;
+  columns: number;
+  perPage: number;
+  btnColor: string;
+  btnTextColor: string;
+  fontFamily: string;
+  textColor: string;
+  enableSearch: boolean;
+  enableFilters: boolean;
+}

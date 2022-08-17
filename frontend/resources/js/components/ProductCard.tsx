@@ -17,7 +17,7 @@ interface Props {
 const StyledProductCard = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
 `;
 
 const ProductCard = ({ product }: Props) => {
@@ -27,8 +27,6 @@ const ProductCard = ({ product }: Props) => {
     const foundImage = getImage();
     return foundImage ? foundImage.node : null;
   }, [product]);
-
-  console.log('PRICES', product);
 
   return (
     <StyledProductCard>
