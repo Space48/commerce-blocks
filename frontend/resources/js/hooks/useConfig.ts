@@ -9,8 +9,8 @@ const useConfig = () => {
     iconColor: 'royalblue',
     fontFamily: 'sans-serif',
     textColor: '#000',
-    enableSearch: false,
-    enableFilters: false
+    enableSearch: true,
+    enableFilters: true
   };
   return [config];
 };

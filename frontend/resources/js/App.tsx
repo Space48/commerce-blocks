@@ -1,7 +1,7 @@
-import { Fragment, h } from 'preact';
-import {useCallback, useEffect, useMemo, useState} from 'preact/compat';
+import { h } from 'preact';
+import { TargetedEvent, useCallback, useEffect, useMemo, useState } from 'preact/compat';
 import { useQuery } from '@urql/preact';
-import { Loading, Error, ProductsCarousel, ProductsGrid, Container } from './components';
+import { Loading, Error, ProductsCarousel, ProductsGrid, Container, SearchInput } from './components';
 import { LAYOUT_TYPE } from './types';
 import useConfig from './hooks/useConfig';
 import { ProductsQuery, SearchQuery } from './helpers/queries';
@@ -12,9 +12,10 @@ const App = () => {
   const [config] = useConfig();
   const [pagination, setPagination] = useState<string[]>([]);
   const [currentPageCursor, setCurrentPageCursor] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState<string>('');
 
   const [result] = useQuery({
-    query: SearchQuery(config.perPage, currentPageCursor)
+    query: SearchQuery(config.perPage, currentPageCursor, searchTerm)
   });
   const { data, fetching, error } = result;
 
@@ -58,6 +59,11 @@ const App = () => {
       });
     }
   }, [pagination, pageInfo?.hasNextPage, pageInfo?.endCursor]);
+  
+  const handleSearchChange = useCallback((event) => {
+    // @ts-ignore
+    setSearchTerm(event.target.value);
+  }, [searchTerm]);
 
   useEffect(() => {
     setCurrentPageCursor(pagination.length > 0 ? pagination[pagination.length - 1] : '');
@@ -77,6 +83,12 @@ const App = () => {
       )}
       {data && (
         <div>
+          {config.enableSearch && (
+            <SearchInput
+              searchTerm={searchTerm}
+              onChange={handleSearchChange}
+            />
+          )}
           {config.type === LAYOUT_TYPE.Grid && (
             <ProductsGrid
               products={products}

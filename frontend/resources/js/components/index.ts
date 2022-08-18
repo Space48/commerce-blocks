@@ -5,6 +5,7 @@ import Pagination from './Pagination';
 import ProductCard from './ProductCard';
 import ProductsCarousel from './ProductsCarousel';
 import ProductsGrid from './ProductsGrid';
+import SearchInput from './SearchInput';
 
 
 export {
@@ -14,5 +15,6 @@ export {
   Pagination,
   ProductCard,
   ProductsCarousel,
-  ProductsGrid
+  ProductsGrid,
+  SearchInput
 };
