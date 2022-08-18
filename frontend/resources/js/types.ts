@@ -12,6 +12,10 @@ export interface Product {
   }
 }
 
+export interface Filter {
+  name: string;
+}
+
 export enum LAYOUT_TYPE {
   Grid = 'GRID',
   Carousel = 'CAROUSEL'
@@ -37,6 +41,10 @@ export interface ImageEdge {
 
 export interface ProductNode {
   node: Product
+}
+
+export interface FiltersNode {
+  node: Filter
 }
 
 export interface Config {
