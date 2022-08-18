@@ -9,6 +9,7 @@ import Pagination from './Pagination';
 interface Props {
   products: ProductNode[];
   pages: string[];
+  columns: number;
   showPreviousPageBtn: boolean;
   showNextPageBtn: boolean;
   onPaginatePrevious: () => void;
@@ -17,15 +18,15 @@ interface Props {
 
 const StyledProductsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(${props => props.columns}, 1fr);
   grid-template-rows: 1fr;
   grid-column-gap: 40px;
   grid-row-gap: 40px;
 `;
 
-const ProductsGrid = ({ products, pages, showPreviousPageBtn, showNextPageBtn, onPaginatePrevious, onPaginateNext }: Props) => (
+const ProductsGrid = ({ products, columns, pages, showPreviousPageBtn, showNextPageBtn, onPaginatePrevious, onPaginateNext }: Props) => (
   <Fragment>
-    <StyledProductsGrid>
+    <StyledProductsGrid columns={columns}>
       {products.map(product => (
         <ProductCard key={product.node.name} product={product.node} />
       ))}

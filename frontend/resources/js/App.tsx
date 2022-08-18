@@ -1,4 +1,4 @@
-import { h } from 'preact';
+import {Fragment, h} from 'preact';
 import { useCallback, useEffect, useState } from 'preact/compat';
 import { useQuery } from '@urql/preact';
 import { Loading, Error, ProductsCarousel, ProductsGrid, Container } from './components';
@@ -68,14 +68,6 @@ const App = () => {
   });
   const { data, fetching, error } = result;
 
-  if (fetching) {
-    return <Loading />;
-  }
-
-  if (error) {
-    return <Error error={error} />;
-  }
-
   const handlePaginateBack = useCallback(() => {
     setPagination(prev => {
       prev.pop();
@@ -97,28 +89,41 @@ const App = () => {
     setCurrentPageCursor(pagination.length > 0 ? pagination[pagination.length - 1] : '');
   }, [pagination]);
 
+  // first load
+  if (!data && fetching) {
+    return <Loading />;
+  }
+
   return (
-    <Container>
-      {config.type === LAYOUT_TYPE.Grid && (
-        <ProductsGrid
-          products={data?.site?.products?.edges}
-          pages={pagination}
-          showPreviousPageBtn={pagination.length > 0}
-          showNextPageBtn={data?.site?.products?.pageInfo?.hasNextPage}
-          onPaginatePrevious={handlePaginateBack}
-          onPaginateNext={handlePaginateForward}
-        />
+    <Container isLoading={fetching}>
+      {error && (
+        <Error error={error} />
       )}
-      {config.type === LAYOUT_TYPE.Carousel && (
-        <ProductsCarousel
-          products={data?.site?.products?.edges}
-          slidesToShow={config.columns}
-          pages={pagination}
-          showPreviousPageBtn={pagination.length > 0}
-          showNextPageBtn={data?.site?.products?.pageInfo?.hasNextPage}
-          onPaginatePrevious={handlePaginateBack}
-          onPaginateNext={handlePaginateForward}
-        />
+      {data && (
+        <div>
+          {config.type === LAYOUT_TYPE.Grid && (
+            <ProductsGrid
+              products={data?.site?.products?.edges}
+              columns={config.columns}
+              pages={pagination}
+              showPreviousPageBtn={pagination.length > 0}
+              showNextPageBtn={data?.site?.products?.pageInfo?.hasNextPage}
+              onPaginatePrevious={handlePaginateBack}
+              onPaginateNext={handlePaginateForward}
+            />
+          )}
+          {config.type === LAYOUT_TYPE.Carousel && (
+            <ProductsCarousel
+              products={data?.site?.products?.edges}
+              slidesToShow={config.columns}
+              pages={pagination}
+              showPreviousPageBtn={pagination.length > 0}
+              showNextPageBtn={data?.site?.products?.pageInfo?.hasNextPage}
+              onPaginatePrevious={handlePaginateBack}
+              onPaginateNext={handlePaginateForward}
+            />
+          )}
+        </div>
       )}
     </Container>
   );
