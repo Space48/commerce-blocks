@@ -1,4 +1,4 @@
-import {Fragment, h} from 'preact';
+import { Fragment, h } from 'preact';
 import { ProductNode } from '../types';
 import ProductCard from './ProductCard';
 import styled from 'styled-components';

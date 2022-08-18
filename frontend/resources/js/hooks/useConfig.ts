@@ -4,8 +4,9 @@ const useConfig = () => {
     type: 'CAROUSEL', // or carousel
     columns: 2,
     perPage: 9,
-    btnColor: '#000',
+    btnColor: 'royalblue',
     btnTextColor: '#FFF',
+    iconColor: 'royalblue',
     fontFamily: 'sans-serif',
     textColor: '#000',
     enableSearch: false,

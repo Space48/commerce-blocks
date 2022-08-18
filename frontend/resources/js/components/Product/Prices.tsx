@@ -1,7 +1,7 @@
 import { Fragment, h } from 'preact';
 import styled from 'styled-components';
 import { getPriceText } from '../../helpers/price';
-import useConfig from "@/hooks/useConfig";
+import useConfig from '../../hooks/useConfig';
 
 /** @jsx h */
 

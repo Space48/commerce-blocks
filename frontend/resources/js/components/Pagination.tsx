@@ -1,9 +1,7 @@
 import { h } from 'preact';
 import styled from 'styled-components';
-import Button from './Pagination/Button';
-import CurrentPage from './Pagination/CurrentPage';
-import ChevronLeft from './Icons/ChevronLeft';
-import ChevronRight from './Icons/ChevronRight';
+import { Button, CurrentPage }  from './Paginate/';
+import { ChevronLeft, ChevronRight }  from './Icons/';
 
 /** @jsx h */
 

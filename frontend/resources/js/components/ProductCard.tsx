@@ -1,13 +1,8 @@
 import { h } from 'preact';
 import { useMemo } from 'preact/compat';
 import styled from 'styled-components';
-import Name from './Product/Name';
-import Button from './Product/Button';
-import Image from './Product/Image';
-import Sku from './Product/Sku';
-import Prices from './Product/Prices';
+import { Name, Button, Image, Sku, Prices, PlaceholderImage } from './Product/';
 import { Product } from '../types';
-import PlaceholderImage from './Product/PlaceholderImage';
 
 /** @jsx h */
 

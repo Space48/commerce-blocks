@@ -1,12 +1,8 @@
 import { h } from 'preact';
 import { useCallback, useEffect, useState } from 'preact/compat';
 import { useQuery } from '@urql/preact';
-import Loading from './components/Loading';
-import Error from './components/Error';
-import ProductsGrid from './components/ProductsGrid';
-import Container from './components/Container';
+import { Loading, Error, ProductsCarousel, ProductsGrid, Container } from './components';
 import { LAYOUT_TYPE } from './types';
-import ProductsCarousel from './components/ProductsCarousel';
 import useConfig from './hooks/useConfig';
 
 /** @jsx h */

@@ -14,7 +14,7 @@ const Error = ({ error }: Props) => {
       <div>{error.name}</div>
       <div>{error.message}</div>
     </div>
-  )
+  );
 };
 
 export default Error;
