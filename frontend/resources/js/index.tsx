@@ -4,12 +4,13 @@ import { createClient, Provider } from '@urql/preact';
 
 const getToken = () => {
   const root = document.getElementsByClassName('s48-your-products-anywhere');
+  // @ts-ignore
   return root.length > 0 ? root[0]?.dataset?.token : '';
 };
 
 const getConfig = () => ({
-  type: 'grid', // or carousel
-  columns: 3,
+  type: 'CAROUSEL', // or carousel
+  columns: 2,
   perPage: 9,
   btnColor: '#000',
   btnTextColor: '#FFF',

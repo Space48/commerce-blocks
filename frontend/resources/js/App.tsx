@@ -1,11 +1,12 @@
 import { h } from 'preact';
-import {useCallback, useEffect, useState} from 'preact/compat';
+import { useCallback, useEffect, useState } from 'preact/compat';
 import { useQuery } from '@urql/preact';
 import Loading from './components/Loading';
 import Error from './components/Error';
 import ProductsGrid from './components/ProductsGrid';
 import Container from './components/Container';
-import { Config } from './types';
+import { Config, LAYOUT_TYPE } from './types';
+import ProductsCarousel from './components/ProductsCarousel';
 
 /** @jsx h */
 
@@ -104,14 +105,27 @@ const App = ({ config }: Props) => {
 
   return (
     <Container>
-      <ProductsGrid
-        products={data?.site?.products?.edges}
-        pages={pagination}
-        showPreviousPageBtn={pagination.length > 0}
-        showNextPageBtn={data?.site?.products?.pageInfo?.hasNextPage}
-        onPaginatePrevious={handlePaginateBack}
-        onPaginateNext={handlePaginateForward}
-      />
+      {config.type === LAYOUT_TYPE.Grid && (
+        <ProductsGrid
+          products={data?.site?.products?.edges}
+          pages={pagination}
+          showPreviousPageBtn={pagination.length > 0}
+          showNextPageBtn={data?.site?.products?.pageInfo?.hasNextPage}
+          onPaginatePrevious={handlePaginateBack}
+          onPaginateNext={handlePaginateForward}
+        />
+      )}
+      {config.type === LAYOUT_TYPE.Carousel && (
+        <ProductsCarousel
+          products={data?.site?.products?.edges}
+          slidesToShow={config.columns}
+          pages={pagination}
+          showPreviousPageBtn={pagination.length > 0}
+          showNextPageBtn={data?.site?.products?.pageInfo?.hasNextPage}
+          onPaginatePrevious={handlePaginateBack}
+          onPaginateNext={handlePaginateForward}
+        />
+      )}
     </Container>
   );
 };

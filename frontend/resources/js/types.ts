@@ -12,6 +12,11 @@ export interface Product {
   }
 }
 
+export enum LAYOUT_TYPE {
+  Grid = 'GRID',
+  Carousel = 'CAROUSEL'
+}
+
 export interface Price {
   value: number;
 }
