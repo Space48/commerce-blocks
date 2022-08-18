@@ -8,18 +8,6 @@ const getToken = () => {
   return root.length > 0 ? root[0]?.dataset?.token : '';
 };
 
-const getConfig = () => ({
-  type: 'CAROUSEL', // or carousel
-  columns: 2,
-  perPage: 9,
-  btnColor: '#000',
-  btnTextColor: '#FFF',
-  fontFamily: 'sans-serif',
-  textColor: '#000',
-  enableSearch: false,
-  enableFilters: false
-});
-
 const client = createClient({
   url: 'https://space-48-apps-2022.mybigcommerce.com/graphql',
   fetchOptions: () => {
@@ -37,7 +25,7 @@ const root = document.getElementsByClassName('s48-your-products-anywhere');
 if (root) {
   render(
     <Provider value={client}>
-      <App config={getConfig()} />
+      <App />
     </Provider>,
     root[0],
   );

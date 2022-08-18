@@ -5,16 +5,14 @@ import Loading from './components/Loading';
 import Error from './components/Error';
 import ProductsGrid from './components/ProductsGrid';
 import Container from './components/Container';
-import { Config, LAYOUT_TYPE } from './types';
+import { LAYOUT_TYPE } from './types';
 import ProductsCarousel from './components/ProductsCarousel';
+import useConfig from './hooks/useConfig';
 
 /** @jsx h */
 
-interface Props {
-  config: Config
-}
-
-const App = ({ config }: Props) => {
+const App = () => {
+  const [config] = useConfig();
   const [pagination, setPagination] = useState<string[]>([]);
   const [currentPageCursor, setCurrentPageCursor] = useState<string>('');
 
