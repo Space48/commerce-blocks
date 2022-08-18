@@ -8,17 +8,16 @@ interface Props {
   name: string;
 }
 
+const StyledName = styled.p`
+  font-family: ${props => props.fontFamily};
+  color: ${props => props.textColor}
+  margin: 0 0 10px 0;
+`;
+
 const Name = ({ name }: Props) => {
   const [config] = useConfig();
-
-  const StyledName = styled.p`
-    font-family: ${config.fontFamily};
-    color: ${config.textColor}
-    margin: 0 0 10px 0;
-  `;
-
   return (
-    <StyledName>
+    <StyledName fontFamily={config.fontFamily} textColor={config.textColor}>
       {name}
     </StyledName>
   );

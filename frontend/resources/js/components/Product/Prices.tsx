@@ -11,18 +11,18 @@ interface Props {
   sale: number | null;
 }
 
+const StyledPrice = styled.p`
+  font-family: ${props => props.fontFamily};
+  color: ${props => props.textColor}
+  margin: 0 0 20px 0;
+  opacity: 0.6;
+`;
+
 const Price = ({ msrp, price, sale }: Props) => {
   const [config] = useConfig();
 
-  const StyledPrice = styled.p`
-    font-family: ${config.fontFamily};
-    color: ${config.textColor}
-    margin: 0 0 20px 0;
-    opacity: 0.6;
-  `;
-
   return (
-    <StyledPrice>
+    <StyledPrice fontFamily={config.fontFamily} textColor={config.textColor}>
       {sale && (price > sale) ? (
         <Fragment>
           {msrp && <div>MSRP: {getPriceText(msrp)}</div>}

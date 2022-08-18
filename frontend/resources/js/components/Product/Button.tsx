@@ -9,24 +9,31 @@ interface Props {
   url: string;
 }
 
+const StyledButton = styled.a`
+  background-color: ${props => props.btnColor};
+  color: ${props => props.btnTextColor};
+  font-family: ${props => props.fontFamily};
+  padding: 10px 20px;
+  display: block;
+  text-decoration: none;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+`;
+
 const Button = ({ label, url }: Props) => {
   const [config] = useConfig();
-
-  const StyledButton = styled.a`
-    background-color: ${config.btnColor};
-    color: ${config.btnTextColor};
-    font-family: ${config.fontFamily};
-    padding: 10px 20px;
-    display: block;
-    text-decoration: none;
-    border-radius: 5px;
-    width: 100%;
-    box-sizing: border-box;
-    text-align: center;
-  `;
   
   return (
-    <StyledButton href={url} target="_blank" rel="noreferrer">
+    <StyledButton
+      href={url}
+      target="_blank"
+      rel="noreferrer"
+      btnColor={config.btnColor}
+      btnTextColor={config.btnTextColor}
+      fontFamily={config.fontFamily}
+    >
       {label}
     </StyledButton>
   );

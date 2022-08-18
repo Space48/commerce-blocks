@@ -1,7 +1,7 @@
-import Button from './Button';
+import PaginateButton from './PaginateButton';
 import CurrentPage from './CurrentPage';
 
 export {
-  Button,
+  PaginateButton,
   CurrentPage
 };

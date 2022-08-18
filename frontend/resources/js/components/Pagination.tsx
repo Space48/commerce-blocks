@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import styled from 'styled-components';
-import { Button, CurrentPage }  from './Paginate/';
+import { PaginateButton, CurrentPage }  from './Paginate/';
 import { ChevronLeft, ChevronRight }  from './Icons/';
 
 /** @jsx h */
@@ -25,21 +25,21 @@ const StyledPagination = styled.div`
 const Pagination = ({ pages, showPreviousPageBtn, showNextPageBtn, onPaginatePrevious, onPaginateNext }: Props) => (
   <StyledPagination>
     {(showNextPageBtn || pages.length > 0) && (
-      <Button
+      <PaginateButton
         onClick={onPaginatePrevious}
         disabled={!showPreviousPageBtn}
       >
         <ChevronLeft />
-      </Button>
+      </PaginateButton>
     )}
     <CurrentPage page={pages.length + 1} />
     {showNextPageBtn && (
-      <Button
+      <PaginateButton
         onClick={onPaginateNext}
         disabled={!showNextPageBtn}
       >
         <ChevronRight />
-      </Button>
+      </PaginateButton>
     )}
   </StyledPagination>
 )
