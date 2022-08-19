@@ -8,6 +8,8 @@ import { ChevronLeft } from './Icons';
 const StyledButton = styled.button`
   display: flex;
   justify-content: center;
+  padding: 10px;
+  border-radius: 5px;
 `;
 
 const StyledChevron = styled.div`
@@ -22,7 +24,7 @@ const FilterButton = ({ isOpen, onClick }) => {
 
   return (
     <StyledButton
-      onClick={() => onClick()}
+      onClick={onClick}
     >
       Show Filters
       <StyledChevron isOpen={isOpen} iconColor={config.iconColor}>

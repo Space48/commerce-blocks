@@ -120,6 +120,10 @@ const App = () => {
     setSortOrder(event.target.value);
   }, [sortOrder]);
 
+  const handleFilterButtonClick = useCallback(() => {
+    setIsFilterOpen(prev => !prev);
+  }, [isFilterOpen]);
+
   useEffect(() => {
     setCurrentPageCursor(pagination.length > 0 ? pagination[pagination.length - 1] : '');
   }, [pagination]);
@@ -146,7 +150,7 @@ const App = () => {
           )}
           <FiltersContainer>
             {config.enableFilters && (
-              <FilterButton isOpen={isFilterOpen} onClick={() => setIsFilterOpen(prev => !prev)} />
+              <FilterButton isOpen={isFilterOpen} onClick={handleFilterButtonClick} />
             )}
             <SortOptions options={sortOptions} selected={sortOrder} onChange={handleSortOrderChange} />
           </FiltersContainer>
