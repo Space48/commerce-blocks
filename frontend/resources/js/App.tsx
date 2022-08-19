@@ -148,7 +148,7 @@ const App = () => {
               onQuickView={handleOnQuickView}
             />
           )}
-          {products.length > 0 && (
+          {products.length === 0 && (
             <NoProductsFound />
           )}
         </div>
