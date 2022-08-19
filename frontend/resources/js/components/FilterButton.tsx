@@ -5,11 +5,12 @@ import { ChevronLeft } from './Icons';
 
 /** @jsx h */
 
-const StyledButton = styled.button`
+const StyledAnchorButton = styled.a`
   display: flex;
   justify-content: center;
   padding: 10px;
   border-radius: 5px;
+  text-decoration: none;
 `;
 
 const StyledChevron = styled.div`
@@ -23,14 +24,15 @@ const FilterButton = ({ isOpen, onClick }) => {
   const [config] = useConfig();
 
   return (
-    <StyledButton
+    <StyledAnchorButton
       onClick={onClick}
+      href="#"
     >
       Show Filters
       <StyledChevron isOpen={isOpen} iconColor={config.iconColor}>
         <ChevronLeft />
       </StyledChevron>
-    </StyledButton>
+    </StyledAnchorButton>
   );
 };
 

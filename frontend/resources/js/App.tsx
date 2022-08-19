@@ -110,17 +110,18 @@ const App = () => {
     setIsQuickViewOpen(true);
   }, [selectedProduct]);
 
-  const handleOnQuickViewClose = useCallback(() => {
+  const handleOnQuickViewClose = useCallback((event) => {
+    event.preventDefault();
     setIsQuickViewOpen(false);
     setSelectedProduct(undefined);
   }, [selectedProduct]);
 
   const handleSortOrderChange = useCallback((event) => {
-    console.log('SORT ORDER CHANGE', event.target.value);
     setSortOrder(event.target.value);
   }, [sortOrder]);
 
-  const handleFilterButtonClick = useCallback(() => {
+  const handleFilterButtonClick = useCallback((event) => {
+    event.preventDefault();
     setIsFilterOpen(prev => !prev);
   }, [isFilterOpen]);
 
@@ -190,7 +191,10 @@ const App = () => {
         onRequestClose={handleOnQuickViewClose}
         style={modalStyles}
       >
-        <QuickView product={selectedProduct} />
+        <QuickView
+          product={selectedProduct}
+          onClose={handleOnQuickViewClose}
+        />
       </Modal>
     </Container>
   );

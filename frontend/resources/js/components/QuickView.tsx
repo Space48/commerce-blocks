@@ -1,16 +1,18 @@
 import { h } from 'preact';
 import styled from 'styled-components';
 import Slider from 'react-slick';
-import useConfig from '../hooks/useConfig';
 import { Product } from '../types';
 import { Image, LinkButton, Name, Prices, Sku, PlaceholderImage } from './Product';
 import 'slick-carousel/slick/slick.css';
 import { devices } from '../helpers/responsive';
+import { CloseIcon } from './Icons';
+import useConfig from '../hooks/useConfig';
 
 /** @jsx h */
 
 interface Props {
-  product?: Product
+  product?: Product;
+  onClose: () => void;
 }
 
 const StyledDiv = styled.div`
@@ -24,6 +26,16 @@ const StyledDiv = styled.div`
     grid-row-gap: 40px;
     padding: ${props => props.hasImage ? '40px 40px 60px 40px' : '20px'} ;
   }
+}`;
+
+const StyledCloseAnchor = styled.a`
+  position: absolute;
+  padding: 5px 10px;
+  top: 10px;
+  right: 10px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  color: ${props => props.iconColor};
 }`;
 
 const StyledSlider = styled.div`
@@ -51,7 +63,9 @@ const StyledProductDiv = styled.div`
   }
 `;
 
-const QuickView = ({ product }: Props) => {
+const QuickView = ({ product, onClose }: Props) => {
+  const [config] = useConfig();
+
   if (!product) {
     return null;
   }
@@ -68,6 +82,9 @@ const QuickView = ({ product }: Props) => {
 
   return (
     <StyledDiv hasImage={hasImage}>
+      <StyledCloseAnchor onClick={onClose} href="#" iconColor={config.iconColor}>
+        <CloseIcon />
+      </StyledCloseAnchor>
       {hasImage ? (
         <StyledSlider>
           <Slider {...settings}>
