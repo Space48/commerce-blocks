@@ -19,7 +19,7 @@ const StyledInput = styled.input`
   width: 100%;
   border: 1px solid #CCC;
   border-radius: 5px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }`;
 
 const StyledIconContainer = styled.div`

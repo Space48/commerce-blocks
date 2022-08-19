@@ -24,6 +24,7 @@ const StyledInput = styled.input`
 `;
 
 const StyledHeading = styled.h4`
+  margin-top: 0px;
 `;
 
 const Option = ({ filter }: Props) => {

@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { useCallback, useEffect, useMemo, useState } from 'preact/compat';
 import { useQuery } from '@urql/preact';
-import { Loading, Error, ProductsCarousel, ProductsGrid, Container, SearchInput, QuickView, NoProductsFound } from './components';
+import { Loading, Error, ProductsCarousel, ProductsGrid, Container, SearchInput, QuickView, NoProductsFound, FiltersList } from './components';
 import { LAYOUT_TYPE, Product } from './types';
 import useConfig from './hooks/useConfig';
 import { ProductsQuery, SearchQuery } from './helpers/queries';
@@ -122,6 +122,9 @@ const App = () => {
               searchTerm={searchTerm}
               onChange={handleSearchChange}
             />
+          )}
+          {config.enableFilters && (
+            <FiltersList filters={filters} />
           )}
           {config.type === LAYOUT_TYPE.Grid && products.length > 0 && (
             <ProductsGrid

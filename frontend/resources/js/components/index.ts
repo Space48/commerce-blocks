@@ -8,11 +8,13 @@ import ProductsGrid from './ProductsGrid';
 import SearchInput from './SearchInput';
 import QuickView from './QuickView';
 import NoProductsFound from './NoProductsFound';
+import FiltersList from './FiltersList';
 
 
 export {
   Container,
   Error,
+  FiltersList,
   Loading,
   NoProductsFound,
   Pagination,

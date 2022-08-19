@@ -3,7 +3,6 @@ import { FiltersNode, Product, ProductNode } from '../types';
 import ProductCard from './ProductCard';
 import styled from 'styled-components';
 import Pagination from './Pagination';
-import FiltersList from './FiltersList';
 import { devices } from '../helpers/responsive';
 
 /** @jsx h */
@@ -48,7 +47,6 @@ const ProductsGrid = ({
   onQuickView
 }: Props) => (
   <Fragment>
-    <FiltersList filters={filters} />
     <StyledProductsGrid columns={columns}>
       {products.map(product => (
         <ProductCard key={product.node.name} product={product.node} onQuickView={onQuickView} />
