@@ -1,7 +1,7 @@
 import { Fragment, h } from 'preact';
 import styled from 'styled-components';
 import Slider from 'react-slick';
-import {Product, ProductNode} from '../types';
+import { Product, ProductNode } from '../types';
 import ProductCard from './ProductCard';
 import Pagination from './Pagination';
 import 'slick-carousel/slick/slick.css';
@@ -42,12 +42,11 @@ const ProductsCarousel = ({
   const settings = {
     ref: sliderRef,
     dots: true,
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow,
     slidesToScroll: slidesToShow
   };
-
 
   return (
     <Fragment>

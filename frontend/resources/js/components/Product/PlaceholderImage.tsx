@@ -7,7 +7,7 @@ const StyledDiv = styled.div`
   width: 90%;
   height: 150px;
   background-color: #EBEBEB;
-  margin: 10px auto;
+  margin: 20px auto;
   display: flex;
   justify-content: center;
   align-items: center;

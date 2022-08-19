@@ -7,12 +7,14 @@ import ProductsCarousel from './ProductsCarousel';
 import ProductsGrid from './ProductsGrid';
 import SearchInput from './SearchInput';
 import QuickView from './QuickView';
+import NoProductsFound from './NoProductsFound';
 
 
 export {
   Container,
   Error,
   Loading,
+  NoProductsFound,
   Pagination,
   ProductCard,
   ProductsCarousel,

@@ -1,12 +1,11 @@
 import { h } from 'preact';
 import { useCallback, useEffect, useMemo, useState } from 'preact/compat';
 import { useQuery } from '@urql/preact';
-import { Loading, Error, ProductsCarousel, ProductsGrid, Container, SearchInput, QuickView } from './components';
+import { Loading, Error, ProductsCarousel, ProductsGrid, Container, SearchInput, QuickView, NoProductsFound } from './components';
 import { LAYOUT_TYPE, Product } from './types';
 import useConfig from './hooks/useConfig';
 import { ProductsQuery, SearchQuery } from './helpers/queries';
 import Modal from 'react-modal';
-
 
 /** @jsx h */
 
@@ -86,6 +85,8 @@ const App = () => {
   const handleSearchChange = useCallback((event) => {
     // @ts-ignore
     setSearchTerm(event.target.value);
+    setPagination([]);
+    setCurrentPageCursor('');
   }, [searchTerm]);
 
   const handleOnQuickView = useCallback((product) => {
@@ -122,7 +123,7 @@ const App = () => {
               onChange={handleSearchChange}
             />
           )}
-          {config.type === LAYOUT_TYPE.Grid && (
+          {config.type === LAYOUT_TYPE.Grid && products.length > 0 && (
             <ProductsGrid
               products={products}
               filters={filters}
@@ -135,7 +136,7 @@ const App = () => {
               onQuickView={handleOnQuickView}
             />
           )}
-          {config.type === LAYOUT_TYPE.Carousel && (
+          {config.type === LAYOUT_TYPE.Carousel && products.length > 0 && (
             <ProductsCarousel
               products={products}
               slidesToShow={config.columns}
@@ -146,6 +147,9 @@ const App = () => {
               onPaginateNext={handlePaginateForward}
               onQuickView={handleOnQuickView}
             />
+          )}
+          {products.length > 0 && (
+            <NoProductsFound />
           )}
         </div>
       )}

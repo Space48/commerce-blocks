@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Slider from 'react-slick';
 import useConfig from '../hooks/useConfig';
 import { Product } from '../types';
-import {Image, LinkButton, Name, Prices, Sku} from './Product';
+import { Image, LinkButton, Name, Prices, Sku, PlaceholderImage } from './Product';
 import 'slick-carousel/slick/slick.css';
 
 /** @jsx h */
@@ -17,7 +17,7 @@ const StyledDiv = styled.div`
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 40px;
   grid-row-gap: 40px;
-  padding: 20px 40px 40px 40px;
+  padding: ${props => props.hasImage ? '40px 40px 60px 40px' : '20px'} ;
 }`;
 
 const StyledSlider = styled.div`
@@ -26,12 +26,10 @@ const StyledSlider = styled.div`
 
 const StyledProductDiv = styled.div`
   max-width: 200px;
-  margin-left: 60px;
+  margin-left: ${props => props.hasImage ? '60px' : '0'};
 `;
 
 const QuickView = ({ product }: Props) => {
-  const [config] = useConfig();
-
   if (!product) {
     return null;
   }
@@ -44,17 +42,23 @@ const QuickView = ({ product }: Props) => {
     slidesToScroll: 1
   };
 
-  return (
-    <StyledDiv>
-      <StyledSlider>
-        <Slider {...settings}>
-          {product?.images.edges.map(image => (
-            <Image key={image.node.url} src={image.node.url} altText={image.node.altText} />
-          ))}
-        </Slider>
-      </StyledSlider>
+  const hasImage = product?.images.edges.length > 0;
 
-      <StyledProductDiv>
+  return (
+    <StyledDiv hasImage={hasImage}>
+      {hasImage ? (
+        <StyledSlider>
+          <Slider {...settings}>
+            {product?.images.edges.map(image => (
+              <Image key={image.node.url} src={image.node.url} altText={image.node.altText} />
+            ))}
+          </Slider>
+        </StyledSlider>
+      ) : (
+        <PlaceholderImage />
+      )}
+
+      <StyledProductDiv hasImage={hasImage}>
         <Sku sku={product.sku} />
         <Name name={product.name} />
         {product.prices && (
