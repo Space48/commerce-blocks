@@ -11,7 +11,9 @@ import {
   QuickView,
   NoProductsFound,
   FiltersList,
-  SortOptions
+  SortOptions,
+  FilterButton,
+  FiltersContainer
 } from './components';
 import { LAYOUT_TYPE, Product } from './types';
 import useConfig from './hooks/useConfig';
@@ -47,6 +49,7 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedProduct, setSelectedProduct] = useState<Product>();
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState('RELEVANCE');
 
   const [result] = useQuery({
@@ -141,13 +144,13 @@ const App = () => {
               onChange={handleSearchChange}
             />
           )}
-          <div>
+          <FiltersContainer>
             {config.enableFilters && (
-              <FiltersList filters={filters} />
+              <FilterButton isOpen={isFilterOpen} onClick={() => setIsFilterOpen(prev => !prev)} />
             )}
             <SortOptions options={sortOptions} selected={sortOrder} onChange={handleSortOrderChange} />
-          </div>
-
+          </FiltersContainer>
+          <FiltersList filters={filters} isOpen={isFilterOpen} />
           {config.type === LAYOUT_TYPE.Grid && products.length > 0 && (
             <ProductsGrid
               products={products}

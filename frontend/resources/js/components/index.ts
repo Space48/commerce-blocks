@@ -9,12 +9,16 @@ import SearchInput from './SearchInput';
 import QuickView from './QuickView';
 import NoProductsFound from './NoProductsFound';
 import FiltersList from './FiltersList';
+import FilterButton from './FilterButton';
+import FiltersContainer from './FiltersContainer';
 import SortOptions from './SortOptions';
 
 
 export {
   Container,
   Error,
+  FilterButton,
+  FiltersContainer,
   FiltersList,
   Loading,
   NoProductsFound,

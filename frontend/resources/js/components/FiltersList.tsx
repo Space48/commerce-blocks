@@ -4,8 +4,14 @@ import styled from 'styled-components';
 import useConfig from '../hooks/useConfig';
 import Option from './Filters/Option';
 import { ChevronLeft } from './Icons';
+import { FiltersNode } from '../types';
 
 /** @jsx h */
+
+interface Props {
+  filters: FiltersNode[];
+  isOpen: boolean;
+}
 
 const StyledFilterWrapper = styled.div`
   overflow: hidden;
@@ -24,39 +30,15 @@ const StyledOptionsWrapper = styled.div`
   border-radius: 5px;
 }`;
 
-const StyledButton = styled.button`
-  margin-bottom: 20px;
-  display: flex;
-  justify-content: center;
-`;
-
-const StyledChevron = styled.div`
-  display: inline-block;
-  transform: rotate(${props => props.isOpen ? '90deg' : '270deg'});
-  margin-left: 20px;
-  color: ${props => props.iconColor};
-`;
-
-const FiltersList = ({ filters }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const FiltersList = ({ filters, isOpen }: Props) => {
   const [config] = useConfig();
 
   return (
-    <div>
-      <StyledButton
-        onClick={() => setIsOpen(prev => !prev)}
-      >
-        Show Filters
-        <StyledChevron isOpen={isOpen} iconColor={config.iconColor}>
-          <ChevronLeft />
-        </StyledChevron>
-      </StyledButton>
-      <StyledFilterWrapper color={config.iconColor} className={isOpen ? 'active' : ''}>
-        <StyledOptionsWrapper>
-          {filters.slice(0, 4).map(filter => <Option key={filter.node.name} filter={filter.node.name} />)}
-        </StyledOptionsWrapper>
-      </StyledFilterWrapper>
-    </div>
+    <StyledFilterWrapper color={config.iconColor} className={isOpen ? 'active' : ''}>
+      <StyledOptionsWrapper>
+        {filters.slice(0, 4).map(filter => <Option key={filter.node.name} filter={filter.node.name} />)}
+      </StyledOptionsWrapper>
+    </StyledFilterWrapper>
   );
 };
 

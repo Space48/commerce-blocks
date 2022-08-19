@@ -16,7 +16,6 @@ const StyledSelect = styled.select`
   width: 100%;
   border: 1px solid #CCC;
   border-radius: 5px;
-  margin-bottom: 20px;
 }`;
 
 const SortOptions = ({ selected, options, onChange }: Props) => {
