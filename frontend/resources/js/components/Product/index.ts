@@ -1,4 +1,5 @@
 import Button from './Button';
+import LinkButton from './LinkButton';
 import Image from './Image';
 import Name from './Name';
 import PlaceholderImage from './PlaceholderImage';
@@ -9,6 +10,7 @@ import Sku from './Sku';
 export {
   Button,
   Image,
+  LinkButton,
   Name,
   PlaceholderImage,
   Prices,

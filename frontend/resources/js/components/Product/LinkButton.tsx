@@ -1,20 +1,20 @@
 import { h } from 'preact';
 import styled from 'styled-components';
 import useConfig from '../../hooks/useConfig';
-import { Product } from '../../types';
 
 /** @jsx h */
 
 interface Props {
   label: string;
-  onClick: (product: Product) => void;
+  url: string;
 }
 
-const StyledButton = styled.button`
+const StyledButton = styled.a`
   background-color: ${props => props.btnColor};
   color: ${props => props.btnTextColor};
   font-family: ${props => props.fontFamily};
   padding: 10px 20px;
+  margin-bottom: 10px;
   display: block;
   text-decoration: none;
   border-radius: 5px;
@@ -28,12 +28,14 @@ const StyledButton = styled.button`
   }
 `;
 
-const LinkButton = ({ label, onClick }: Props) => {
+const LinkButton = ({ label, url }: Props) => {
   const [config] = useConfig();
   
   return (
     <StyledButton
-      onClick={onClick}
+      href={url}
+      target="_blank"
+      rel="noreferrer"
       btnColor={config.btnColor}
       btnHoverColor={config.btnHoverColor}
       btnTextColor={config.btnTextColor}

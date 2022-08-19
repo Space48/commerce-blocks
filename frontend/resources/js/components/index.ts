@@ -6,6 +6,7 @@ import ProductCard from './ProductCard';
 import ProductsCarousel from './ProductsCarousel';
 import ProductsGrid from './ProductsGrid';
 import SearchInput from './SearchInput';
+import QuickView from './QuickView';
 
 
 export {
@@ -16,5 +17,6 @@ export {
   ProductCard,
   ProductsCarousel,
   ProductsGrid,
-  SearchInput
+  SearchInput,
+  QuickView
 };

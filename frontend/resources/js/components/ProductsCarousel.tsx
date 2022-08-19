@@ -1,7 +1,7 @@
 import { Fragment, h } from 'preact';
 import styled from 'styled-components';
 import Slider from 'react-slick';
-import { ProductNode } from '../types';
+import {Product, ProductNode} from '../types';
 import ProductCard from './ProductCard';
 import Pagination from './Pagination';
 import 'slick-carousel/slick/slick.css';
@@ -17,6 +17,7 @@ interface Props {
   onPaginatePrevious: () => void;
   onPaginateNext: () => void;
   slidesToShow: number;
+  onQuickView: (product: Product) => void;
 }
 
 const SlideCard = styled.div`
@@ -34,7 +35,8 @@ const ProductsCarousel = ({
   showNextPageBtn,
   onPaginatePrevious,
   onPaginateNext,
-  slidesToShow
+  slidesToShow,
+  onQuickView
 }: Props) => {
   const sliderRef = useRef(null);
   const settings = {
@@ -52,7 +54,7 @@ const ProductsCarousel = ({
       <StyledSlider {...settings}>
         {products.map(product => (
           <SlideCard key={product.node.name}>
-            <ProductCard product={product.node} />
+            <ProductCard product={product.node} onQuickView={onQuickView} />
           </SlideCard>
         ))}
       </StyledSlider>

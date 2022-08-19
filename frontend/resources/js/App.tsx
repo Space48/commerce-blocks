@@ -1,18 +1,41 @@
 import { h } from 'preact';
-import { TargetedEvent, useCallback, useEffect, useMemo, useState } from 'preact/compat';
+import { useCallback, useEffect, useMemo, useState } from 'preact/compat';
 import { useQuery } from '@urql/preact';
-import { Loading, Error, ProductsCarousel, ProductsGrid, Container, SearchInput } from './components';
-import { LAYOUT_TYPE } from './types';
+import { Loading, Error, ProductsCarousel, ProductsGrid, Container, SearchInput, QuickView } from './components';
+import { LAYOUT_TYPE, Product } from './types';
 import useConfig from './hooks/useConfig';
 import { ProductsQuery, SearchQuery } from './helpers/queries';
+import Modal from 'react-modal';
+
 
 /** @jsx h */
+
+Modal.setAppElement('body');
+
+const modalStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    transform: 'translate(-50%, -50%)',
+    width: 'auto',
+    maxWidth: '1024px',
+    borderRadius: '5px'
+  },
+  overlay: {
+    zIndex: 9999,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)'
+  }
+};
 
 const App = () => {
   const [config] = useConfig();
   const [pagination, setPagination] = useState<string[]>([]);
   const [currentPageCursor, setCurrentPageCursor] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [selectedProduct, setSelectedProduct] = useState<Product>();
+  const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
 
   const [result] = useQuery({
     query: SearchQuery(config.perPage, currentPageCursor, searchTerm)
@@ -65,6 +88,16 @@ const App = () => {
     setSearchTerm(event.target.value);
   }, [searchTerm]);
 
+  const handleOnQuickView = useCallback((product) => {
+    setSelectedProduct(product);
+    setIsQuickViewOpen(true);
+  }, [selectedProduct]);
+
+  const handleOnQuickViewClose = useCallback(() => {
+    setIsQuickViewOpen(false);
+    setSelectedProduct(undefined);
+  }, [selectedProduct]);
+
   useEffect(() => {
     setCurrentPageCursor(pagination.length > 0 ? pagination[pagination.length - 1] : '');
   }, [pagination]);
@@ -99,6 +132,7 @@ const App = () => {
               showNextPageBtn={pageInfo?.hasNextPage}
               onPaginatePrevious={handlePaginateBack}
               onPaginateNext={handlePaginateForward}
+              onQuickView={handleOnQuickView}
             />
           )}
           {config.type === LAYOUT_TYPE.Carousel && (
@@ -110,10 +144,18 @@ const App = () => {
               showNextPageBtn={pageInfo?.hasNextPage}
               onPaginatePrevious={handlePaginateBack}
               onPaginateNext={handlePaginateForward}
+              onQuickView={handleOnQuickView}
             />
           )}
         </div>
       )}
+      <Modal
+        isOpen={isQuickViewOpen}
+        onRequestClose={handleOnQuickViewClose}
+        style={modalStyles}
+      >
+        <QuickView product={selectedProduct} />
+      </Modal>
     </Container>
   );
 };
