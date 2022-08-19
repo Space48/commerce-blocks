@@ -1,11 +1,23 @@
 import { h } from 'preact';
 import { useCallback, useEffect, useMemo, useState } from 'preact/compat';
 import { useQuery } from '@urql/preact';
-import { Loading, Error, ProductsCarousel, ProductsGrid, Container, SearchInput, QuickView, NoProductsFound, FiltersList } from './components';
+import {
+  Loading,
+  Error,
+  ProductsCarousel,
+  ProductsGrid,
+  Container,
+  SearchInput,
+  QuickView,
+  NoProductsFound,
+  FiltersList,
+  SortOptions
+} from './components';
 import { LAYOUT_TYPE, Product } from './types';
 import useConfig from './hooks/useConfig';
 import { ProductsQuery, SearchQuery } from './helpers/queries';
 import Modal from 'react-modal';
+import { sortOptions } from './helpers/sort';
 
 /** @jsx h */
 
@@ -35,9 +47,10 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedProduct, setSelectedProduct] = useState<Product>();
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
+  const [sortOrder, setSortOrder] = useState('RELEVANCE');
 
   const [result] = useQuery({
-    query: SearchQuery(config.perPage, currentPageCursor, searchTerm)
+    query: SearchQuery(config.perPage, currentPageCursor, sortOrder, searchTerm)
   });
   const { data, fetching, error } = result;
 
@@ -99,6 +112,11 @@ const App = () => {
     setSelectedProduct(undefined);
   }, [selectedProduct]);
 
+  const handleSortOrderChange = useCallback((event) => {
+    console.log('SORT ORDER CHANGE', event.target.value);
+    setSortOrder(event.target.value);
+  }, [sortOrder]);
+
   useEffect(() => {
     setCurrentPageCursor(pagination.length > 0 ? pagination[pagination.length - 1] : '');
   }, [pagination]);
@@ -123,9 +141,13 @@ const App = () => {
               onChange={handleSearchChange}
             />
           )}
-          {config.enableFilters && (
-            <FiltersList filters={filters} />
-          )}
+          <div>
+            {config.enableFilters && (
+              <FiltersList filters={filters} />
+            )}
+            <SortOptions options={sortOptions} selected={sortOrder} onChange={handleSortOrderChange} />
+          </div>
+
           {config.type === LAYOUT_TYPE.Grid && products.length > 0 && (
             <ProductsGrid
               products={products}

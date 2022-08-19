@@ -9,6 +9,7 @@ import SearchInput from './SearchInput';
 import QuickView from './QuickView';
 import NoProductsFound from './NoProductsFound';
 import FiltersList from './FiltersList';
+import SortOptions from './SortOptions';
 
 
 export {
@@ -22,5 +23,6 @@ export {
   ProductsCarousel,
   ProductsGrid,
   SearchInput,
+  SortOptions,
   QuickView
 };

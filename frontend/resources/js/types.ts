@@ -58,3 +58,8 @@ export interface Config {
   enableSearch: boolean;
   enableFilters: boolean;
 }
+
+export interface SortOption {
+  label: string;
+  value: string;
+}

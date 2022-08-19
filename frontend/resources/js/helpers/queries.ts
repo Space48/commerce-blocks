@@ -53,17 +53,18 @@ export const ProductsQuery = (perPage, cursor) => `
  }
 `;
 
-export const SearchQuery = (perPage, cursor, searchTerm) => `
+export const SearchQuery = (perPage, cursor, sortOrder, searchTerm) => `
   query paginateProducts(
    $pageSize: Int = ${perPage}
    $cursor: String = "${cursor}"
  ) {
    site {
      search {
-      searchProducts(filters: {
+      searchProducts(sort: ${sortOrder}, filters: {
         searchTerm: "${searchTerm}"
         hideOutOfStock: false
       }) {
+       
         filters(first: $pageSize, after: $cursor) {
           edges {
             node {
