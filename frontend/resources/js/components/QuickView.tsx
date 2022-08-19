@@ -5,6 +5,7 @@ import useConfig from '../hooks/useConfig';
 import { Product } from '../types';
 import { Image, LinkButton, Name, Prices, Sku, PlaceholderImage } from './Product';
 import 'slick-carousel/slick/slick.css';
+import { devices } from '../helpers/responsive';
 
 /** @jsx h */
 
@@ -13,20 +14,41 @@ interface Props {
 }
 
 const StyledDiv = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-column-gap: 40px;
-  grid-row-gap: 40px;
-  padding: ${props => props.hasImage ? '40px 40px 60px 40px' : '20px'} ;
+  display: flex;
+  flex-direction: column;
+  
+  @media ${devices.tablet} {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 40px;
+    grid-row-gap: 40px;
+    padding: ${props => props.hasImage ? '40px 40px 60px 40px' : '20px'} ;
+  }
 }`;
 
 const StyledSlider = styled.div`
-  min-width: 400px;
+  min-width: 300px;
+  margin-bottom: 40px;
+  
+  @media ${devices.tablet} {
+    min-width: 350px;
+    margin-bottom: 0;
+  }
+  
+  @media ${devices.desktop} {
+    min-width: 400px;
+  }
 `;
 
 const StyledProductDiv = styled.div`
-  max-width: 200px;
-  margin-left: ${props => props.hasImage ? '60px' : '0'};
+  @media ${devices.tablet} {
+    min-width: 200px;
+    margin-left: ${props => props.hasImage ? '20px' : '0'};
+  }
+  
+   @media ${devices.desktop} {
+    margin-left: ${props => props.hasImage ? '60px' : '0'};
+  }
 `;
 
 const QuickView = ({ product }: Props) => {
