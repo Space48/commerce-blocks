@@ -26,6 +26,6 @@ class ProxyController extends Controller
             $request->json()->all()
         );
 
-        return $this->jsonResponse(json_decode($response->body(), true), $response->status());
+        return response()->json(json_decode($response->body(), true), $response->status());
     }
 }
