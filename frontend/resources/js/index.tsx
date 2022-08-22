@@ -3,8 +3,9 @@ import App from './App';
 import { createClient, Provider } from '@urql/preact';
 
 const getToken = () => {
-  // todo
-  return '';
+  const root = document.getElementsByClassName('s48-your-products-anywhere');
+  // @ts-ignore
+  return root.length > 0 ? root[0]?.dataset?.token : '';
 };
 
 const client = createClient({
@@ -18,7 +19,7 @@ const client = createClient({
 });
 
 
-const root = document.getElementById('root');
+const root = document.getElementsByClassName('s48-your-products-anywhere');
 
 /** @jsx h */
 if (root) {
@@ -26,6 +27,6 @@ if (root) {
     <Provider value={client}>
       <App />
     </Provider>,
-    document.body,
+    root[0],
   );
 }

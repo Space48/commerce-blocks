@@ -1,11 +1,19 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import basicSsl from '@vitejs/plugin-basic-ssl'
+import preactRefresh from '@prefresh/vite'
 
 export default defineConfig({
+    resolve: {
+        alias: {
+            react: 'preact/compat',
+            'react-dom': 'preact/compat'
+        },
+    },
     esbuild: {
         jsxFactory: 'h',
-        jsxFragment: 'Fragment'
+        jsxFragment: 'Fragment',
+
     },
     plugins: [
         laravel({
@@ -15,6 +23,7 @@ export default defineConfig({
             publicDirectory: 'public/frontend',
             refresh: true,
         }),
+        preactRefresh(),
         basicSsl(),
     ],
     server: {
