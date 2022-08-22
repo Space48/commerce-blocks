@@ -68,7 +68,60 @@ export const SearchQuery = (perPage, cursor, sortOrder, searchTerm) => `
         filters(first: $pageSize, after: $cursor) {
           edges {
             node {
+              __typename
               name
+              isCollapsedByDefault
+              ... on ProductAttributeSearchFilter {
+                attributes {
+                  edges {
+                    node {
+                      value
+                      isSelected
+                      productCount
+                    }
+                  }
+                }
+              }
+              ... on CategorySearchFilter {
+                name
+                displayProductCount
+                isCollapsedByDefault
+                categories {
+                  edges {
+                    node {
+                      name
+                      entityId
+                      isSelected
+                      productCount
+                      subCategories {
+                        edges {
+                          node {
+                            entityId
+                            name
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              ... on OtherSearchFilter {
+                name
+                displayProductCount
+                isCollapsedByDefault
+                freeShipping {
+                  isSelected
+                  productCount
+                }
+                isInStock {
+                  isSelected
+                  productCount
+                }
+                isFeatured {
+                  isSelected
+                  productCount
+                }
+              }
             }
           }
         }

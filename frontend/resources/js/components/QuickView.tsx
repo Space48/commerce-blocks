@@ -12,7 +12,7 @@ import useConfig from '../hooks/useConfig';
 
 interface Props {
   product?: Product;
-  onClose: () => void;
+  onClose: (event: any) => void;
 }
 
 const StyledDiv = styled.div`

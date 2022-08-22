@@ -1,9 +1,7 @@
 import { h } from 'preact';
-import { useState } from 'preact/compat';
 import styled from 'styled-components';
 import useConfig from '../hooks/useConfig';
-import Option from './Filters/Option';
-import { ChevronLeft } from './Icons';
+import { Filter } from './Filters';
 import { FiltersNode } from '../types';
 
 /** @jsx h */
@@ -36,7 +34,7 @@ const FiltersList = ({ filters, isOpen }: Props) => {
   return (
     <StyledFilterWrapper color={config.iconColor} className={isOpen ? 'active' : ''}>
       <StyledOptionsWrapper>
-        {filters.slice(0, 4).map(filter => <Option key={filter.node.name} filter={filter.node.name} />)}
+        {filters.map(filter => <Filter key={filter.node.name} filter={filter.node} />)}
       </StyledOptionsWrapper>
     </StyledFilterWrapper>
   );

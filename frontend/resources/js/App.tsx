@@ -17,7 +17,7 @@ import {
 } from './components';
 import { LAYOUT_TYPE, Product } from './types';
 import useConfig from './hooks/useConfig';
-import { ProductsQuery, SearchQuery } from './helpers/queries';
+import { SearchQuery } from './helpers/queries';
 import Modal from 'react-modal';
 import { sortOptions } from './helpers/sort';
 
@@ -56,7 +56,7 @@ const App = () => {
     query: SearchQuery(config.perPage, currentPageCursor, sortOrder, searchTerm)
   });
   const { data, fetching, error } = result;
-
+  
   const pageInfo = useMemo(() => {
     if (data?.site?.products?.pageInfo) {
       return data?.site?.products?.pageInfo;

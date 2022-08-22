@@ -12,8 +12,35 @@ export interface Product {
   }
 }
 
+export interface CategoryNode {
+  node: {
+    entityId: number;
+    isSelected: boolean;
+    name: string;
+    productCount: number;
+  }
+}
+
+export interface Categories {
+  edges: CategoryNode[]
+}
+
+export interface AttributesNode {
+  node: {
+    isSelected: boolean;
+    value: string;
+    productCount: number;
+  }
+}
+
+export interface Attributes {
+  edges: AttributesNode[]
+}
+
 export interface Filter {
   name: string;
+  categories?: Categories;
+  attributes?: Attributes;
 }
 
 export enum LAYOUT_TYPE {

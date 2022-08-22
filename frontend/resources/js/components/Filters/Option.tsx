@@ -5,7 +5,8 @@ import useConfig from '../../hooks/useConfig';
 /** @jsx h */
 
 interface Props {
-  filter: string;
+  label: string;
+  value: string | number;
 }
 
 const StyledDiv = styled.div`
@@ -23,23 +24,16 @@ const StyledInput = styled.input`
   padding: 5px;
 `;
 
-const StyledHeading = styled.h4`
-  margin-top: 0px;
-`;
-
-const Option = ({ filter }: Props) => {
+const Option = ({ label, value }: Props) => {
   const [config] = useConfig();
   // todo: add filter options
   // todo: onclick
   return (
     <StyledDiv>
-      <StyledHeading>{filter}</StyledHeading>
-      {[...Array(5)].map((value, index) => (
-        <StyledOption key={index}>
-          <label htmlFor={index.toString()}>{index}</label>
-          <StyledInput id={index} type="checkbox" value={index} />
-        </StyledOption>
-      ))}
+      <StyledOption>
+        <label htmlFor={value.toString()}>{label}</label>
+        <StyledInput id={value} type="checkbox" value={value} />
+      </StyledOption>
     </StyledDiv>
   );
 };
