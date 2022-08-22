@@ -78,7 +78,7 @@ const App = () => {
       return [...prev];
     });
 
-  }, [pagination]);
+  }, []);
 
   const handlePaginateForward = useCallback(() => {
     if (pageInfo?.hasNextPage) {
@@ -87,59 +87,55 @@ const App = () => {
         return [...prev];
       });
     }
-  }, [pagination, pageInfo?.hasNextPage, pageInfo?.endCursor]);
+  }, [pageInfo?.hasNextPage, pageInfo?.endCursor]);
   
   const handleSearchChange = useCallback((event) => {
     // @ts-ignore
     setSearchTerm(event.target.value);
     setPagination([]);
     setCurrentPageCursor('');
-  }, [searchTerm]);
+  }, []);
 
   const handleOnQuickView = useCallback((product) => {
     setSelectedProduct(product);
     setIsQuickViewOpen(true);
-  }, [selectedProduct]);
+  }, []);
 
   const handleOnQuickViewClose = useCallback((event) => {
     event.preventDefault();
     setIsQuickViewOpen(false);
     setSelectedProduct(undefined);
-  }, [selectedProduct]);
+  }, []);
 
   const handleSortOrderChange = useCallback((event) => {
     setSortOrder(event.target.value);
-  }, [sortOrder]);
+  }, []);
 
   const handleFilterButtonClick = useCallback((event) => {
     event.preventDefault();
     setIsFilterOpen(prev => !prev);
-  }, [isFilterOpen]);
+  }, []);
   
   const handleCategorySelection = useCallback((entityId: number) => {
-    if (currentSelectedCategories.includes(entityId)) {
-      setCurrentSelectedCategories(prev => {
+    setCurrentSelectedCategories(prev => {
+      if (prev.includes(entityId)) {
         const index = prev.indexOf(entityId);
         if (index !== -1) {
           prev.splice(index, 1);
         }
         return [...prev];
-      });
-    }
-    else {
-      setCurrentSelectedCategories(prev => {
-        prev.push(entityId);
-        return [...prev];
-      });
-    }
-  }, [currentSelectedCategories]);
+      }
+      prev.push(entityId);
+      return [...prev];
+    });
+  }, []);
 
   const handleAttributeSelection = useCallback((attribute: string, value: string) => {
-    if (currentSelectedAttributes[attribute] !== undefined) {
-      if (currentSelectedAttributes[attribute].length > 0 &&
-        currentSelectedAttributes[attribute].find(attributeValue => attributeValue === value)) {
-        // remove an attribute
-        setCurrentSelectedAttributes(prev => {
+    setCurrentSelectedAttributes(prev => {
+      if (prev[attribute] !== undefined) {
+        // remove an existing value and attribute
+        if (prev[attribute].length > 0 &&
+          prev[attribute].find(attributeValue => attributeValue === value)) {
           const index = prev[attribute].indexOf(value);
           if (index !== -1) {
             prev[attribute].splice(index, 1);
@@ -148,28 +144,19 @@ const App = () => {
             delete prev[attribute];
           }
           return { ...prev };
-        });
-      }
-      else {
+        }
         // append value to existing attribute
-        setCurrentSelectedAttributes(prev => {
-          prev[attribute] = [...prev[attribute], value];
-          return { ...prev };
-        });
+        prev[attribute] = [...prev[attribute], value];
+        return { ...prev };
       }
-    }
-    else {
       // create a new attribute + value
-      setCurrentSelectedAttributes(prev => {
-        const newAttributes = {
-          [attribute]: [value]
-        };
-        return { ...prev, ...newAttributes };
-      });
-    }
-
-  }, [currentSelectedAttributes]);
-
+      const newAttributes = {
+        [attribute]: [value]
+      };
+      return { ...prev, ...newAttributes };
+    });
+  }, []);
+  
   useEffect(() => {
     setCurrentPageCursor(pagination.length > 0 ? pagination[pagination.length - 1] : '');
   }, [pagination]);

@@ -27,7 +27,7 @@ const StyledOptionsWrapper = styled.div`
   padding: 20px;
   background-color: #EBEBEB;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   border-radius: 5px;
 }`;
 

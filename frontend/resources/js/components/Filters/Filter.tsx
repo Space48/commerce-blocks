@@ -13,6 +13,7 @@ interface Props {
 
 const StyledDiv = styled.div`
   margin-right: 20px;
+  width: 100%;
 }`;
 
 const StyledHeading = styled.h4`

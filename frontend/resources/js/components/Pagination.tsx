@@ -24,7 +24,7 @@ const StyledPagination = styled.div`
 
 const Pagination = ({ pages, showPreviousPageBtn, showNextPageBtn, onPaginatePrevious, onPaginateNext }: Props) => (
   <StyledPagination>
-    {(showNextPageBtn || pages.length > 0) && (
+    {(showNextPageBtn) && (
       <PaginateButton
         onClick={onPaginatePrevious}
         disabled={!showPreviousPageBtn}
@@ -36,7 +36,6 @@ const Pagination = ({ pages, showPreviousPageBtn, showNextPageBtn, onPaginatePre
     {showNextPageBtn && (
       <PaginateButton
         onClick={onPaginateNext}
-        disabled={!showNextPageBtn}
       >
         <ChevronRight />
       </PaginateButton>
