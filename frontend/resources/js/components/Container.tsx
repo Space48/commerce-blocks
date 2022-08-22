@@ -1,6 +1,5 @@
 import { h } from 'preact';
 import styled from 'styled-components';
-import { useEffect, useRef, useState } from 'preact/compat';
 import { PreactElement } from 'preact/src/internal';
 
 /** @jsx h */
@@ -18,12 +17,10 @@ const StyledContainer = styled.div`
   margin: 0px auto;
 `;
 
-const Container = ({ isLoading, children }: Props) => {
-  return (
-    <StyledContainer isLoading={isLoading}>
-      {children}
-    </StyledContainer>
-  );
-};
+const Container = ({ isLoading, children }: Props) => (
+  <StyledContainer isLoading={isLoading}>
+    {children}
+  </StyledContainer>
+);
 
 export default Container;

@@ -7,14 +7,11 @@ interface Props {
   error: CombinedError;
 }
 
-const Error = ({ error }: Props) => {
-  console.log('ERROR', error);
-  return (
-    <div>
-      <div>{error.name}</div>
-      <div>{error.message}</div>
-    </div>
-  );
-};
+const Error = ({ error }: Props) => (
+  <div>
+    <div>{error.name}</div>
+    <div>{error.message}</div>
+  </div>
+);
 
 export default Error;
