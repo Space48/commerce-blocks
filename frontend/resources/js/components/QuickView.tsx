@@ -4,7 +4,7 @@ import Slider from 'react-slick';
 import { Product } from '../types';
 import { Image, LinkButton, Name, Prices, Sku, PlaceholderImage } from './Product';
 import 'slick-carousel/slick/slick.css';
-import { devices } from '../helpers/responsive';
+import { Devices } from '../helpers';
 import { CloseIcon } from './Icons';
 import useConfig from '../hooks/useConfig';
 
@@ -19,7 +19,7 @@ const StyledDiv = styled.div`
   display: flex;
   flex-direction: column;
   
-  @media ${devices.tablet} {
+  @media ${Devices.tablet} {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-column-gap: 40px;
@@ -42,23 +42,23 @@ const StyledSlider = styled.div`
   min-width: 300px;
   margin-bottom: 40px;
   
-  @media ${devices.tablet} {
+  @media ${Devices.tablet} {
     min-width: 350px;
     margin-bottom: 0;
   }
   
-  @media ${devices.desktop} {
+  @media ${Devices.desktop} {
     min-width: 400px;
   }
 `;
 
 const StyledProductDiv = styled.div`
-  @media ${devices.tablet} {
+  @media ${Devices.tablet} {
     min-width: 200px;
     margin-left: ${props => props.hasImage ? '20px' : '0'};
   }
   
-   @media ${devices.desktop} {
+   @media ${Devices.desktop} {
     margin-left: ${props => props.hasImage ? '60px' : '0'};
   }
 `;

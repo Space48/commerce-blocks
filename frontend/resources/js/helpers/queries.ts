@@ -1,4 +1,4 @@
-const Product = `
+const product = `
   products (first: $pageSize, after:$cursor) {
    pageInfo {
      hasNextPage
@@ -42,13 +42,13 @@ const Product = `
  }
 `;
 
-export const ProductsQuery = (perPage, cursor) => `
+export const productsQuery = (perPage, cursor) => `
   query paginateProducts(
    $pageSize: Int = ${perPage}
    $cursor: String = "${cursor}"
  ) {
    site {
-     ${Product}
+     ${product}
    }
  }
 `;
@@ -70,7 +70,7 @@ const getAttributeFilter = (attributes) => {
   return `productAttributes: [${filterItems.join(',')}]`;
 };
 
-export const SearchQuery = (perPage, cursor, sortOrder, searchTerm, categoryFilters, attributeFilters) => `
+export const searchQuery = (perPage, cursor, sortOrder, searchTerm, categoryFilters, attributeFilters) => `
   query paginateProducts(
    $pageSize: Int = ${perPage}
    $cursor: String = "${cursor}"
@@ -145,7 +145,7 @@ export const SearchQuery = (perPage, cursor, sortOrder, searchTerm, categoryFilt
             }
           }
         }
-        ${Product}
+        ${product}
       }
      }
    }

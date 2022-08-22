@@ -17,30 +17,12 @@ import {
 } from './components';
 import { LAYOUT_TYPE, Product, SelectedAttributes } from './types';
 import useConfig from './hooks/useConfig';
-import { SearchQuery } from './helpers/queries';
 import Modal from 'react-modal';
-import { sortOptions } from './helpers/sort';
+import { SortOptions as SortOptionItems, ModalStyles, searchQuery } from './helpers';
 
 /** @jsx h */
 
 Modal.setAppElement('body');
-
-const modalStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    transform: 'translate(-50%, -50%)',
-    width: 'auto',
-    maxWidth: '1024px',
-    borderRadius: '5px'
-  },
-  overlay: {
-    zIndex: 9999,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)'
-  }
-};
 
 const App = () => {
   const [config] = useConfig();
@@ -55,7 +37,7 @@ const App = () => {
   const [currentSelectedAttributes, setCurrentSelectedAttributes] = useState<SelectedAttributes>({});
 
   const [result] = useQuery({
-    query: SearchQuery(
+    query: searchQuery(
       config.perPage,
       currentPageCursor,
       sortOrder,
@@ -214,7 +196,7 @@ const App = () => {
             {config.enableFilters && (
               <FilterButton isOpen={isFilterOpen} onClick={handleFilterButtonClick} />
             )}
-            <SortOptions options={sortOptions} selected={sortOrder} onChange={handleSortOrderChange} />
+            <SortOptions options={SortOptionItems} selected={sortOrder} onChange={handleSortOrderChange} />
           </FiltersContainer>
           <FiltersList
             filters={filters}
@@ -255,7 +237,7 @@ const App = () => {
       <Modal
         isOpen={isQuickViewOpen}
         onRequestClose={handleOnQuickViewClose}
-        style={modalStyles}
+        style={ModalStyles}
       >
         <QuickView
           product={selectedProduct}

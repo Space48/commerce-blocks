@@ -1,4 +1,4 @@
-export const sortOptions = [
+export const SortOptions = [
   {
     label: 'A to Z',
     value: 'A_TO_Z'

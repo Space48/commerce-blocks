@@ -1,11 +1,11 @@
-export const sizes = {
+export const Sizes = {
   tablet: 601,
   desktop: 1024,
   desktopL: 1440
 };
 
-export const devices = {
-  tablet: `(min-width: ${sizes.tablet}px)`,
-  desktop: `(min-width: ${sizes.desktop}px)`,
-  desktopL: `(min-width: ${sizes.desktopL}px)`
+export const Devices = {
+  tablet: `(min-width: ${Sizes.tablet}px)`,
+  desktop: `(min-width: ${Sizes.desktop}px)`,
+  desktopL: `(min-width: ${Sizes.desktopL}px)`
 };

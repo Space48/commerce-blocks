@@ -6,7 +6,7 @@ import ProductCard from './ProductCard';
 import Pagination from './Pagination';
 import 'slick-carousel/slick/slick.css';
 import { useRef } from 'preact/compat';
-import { sizes } from '../helpers/responsive';
+import { Sizes } from '../helpers';
 
 /** @jsx h */
 
@@ -49,14 +49,14 @@ const ProductsCarousel = ({
     slidesToScroll: slidesToShow,
     responsive: [
       {
-        breakpoint: sizes.tablet,
+        breakpoint: Sizes.tablet,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1
         }
       },
       {
-        breakpoint: sizes.desktop,
+        breakpoint: Sizes.desktop,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2

@@ -3,7 +3,7 @@ import { FiltersNode, Product, ProductNode } from '../types';
 import ProductCard from './ProductCard';
 import styled from 'styled-components';
 import Pagination from './Pagination';
-import { devices } from '../helpers/responsive';
+import { Devices } from '../helpers';
 
 /** @jsx h */
 
@@ -26,11 +26,11 @@ const StyledProductsGrid = styled.div`
   grid-column-gap: 40px;
   grid-row-gap: 40px;
   
-  @media ${devices.tablet} {
+  @media ${Devices.tablet} {
     grid-template-columns: repeat(2, 1fr);
   }
   
-  @media ${devices.desktop} {
+  @media ${Devices.desktop} {
     grid-template-columns: repeat(${props => props.columns}, 1fr);
   }
 `;
