@@ -19,6 +19,7 @@ const StyledFilterWrapper = styled.div`
   max-height: 0;
   &.active {
      max-height: 500px;
+     margin-bottom: 20px;
   }
 }`;
 

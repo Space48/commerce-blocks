@@ -1,7 +1,7 @@
 
 const useConfig = () => {
   const config = {
-    type: 'GRID', // or carousel
+    type: 'CAROUSEL', // or carousel
     columns: 3,
     perPage: 9,
     btnColor: 'royalblue',

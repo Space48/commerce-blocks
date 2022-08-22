@@ -11,7 +11,7 @@ interface Props {
 }
 
 const StyledContainer = styled.div`
-  height: ${props => props.height};
+  height: 100%;
   opacity: ${props => props.isLoading ? '0.2' : '1'};
   transition: opacity 0.25s ease-in-out;
   max-width: 1024px;
@@ -19,19 +19,8 @@ const StyledContainer = styled.div`
 `;
 
 const Container = ({ isLoading, children }: Props) => {
-  const [height, setHeight] = useState('100%');
-  const containerRef = useRef(null);
-
-  useEffect(() => {
-    setTimeout(() => {
-      // @ts-ignore
-      const containerHeight = containerRef?.current.clientHeight;
-      setHeight( containerHeight ? `${containerHeight}px` : '100%');
-    }, 1000);
-  }, [containerRef.current]);
-  
   return (
-    <StyledContainer ref={containerRef} height={height} isLoading={isLoading}>
+    <StyledContainer isLoading={isLoading}>
       {children}
     </StyledContainer>
   );
