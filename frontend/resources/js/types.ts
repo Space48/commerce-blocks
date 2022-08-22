@@ -37,6 +37,10 @@ export interface Attributes {
   edges: AttributesNode[]
 }
 
+export interface SelectedAttributes {
+  [key: string] : string[];
+}
+
 export interface Filter {
   name: string;
   categories?: Categories;

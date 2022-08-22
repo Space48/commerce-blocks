@@ -7,6 +7,8 @@ import Option from './Option';
 
 interface Props {
   filter: FilterProp;
+  onCategoryChange?: (entityId: number) => void;
+  onAttributeChange?: (attribute: string, value: string) => void;
 }
 
 const StyledDiv = styled.div`
@@ -17,7 +19,7 @@ const StyledHeading = styled.h4`
   margin-top: 0px;
 `;
 
-const Filter = ({ filter }: Props) => {
+const Filter = ({ filter, onCategoryChange, onAttributeChange }: Props) => {
   const hasOptions = filter.categories ?? filter.attributes;
 
   return hasOptions !== undefined ? (
@@ -25,12 +27,23 @@ const Filter = ({ filter }: Props) => {
       <StyledHeading>{filter.name}</StyledHeading>
       {filter.categories !== undefined && (
         filter.categories.edges.map((category) => (
-          <Option key={category.node.entityId} label={category.node.name} value={category.node.entityId} />
+          <Option
+            key={category.node.entityId}
+            label={category.node.name}
+            value={category.node.entityId}
+            onCategoryChange={onCategoryChange}
+          />
         ))
       )}
       {filter.attributes !== undefined && (
         filter.attributes.edges.map((attribute) => (
-          <Option key={attribute.node.value} label={attribute.node.value} value={attribute.node.value} />
+          <Option
+            key={attribute.node.value}
+            label={attribute.node.value}
+            value={attribute.node.value}
+            identifier={filter.name}
+            onAttributeChange={onAttributeChange}
+          />
         ))
       )}
     </StyledDiv>

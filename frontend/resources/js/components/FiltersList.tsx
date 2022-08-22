@@ -9,6 +9,8 @@ import { FiltersNode } from '../types';
 interface Props {
   filters: FiltersNode[];
   isOpen: boolean;
+  onCategoryChange: (value: number) => void;
+  onAttributeChange: (attribute: string, value: string) => void;
 }
 
 const StyledFilterWrapper = styled.div`
@@ -28,13 +30,20 @@ const StyledOptionsWrapper = styled.div`
   border-radius: 5px;
 }`;
 
-const FiltersList = ({ filters, isOpen }: Props) => {
+const FiltersList = ({ filters, isOpen, onCategoryChange, onAttributeChange }: Props) => {
   const [config] = useConfig();
 
   return (
     <StyledFilterWrapper color={config.iconColor} className={isOpen ? 'active' : ''}>
       <StyledOptionsWrapper>
-        {filters.map(filter => <Filter key={filter.node.name} filter={filter.node} />)}
+        {filters.map(filter => (
+          <Filter
+            key={filter.node.name}
+            filter={filter.node}
+            onCategoryChange={onCategoryChange}
+            onAttributeChange={onAttributeChange}
+          />
+        ))}
       </StyledOptionsWrapper>
     </StyledFilterWrapper>
   );

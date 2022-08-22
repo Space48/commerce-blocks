@@ -53,7 +53,24 @@ export const ProductsQuery = (perPage, cursor) => `
  }
 `;
 
-export const SearchQuery = (perPage, cursor, sortOrder, searchTerm) => `
+const getCategoryFilter = (categoryFilters) => categoryFilters.length > 0
+  ? `categoryEntityIds: [${categoryFilters.join(',')}]` : '';
+
+const getAttributeFilter = (attributes) => {
+  if (Object.keys(attributes).length === 0) {
+    return '';
+  }
+  const filterItems: string[] = [];
+  Object.keys(attributes).map(key => {
+    filterItems.push(`{
+      attribute: "${key}"
+      values: ["${attributes[key].join('","')}"] 
+    }`);
+  });
+  return `productAttributes: [${filterItems.join(',')}]`;
+};
+
+export const SearchQuery = (perPage, cursor, sortOrder, searchTerm, categoryFilters, attributeFilters) => `
   query paginateProducts(
    $pageSize: Int = ${perPage}
    $cursor: String = "${cursor}"
@@ -62,7 +79,10 @@ export const SearchQuery = (perPage, cursor, sortOrder, searchTerm) => `
      search {
       searchProducts(sort: ${sortOrder}, filters: {
         searchTerm: "${searchTerm}"
+        ${getCategoryFilter(categoryFilters)}
+        ${getAttributeFilter(attributeFilters)}
         hideOutOfStock: false
+        searchSubCategories: true
       }) {
        
         filters(first: $pageSize, after: $cursor) {

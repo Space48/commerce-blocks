@@ -1,12 +1,14 @@
-import { Fragment, h } from 'preact';
+import { h } from 'preact';
 import styled from 'styled-components';
-import useConfig from '../../hooks/useConfig';
 
 /** @jsx h */
 
 interface Props {
   label: string;
   value: string | number;
+  identifier?: string;
+  onCategoryChange?: (value: number) => void;
+  onAttributeChange?: (attribute: string, value: string) => void;
 }
 
 const StyledDiv = styled.div`
@@ -24,15 +26,26 @@ const StyledInput = styled.input`
   padding: 5px;
 `;
 
-const Option = ({ label, value }: Props) => {
-  const [config] = useConfig();
-  // todo: add filter options
-  // todo: onclick
+const Option = ({ label, value, identifier, onCategoryChange, onAttributeChange }: Props) => {
+  const handleClick = (value: string | number) => {
+    if (onCategoryChange !== undefined && typeof value === 'number') {
+      onCategoryChange(value);
+    }
+    if (onAttributeChange !== undefined && typeof value === 'string' && identifier !== undefined) {
+      onAttributeChange(identifier, value);
+    }
+  };
+  const inputId = identifier ? `${identifier.toLowerCase()}-` + value.toString() : 'category-' + value.toString();
+  
+  if (label === '') {
+    return null;
+  }
+  
   return (
     <StyledDiv>
       <StyledOption>
-        <label htmlFor={value.toString()}>{label}</label>
-        <StyledInput id={value} type="checkbox" value={value} />
+        <label htmlFor={inputId}>{label}</label>
+        <StyledInput id={inputId} type="checkbox" value={value} onChange={() => handleClick(value)} />
       </StyledOption>
     </StyledDiv>
   );

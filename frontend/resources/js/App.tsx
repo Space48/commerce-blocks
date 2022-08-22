@@ -15,7 +15,7 @@ import {
   FilterButton,
   FiltersContainer
 } from './components';
-import { LAYOUT_TYPE, Product } from './types';
+import { LAYOUT_TYPE, Product, SelectedAttributes } from './types';
 import useConfig from './hooks/useConfig';
 import { SearchQuery } from './helpers/queries';
 import Modal from 'react-modal';
@@ -51,12 +51,21 @@ const App = () => {
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [sortOrder, setSortOrder] = useState('RELEVANCE');
+  const [currentSelectedCategories, setCurrentSelectedCategories] = useState<number[]>([]);
+  const [currentSelectedAttributes, setCurrentSelectedAttributes] = useState<SelectedAttributes>({});
 
   const [result] = useQuery({
-    query: SearchQuery(config.perPage, currentPageCursor, sortOrder, searchTerm)
+    query: SearchQuery(
+      config.perPage,
+      currentPageCursor,
+      sortOrder,
+      searchTerm,
+      currentSelectedCategories,
+      currentSelectedAttributes
+    )
   });
   const { data, fetching, error } = result;
-  
+
   const pageInfo = useMemo(() => {
     if (data?.site?.products?.pageInfo) {
       return data?.site?.products?.pageInfo;
@@ -124,12 +133,64 @@ const App = () => {
     event.preventDefault();
     setIsFilterOpen(prev => !prev);
   }, [isFilterOpen]);
+  
+  const handleCategorySelection = useCallback((entityId: number) => {
+    if (currentSelectedCategories.includes(entityId)) {
+      setCurrentSelectedCategories(prev => {
+        const index = prev.indexOf(entityId);
+        if (index !== -1) {
+          prev.splice(index, 1);
+        }
+        return [...prev];
+      });
+    }
+    else {
+      setCurrentSelectedCategories(prev => {
+        prev.push(entityId);
+        return [...prev];
+      });
+    }
+  }, [currentSelectedCategories]);
+
+  const handleAttributeSelection = useCallback((attribute: string, value: string) => {
+    if (currentSelectedAttributes[attribute] !== undefined) {
+      if (currentSelectedAttributes[attribute].length > 0 &&
+        currentSelectedAttributes[attribute].find(attributeValue => attributeValue === value)) {
+        // remove an attribute
+        setCurrentSelectedAttributes(prev => {
+          const index = prev[attribute].indexOf(value);
+          if (index !== -1) {
+            prev[attribute].splice(index, 1);
+          }
+          if (prev[attribute].length === 0) {
+            delete prev[attribute];
+          }
+          return { ...prev };
+        });
+      }
+      else {
+        // append value to existing attribute
+        setCurrentSelectedAttributes(prev => {
+          prev[attribute] = [...prev[attribute], value];
+          return { ...prev };
+        });
+      }
+    }
+    else {
+      // create a new attribute + value
+      setCurrentSelectedAttributes(prev => {
+        const newAttributes = {
+          [attribute]: [value]
+        };
+        return { ...prev, ...newAttributes };
+      });
+    }
+
+  }, [currentSelectedAttributes]);
 
   useEffect(() => {
     setCurrentPageCursor(pagination.length > 0 ? pagination[pagination.length - 1] : '');
   }, [pagination]);
-
-  console.log('DATA', data);
 
   // first load
   if (!data && fetching) {
@@ -155,7 +216,12 @@ const App = () => {
             )}
             <SortOptions options={sortOptions} selected={sortOrder} onChange={handleSortOrderChange} />
           </FiltersContainer>
-          <FiltersList filters={filters} isOpen={isFilterOpen} />
+          <FiltersList
+            filters={filters}
+            isOpen={isFilterOpen}
+            onCategoryChange={handleCategorySelection}
+            onAttributeChange={handleAttributeSelection}
+          />
           {config.type === LAYOUT_TYPE.Grid && products.length > 0 && (
             <ProductsGrid
               products={products}
