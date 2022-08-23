@@ -1,12 +1,13 @@
 import { h } from 'preact';
 import styled from 'styled-components';
 import Spinner from './Icons/Spinner';
-import useConfig from '../hooks/useConfig';
+import { useContext } from 'preact/compat';
+import ConfigContext from '../context/ConfigContext';
 
 /** @jsx h */
 
 const StyledDiv = styled.div`
-  color: ${props => props.iconColor};
+  color: ${props => props.iconColor ?? '#000'};
   width: 32px;
   height: 32px;
   margin: 0px auto;
@@ -22,10 +23,10 @@ const StyledDiv = styled.div`
 }`;
 
 const Loading = () => {
-  const [config] = useConfig();
+  const config = useContext(ConfigContext);
 
   return (
-    <StyledDiv color={config.iconColor}>
+    <StyledDiv color={config?.design?.button_colour}>
       <Spinner />
     </StyledDiv>
   );

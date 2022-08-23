@@ -1,6 +1,7 @@
 import { h } from 'preact';
 import styled from 'styled-components';
-import useConfig from '../../hooks/useConfig';
+import { useContext } from 'preact/compat';
+import ConfigContext from '../../context/ConfigContext';
 
 /** @jsx h */
 
@@ -10,9 +11,11 @@ interface Props {
 }
 
 const StyledButton = styled.a`
-  background-color: ${props => props.btnColor};
-  color: ${props => props.btnTextColor};
-  font-family: ${props => props.fontFamily};
+  background-color: ${props => props.btnColor ?? '#CCC'};
+  color: ${props => props.btnTextColor ?? 'inherit'};
+  font-family: ${props => props.fontFamily ?? 'inherit'};
+  font-weight: ${props => props.fontWeight ?? 'inherit'};
+  font-size: ${props => props.fontSize ?? 'inherit'};
   padding: 10px 20px;
   margin-bottom: 10px;
   display: block;
@@ -23,24 +26,26 @@ const StyledButton = styled.a`
   text-align: center;
   transition: background-color 0.2s ease-in, color 0.2s ease-in;
   &:hover {
-    background-color: ${props => props.btnHoverColor};
-    color: ${props => props.btnTextHoverColor};
+    background-color: ${props => props.btnHoverColor ?? '#EEE'};
+    color: ${props => props.btnTextHoverColor ?? 'inherit'};
   }
 `;
 
 const LinkButton = ({ label, url }: Props) => {
-  const [config] = useConfig();
-  
+  const config = useContext(ConfigContext);
+
   return (
     <StyledButton
       href={url}
       target="_blank"
       rel="noreferrer"
-      btnColor={config.btnColor}
-      btnHoverColor={config.btnHoverColor}
-      btnTextColor={config.btnTextColor}
-      btnTextHoverColor={config.btnTextHoverColor}
-      fontFamily={config.fontFamily}
+      btnColor={config?.design?.button_colour}
+      btnHoverColor={config?.design?.button_hover_colour}
+      btnTextColor={config?.design?.button_text_colour}
+      btnTextHoverColor={config?.design?.button_hover_text_colour}
+      fontFamily={config?.design?.button_font_family}
+      fontSize={config?.design?.button_font_size}
+      fontWeight={config?.design?.button_font_weight}
     >
       {label}
     </StyledButton>

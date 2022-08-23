@@ -1,11 +1,12 @@
 import { h } from 'preact';
 import styled from 'styled-components';
-import useConfig from '../../hooks/useConfig';
+import { useContext } from 'preact/compat';
+import ConfigContext from '../../context/ConfigContext';
 
 /** @jsx h */
 
 const StyledButton = styled.button`
-  color: ${props => props.iconColor};
+  color: ${props => props.iconColor ?? '#000'};
   padding: 5px;
   &:disabled {
     opacity: 0.1;
@@ -13,10 +14,10 @@ const StyledButton = styled.button`
 `;
 
 const PaginateButton = (props) => {
-  const [config] = useConfig();
+  const config = useContext(ConfigContext);
 
   return (
-    <StyledButton {...props} iconColor={config.iconColor}>
+    <StyledButton {...props} iconColor={config?.design?.button_colour}>
       {props.children}
     </StyledButton>
   );

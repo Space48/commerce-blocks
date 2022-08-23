@@ -1,3 +1,41 @@
+export interface DesignContext {
+  name: string | null;
+  heading_font_family: string | null;
+  heading_font_size: string | null;
+  heading_font_weight: string | null;
+  heading_colour: string | null;
+  text_font_family: string | null;
+  text_font_size: string | null;
+  text_colour: string | null;
+  price_font_family: string | null;
+  price_font_size: string | null;
+  price_font_weight: string | null;
+  price_colour: string | null;
+  sale_price_font_size: string | null;
+  sale_price_font_weight: string | null;
+  sale_price_colour: string | null;
+  link_colour: string | null;
+  link_hover_colour: string | null;
+  button_font_family: string | null;
+  button_font_weight: string | null;
+  button_font_size: string | null;
+  button_colour: string | null;
+  button_hover_colour: string | null;
+  button_text_colour: string | null;
+  button_hover_text_colour: string | null;
+}
+
+export interface ContextType {
+  store_url: string;
+  block_type: string;
+  access_token: string;
+  columns: number | null;
+  enable_search: boolean;
+  enable_filters: boolean;
+  limit: number | null;
+  design: DesignContext
+}
+
 export interface Product {
   name: string;
   sku: string;

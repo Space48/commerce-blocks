@@ -1,18 +1,16 @@
 import { h } from 'preact';
 import styled from 'styled-components';
-import useConfig from '../hooks/useConfig';
 
 /** @jsx h */
 
 const StyledDiv = styled.div`
-  color: ${props => props.iconColor};
+  margin-top: 40px;
 }`;
 
 const NoProductsFound = () => {
-  const [config] = useConfig();
 
   return (
-    <StyledDiv color={config.iconColor}>
+    <StyledDiv>
       <p>No products found. Try a different search term.</p>
     </StyledDiv>
   );

@@ -1,7 +1,9 @@
 import { h } from 'preact';
 import styled from 'styled-components';
-import useConfig from '../hooks/useConfig';
 import { ChevronLeft } from './Icons';
+import ConfigContext from '../context/ConfigContext';
+import { useContext } from 'preact/compat';
+
 
 /** @jsx h */
 
@@ -17,11 +19,11 @@ const StyledChevron = styled.div`
   display: inline-block;
   transform: rotate(${props => props.isOpen ? '90deg' : '270deg'});
   margin-left: 20px;
-  color: ${props => props.iconColor};
+  color: ${props => props.iconColor ?? '#000'};
 `;
 
 const FilterButton = ({ isOpen, onClick }) => {
-  const [config] = useConfig();
+  const config = useContext(ConfigContext);
 
   return (
     <StyledAnchorButton
@@ -29,7 +31,7 @@ const FilterButton = ({ isOpen, onClick }) => {
       href="#"
     >
       Show Filters
-      <StyledChevron isOpen={isOpen} iconColor={config.iconColor}>
+      <StyledChevron isOpen={isOpen} iconColor={config?.design?.button_colour}>
         <ChevronLeft />
       </StyledChevron>
     </StyledAnchorButton>

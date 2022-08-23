@@ -1,6 +1,5 @@
 import { h } from 'preact';
 import styled from 'styled-components';
-import useConfig from '../hooks/useConfig';
 import { Filter } from './Filters';
 import { FiltersNode } from '../types';
 
@@ -32,10 +31,9 @@ const StyledOptionsWrapper = styled.div`
 }`;
 
 const FiltersList = ({ filters, isOpen, onCategoryChange, onAttributeChange }: Props) => {
-  const [config] = useConfig();
 
   return (
-    <StyledFilterWrapper color={config.iconColor} className={isOpen ? 'active' : ''}>
+    <StyledFilterWrapper className={isOpen ? 'active' : ''}>
       <StyledOptionsWrapper>
         {filters.map(filter => (
           <Filter

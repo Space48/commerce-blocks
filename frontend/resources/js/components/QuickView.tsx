@@ -6,7 +6,8 @@ import { Image, LinkButton, Name, Prices, Sku, PlaceholderImage } from './Produc
 import 'slick-carousel/slick/slick.css';
 import { Devices } from '../helpers';
 import { CloseIcon } from './Icons';
-import useConfig from '../hooks/useConfig';
+import ConfigContext from '../context/ConfigContext';
+import { useContext } from 'preact/compat';
 
 /** @jsx h */
 
@@ -35,7 +36,7 @@ const StyledCloseAnchor = styled.a`
   right: 10px;
   box-sizing: border-box;
   border-radius: 5px;
-  color: ${props => props.iconColor};
+  color: ${props => props.iconColor ?? '#000'};
 }`;
 
 const StyledSlider = styled.div`
@@ -64,7 +65,7 @@ const StyledProductDiv = styled.div`
 `;
 
 const QuickView = ({ product, onClose }: Props) => {
-  const [config] = useConfig();
+  const config = useContext(ConfigContext);
 
   if (!product) {
     return null;
@@ -82,7 +83,7 @@ const QuickView = ({ product, onClose }: Props) => {
 
   return (
     <StyledDiv hasImage={hasImage}>
-      <StyledCloseAnchor onClick={onClose} href="#" iconColor={config.iconColor}>
+      <StyledCloseAnchor onClick={onClose} href="#" iconColor={config?.design?.button_colour}>
         <CloseIcon />
       </StyledCloseAnchor>
       {hasImage ? (

@@ -1,6 +1,5 @@
 import { h } from 'preact';
 import styled from 'styled-components';
-import useConfig from '../hooks/useConfig';
 import { SortOption } from '../types';
 
 /** @jsx h */
