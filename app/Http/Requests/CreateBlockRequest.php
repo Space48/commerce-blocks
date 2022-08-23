@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class CreateBlockRequest extends FormRequest
 {
@@ -16,7 +15,7 @@ class CreateBlockRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'valid_domain' => 'required|string|max:255',
+            'valid_domain' => 'required|url|max:255',
             'block_type' => 'required|string|max:255',
             'channel_id' => 'required|integer',
             'design_id' => 'nullable|integer',

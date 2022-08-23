@@ -8,20 +8,6 @@ use Tests\TestCase;
 
 class BlockTest extends TestCase
 {
-    public function getValidDomainWithProtocol()
-    {
-        /** @var Block $block */
-        $block = Block::factory()->make(['valid_domain' => 'https://www.test.com']);
-        $this->assertEquals('https://www.test.com', $block->valid_domain);
-    }
-
-    public function getValidDomainWithoutProtocol()
-    {
-        /** @var Block $block */
-        $block = Block::factory()->make(['valid_domain' => 'www.test.com']);
-        $this->assertEquals('https://www.test.com', $block->valid_domain);
-    }
-
     public function testRequiresTokenUpdateWhenNoToken()
     {
         /** @var Block $block */
@@ -42,7 +28,7 @@ class BlockTest extends TestCase
         $block = Block::factory()->make([
             'valid_domain' => 'www.test.com',
             'graphql_access_token' => 'test',
-            'graphql_access_token_domain' => 'www.test.com',
+            'graphql_access_token_domain' => 'https://www.test.com',
             'graphql_access_token_expires_at' => Carbon::now()->addDay()->subMinute(),
         ]);
         $this->assertTrue($block->requiresTokenUpdate());

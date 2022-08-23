@@ -97,24 +97,6 @@ class Block extends Model
         return $this->belongsTo(BigcommerceStore::class, 'bigcommerce_store_id', 'id');
     }
 
-    public function setValidDomainAttribute($value)
-    {
-        if (Str::startsWith($value, ['http://', 'https://'])) {
-            $this->attributes['valid_domain'] = $value;
-        } else {
-            $this->attributes['valid_domain'] = "https://" . $value;
-        }
-    }
-
-    public function getValidDomainAttribute($value)
-    {
-        if (Str::startsWith($value, ['http://', 'https://'])) {
-            return $value;
-        }
-
-        return 'https://' . $value;
-    }
-
     public function requiresTokenUpdate(): bool
     {
         // Update if no domain or token yet

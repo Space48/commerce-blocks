@@ -126,8 +126,8 @@ const BlockForm = (
         <Input
           name="valid_domain"
           type="text"
-          label="Domain"
-          description="The site domain where the embed script will be loaded from"
+          label="Site URL"
+          description="The site domain where the embed script will be loaded from. Please include protocol."
           required
           value={block?.valid_domain ?? ''}
           onChange={onInputChange}
