@@ -153,7 +153,6 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    console.log('DATA', data?.site?.search?.searchProducts?.filters?.edges);
     setFilters(prev => {
       // update the existing
       if (prev && prev.length > 0 && data?.site?.search?.searchProducts?.filters?.edges) {
