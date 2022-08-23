@@ -1,7 +1,5 @@
 import { h } from 'preact';
 import styled from 'styled-components';
-import { useContext } from 'preact/compat';
-import ConfigContext from '../../context/ConfigContext';
 
 /** @jsx h */
 
@@ -16,17 +14,10 @@ const StyledName = styled.p`
   margin: 0 0 10px 0;
 `;
 
-const Name = ({ name }: Props) => {
-  const config = useContext(ConfigContext);
-  return (
-    <StyledName
-      fontFamily={config?.design?.text_font_family}
-      fontSize={config?.design?.text_font_size}
-      textColor={config?.design?.text_colour}
-    >
-      {name}
-    </StyledName>
-  );
-};
+const Name = ({ name }: Props) => (
+  <StyledName>
+    {name}
+  </StyledName>
+);
 
 export default Name;
