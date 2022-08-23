@@ -23,11 +23,8 @@ class BlockCollectionController extends Controller
                 $blockQuery->where('channel_id', $params['channel_id']);
             }
             if (isset($params['name:like'])) {
-                $blockQuery->where(\DB::raw('LOWER(name)'), 'like', '%' . trim(mb_strtolower($params['name:like'])) .    '%');
+                $blockQuery->where(\DB::raw('LOWER(name)'), 'like', '%' . trim(mb_strtolower($params['name:like'])) . '%');
             }
-
-//            var_dump($blockQuery->toSql());
-//            exit;
 
             $blocks = $blockQuery->paginate($request->get('limit', 100));
             $resource = new BlockCollectionResource($blocks);
