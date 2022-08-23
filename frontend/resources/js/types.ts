@@ -86,11 +86,16 @@ export interface Config {
   columns: number;
   perPage: number;
   btnColor: string;
+  btnHoverColor: string;
   btnTextColor: string;
+  btnTextHoverColor: string;
   fontFamily: string;
   textColor: string;
+  iconColor: string;
   enableSearch: boolean;
   enableFilters: boolean;
+  source: string;
+  gaId: string;
 }
 
 export interface SortOption {

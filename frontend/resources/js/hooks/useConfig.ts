@@ -1,6 +1,7 @@
+import { Config } from '../types';
 
 const useConfig = () => {
-  const config = {
+  const config: Config = {
     type: 'CAROUSEL', // or carousel
     columns: 3,
     perPage: 9,
@@ -12,7 +13,9 @@ const useConfig = () => {
     fontFamily: 'sans-serif',
     textColor: '#000',
     enableSearch: true,
-    enableFilters: true
+    enableFilters: true,
+    source: 'email_campaign',
+    gaId: 'my-ga-id'
   };
   return [config];
 };
