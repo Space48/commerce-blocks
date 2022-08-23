@@ -15,7 +15,7 @@ import {
   FilterButton,
   FiltersContainer
 } from './components';
-import { LAYOUT_TYPE, Product, SelectedAttributes } from './types';
+import { FiltersNode, LAYOUT_TYPE, Product, SelectedAttributes } from './types';
 import useConfig from './hooks/useConfig';
 import Modal from 'react-modal';
 import { SortOptions as SortOptionItems, ModalStyles, searchQuery } from './helpers';
@@ -35,6 +35,7 @@ const App = () => {
   const [sortOrder, setSortOrder] = useState('RELEVANCE');
   const [currentSelectedCategories, setCurrentSelectedCategories] = useState<number[]>([]);
   const [currentSelectedAttributes, setCurrentSelectedAttributes] = useState<SelectedAttributes>({});
+  const [filters, setFilters] = useState<FiltersNode[]>([]);
 
   const [result] = useQuery({
     query: searchQuery(
@@ -63,12 +64,6 @@ const App = () => {
     }
     if (data?.site?.search?.searchProducts?.products?.edges) {
       return data?.site?.search?.searchProducts?.products?.edges;
-    }
-  }, [data]);
-
-  const filters = useMemo(() => {
-    if (data?.site?.search?.searchProducts?.filters?.edges) {
-      return data?.site?.search?.searchProducts?.filters?.edges;
     }
   }, [data]);
 
@@ -156,7 +151,51 @@ const App = () => {
       return { ...prev, ...newAttributes };
     });
   }, []);
-  
+
+  useEffect(() => {
+    setFilters(prev => {
+      // update the existing
+      if (prev && prev.length > 0 && data?.site?.search?.searchProducts?.filters?.edges) {
+        // merge the previous
+        prev.forEach(previousFilter => {
+          const current = data?.site?.search?.searchProducts?.filters?.edges.find(filter => filter.node.name === previousFilter.node.name);
+          previousFilter.node.enabled = current === undefined;
+          if (previousFilter.node.attributes?.edges) {
+            previousFilter.node.attributes.edges.forEach(attribute => {
+              const existingAttr = current?.node?.attributes?.edges?.find((currentAttribute) => attribute.node.value === currentAttribute.node.value);
+              attribute.node.enabled = existingAttr !== undefined;
+            });
+          }
+          if (previousFilter.node.categories?.edges) {
+            previousFilter.node.categories.edges.forEach(attribute => {
+              const existingCategory = current?.node?.categories?.edges?.find((currentAttribute) => attribute.node.entityId === currentAttribute.node.entityId);
+              attribute.node.enabled = existingCategory !== undefined;
+            });
+          }
+        });
+        return [...prev];
+      }
+      // set defaults on the original data
+      if (data?.site?.search?.searchProducts?.filters?.edges) {
+        data?.site?.search?.searchProducts?.filters?.edges.forEach(filter => {
+          filter.node.enabled = true;
+          if (filter?.node?.attributes?.edges) {
+            filter.node.attributes.edges.forEach(attribute => {
+              attribute.node.enabled = true;
+            });
+          }
+          if (filter?.node?.categories?.edges) {
+            filter.node.categories.edges.forEach(category => {
+              category.node.enabled = true;
+            });
+          }
+        });
+        return data?.site?.search?.searchProducts?.filters?.edges;
+      }
+      return [];
+    });
+  }, [data?.site?.search?.searchProducts?.filters?.edges]);
+
   useEffect(() => {
     setCurrentPageCursor(pagination.length > 0 ? pagination[pagination.length - 1] : '');
   }, [pagination]);
@@ -180,17 +219,19 @@ const App = () => {
             />
           )}
           <FiltersContainer>
-            {config.enableFilters && (
+            {config.enableFilters && filters.length > 0 && (
               <FilterButton isOpen={isFilterOpen} onClick={handleFilterButtonClick} />
             )}
             <SortOptions options={SortOptionItems} selected={sortOrder} onChange={handleSortOrderChange} />
           </FiltersContainer>
-          <FiltersList
-            filters={filters}
-            isOpen={isFilterOpen}
-            onCategoryChange={handleCategorySelection}
-            onAttributeChange={handleAttributeSelection}
-          />
+          {filters.length > 0 && (
+            <FiltersList
+              filters={filters}
+              isOpen={isFilterOpen}
+              onCategoryChange={handleCategorySelection}
+              onAttributeChange={handleAttributeSelection}
+            />
+          )}
           {config.type === LAYOUT_TYPE.Grid && products.length > 0 && (
             <ProductsGrid
               products={products}

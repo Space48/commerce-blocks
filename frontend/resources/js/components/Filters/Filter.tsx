@@ -11,9 +11,11 @@ interface Props {
   onAttributeChange?: (attribute: string, value: string) => void;
 }
 
+// todo: enabled should disable on-click of the nav.
 const StyledDiv = styled.div`
   margin-right: 20px;
   width: 100%;
+  // opacity: ${props => props.enabled ? '0.5' : '1'};
 }`;
 
 const StyledHeading = styled.h4`
@@ -24,7 +26,7 @@ const Filter = ({ filter, onCategoryChange, onAttributeChange }: Props) => {
   const hasOptions = filter.categories ?? filter.attributes;
 
   return hasOptions !== undefined ? (
-    <StyledDiv>
+    <StyledDiv enabled={filter.enabled}>
       <StyledHeading>{filter.name}</StyledHeading>
       {filter.categories !== undefined && (
         filter.categories.edges.map((category) => (
@@ -33,6 +35,7 @@ const Filter = ({ filter, onCategoryChange, onAttributeChange }: Props) => {
             label={category.node.name}
             value={category.node.entityId}
             onCategoryChange={onCategoryChange}
+            enabled={category.node.enabled}
           />
         ))
       )}
@@ -44,6 +47,7 @@ const Filter = ({ filter, onCategoryChange, onAttributeChange }: Props) => {
             value={attribute.node.value}
             identifier={filter.name}
             onAttributeChange={onAttributeChange}
+            enabled={attribute.node.enabled}
           />
         ))
       )}

@@ -18,6 +18,7 @@ export interface CategoryNode {
     isSelected: boolean;
     name: string;
     productCount: number;
+    enabled: boolean;
   }
 }
 
@@ -30,6 +31,7 @@ export interface AttributesNode {
     isSelected: boolean;
     value: string;
     productCount: number;
+    enabled: boolean;
   }
 }
 
@@ -43,6 +45,7 @@ export interface SelectedAttributes {
 
 export interface Filter {
   name: string;
+  enabled: boolean;
   categories?: Categories;
   attributes?: Attributes;
 }
