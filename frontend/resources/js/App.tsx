@@ -228,7 +228,7 @@ const App = () => {
             )}
             <SortOptions options={SortOptionItems} selected={sortOrder} onChange={handleSortOrderChange} />
           </FiltersContainer>
-          {filters.length > 0 && (
+          {config.enableFilters && filters.length > 0 && (
             <FiltersList
               filters={filters}
               isOpen={isFilterOpen}
