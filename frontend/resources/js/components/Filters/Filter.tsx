@@ -15,7 +15,6 @@ interface Props {
 const StyledDiv = styled.div`
   margin-right: 20px;
   width: 100%;
-  // opacity: ${props => props.enabled ? '0.5' : '1'};
 }`;
 
 const StyledHeading = styled.h4`
@@ -26,7 +25,7 @@ const Filter = ({ filter, onCategoryChange, onAttributeChange }: Props) => {
   const hasOptions = filter.categories ?? filter.attributes;
 
   return hasOptions !== undefined ? (
-    <StyledDiv enabled={filter.enabled}>
+    <StyledDiv>
       <StyledHeading>{filter.name}</StyledHeading>
       {filter.categories !== undefined && (
         filter.categories.edges.map((category) => (
