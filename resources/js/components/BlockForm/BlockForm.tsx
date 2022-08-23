@@ -9,16 +9,16 @@ import {
   Input,
   Panel,
   Select,
-  Tabs,
-  Text,
-  Textarea,
+  Tabs
 } from '@bigcommerce/big-design';
-import {useTabs} from '../hooks';
-import SaveBar from './SaveBar';
-import {Block, Channel, Errors, LAYOUT_TYPE} from '../types';
-import {channelsAsSelectOptions} from '../utils';
+import {useTabs} from '../../hooks';
+import SaveBar from '../SaveBar';
+import {Block, Channel, Errors, LAYOUT_TYPE} from '../../types';
+import {channelsAsSelectOptions} from '../../utils';
 import {DeleteIcon} from '@bigcommerce/big-design-icons';
-import {blockTypeOptions} from '../utils/block';
+import {blockTypeOptions} from '../../utils/block';
+import {BlockPreview} from './BlockPreview';
+import {BlockSnippet} from './BlockSnippet';
 
 interface Props {
   blockId?: string | null;
@@ -73,93 +73,91 @@ const BlockForm = (
   }, [])
 
   const renderSettings = () => (
-    <Panel header='Settings' id='settings-content'>
-      <FormGroup>
-        <Input
-          label="Name"
-          type="text"
-          name="name"
-          placeholder="E.g. Featured products"
-          required={true}
-          value={block?.name ?? ''}
-          error={errors?.name}
-          onChange={onInputChange}
-        />
-      </FormGroup>
-      <FormGroup>
-        <Select
-          name="channel_id"
-          label="Channel"
-          required
-          options={channelOptions}
-          value={block?.channel_id ?? ''}
-          onOptionChange={(value) => onChange('channel_id', value)}
-          action={block?.channel_id ? {
-            content: 'Remove',
-            icon: <DeleteIcon/>,
-            onActionClick: () => onChange('channel_id', null)
-          } : undefined}
-          placeholder="Assign to channel"
-        />
-      </FormGroup>
-      <FormGroup>
-        <Select
-          name="block_type"
-          label="Type"
-          required
-          options={blockTypeOptions}
-          value={block?.block_type ?? ''}
-          onOptionChange={(value) => onChange('block_type', value)}
-          placeholder="Choose type"
-        />
-      </FormGroup>
-      <FormGroup>
-        <Select
-          name="design_id"
-          label="Design"
-          required
-          options={designOptions}
-          value={block?.design_id ?? null}
-          onOptionChange={(value) => onChange('design_id', value)}
-          placeholder="Choose design"
-        />
-      </FormGroup>
-      <FormGroup>
-        <Input
-          name="valid_domain"
-          type="text"
-          label="Site URL"
-          description="The site domain where the embed script will be loaded from. Please include protocol."
-          required
-          value={block?.valid_domain ?? ''}
-          onChange={onInputChange}
-          placeholder="https://www.bigcommerce.com"
-        />
-      </FormGroup>
-    </Panel>
+    <>
+      <Panel header='Settings' id='settings-content'>
+        <FormGroup>
+          <Input
+            label="Name"
+            type="text"
+            name="name"
+            placeholder="E.g. Featured products"
+            required={true}
+            value={block?.name ?? ''}
+            error={errors?.name}
+            onChange={onInputChange}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Select
+            name="channel_id"
+            label="Channel"
+            required
+            options={channelOptions}
+            value={block?.channel_id ?? ''}
+            onOptionChange={(value) => onChange('channel_id', value)}
+            action={block?.channel_id ? {
+              content: 'Remove',
+              icon: <DeleteIcon/>,
+              onActionClick: () => onChange('channel_id', null)
+            } : undefined}
+            placeholder="Assign to channel"
+          />
+        </FormGroup>
+        <FormGroup>
+          <Select
+            name="block_type"
+            label="Type"
+            required
+            options={blockTypeOptions}
+            value={block?.block_type ?? ''}
+            onOptionChange={(value) => onChange('block_type', value)}
+            placeholder="Choose type"
+          />
+        </FormGroup>
+        <FormGroup>
+          <Select
+            name="design_id"
+            label="Design"
+            required
+            options={designOptions}
+            value={block?.design_id ?? null}
+            onOptionChange={(value) => onChange('design_id', value)}
+            placeholder="Choose design"
+          />
+        </FormGroup>
+        <FormGroup>
+          <Input
+            name="valid_domain"
+            type="text"
+            label="Site URL"
+            description="The site domain where the embed script will be loaded from. Please include protocol."
+            required
+            value={block?.valid_domain ?? ''}
+            onChange={onInputChange}
+            placeholder="https://www.bigcommerce.com"
+          />
+        </FormGroup>
+      </Panel>
+      {renderProductSelections()}
+    </>
+
   )
 
   const renderSnippet = () => (
-    <Panel header='Snippet' id='snippet-content'>
-      {blockId ?
-        <FormGroup>
-          <Textarea
-            readOnly
-            rows={7}
-            value={snippet ?? ''}
-          />
-        </FormGroup>
-        : <Text>The snippet will be shown once block has been created.</Text>
-      }
-    </Panel>
+    <div id="snippet-content">
+      <BlockSnippet blockId={blockId} snippet={snippet}/>
+    </div>
   )
 
   const renderPreview = () => (
-    <Panel header='Preview' id='preview-content'>
-      {blockId ?
-        <Text>TODO, add a preview</Text>
-        : <Text>The preview will be shown once block has been created.</Text>
-      }
+    <div id="preview-content">
+      <BlockPreview block={block}/>
+    </div>
+  );
+
+  const renderProductSelections = () => (
+    <Panel header='Products'>
+
     </Panel>
   )
 
