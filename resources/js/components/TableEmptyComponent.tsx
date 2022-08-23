@@ -14,7 +14,7 @@ const TableEmptyComponent = ({error, itemName, itemNamePlural, searchTerm}: Prop
   return useMemo(
     () => {
       return (
-        <Box style={{textAlign: 'center'}} paddingVertical="xxxLarge">
+        <Box style={{textAlign: 'center'}} paddingVertical="xxxLarge" marginTop="xxxLarge" marginBottom="xxLarge">
           {
             (!error && searchTerm === '') ?
               <>

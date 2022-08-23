@@ -13,16 +13,17 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('blocks', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->foreignId('bigcommerce_store_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->integer('channel_id');
-            $table->foreignId('design_id')->constrained();
+            $table->foreignId('design_id')->nullable()->constrained()->nullOnDelete();
             $table->string('block_type');
             $table->string('valid_domain');
-            $table->string('graphql_access_token');
-            $table->dateTime('graphql_access_token_expires_at');
-            $table->jsonb('graphql_filters');
+            $table->text('graphql_access_token')->nullable();
+            $table->string('graphql_access_token_domain')->nullable();
+            $table->dateTime('graphql_access_token_expires_at')->nullable();
+            $table->jsonb('graphql_filters')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

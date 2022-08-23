@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\RevokeToken;
 use App\Models\BigcommerceStore;
 use Illuminate\Console\Command;
 
@@ -31,7 +32,7 @@ class RevokeApiToken extends Command
         $storeHash = $this->argument('store_hash');
         $token = $this->argument('token');
         if ($storeHash && $store = BigcommerceStore::whereStoreHash($storeHash)->first()) {
-            \App\Jobs\RevokeToken::dispatchSync($store, $token);
+            RevokeToken::dispatchSync($store, $token);
         }
     }
 }

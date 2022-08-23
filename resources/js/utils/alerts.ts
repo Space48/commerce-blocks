@@ -2,7 +2,7 @@ import {createAlertsManager} from '@bigcommerce/big-design';
 
 export const alertsManager: any = createAlertsManager();
 
-export const addAlert = (type, message, header: string | null = null,  autoDismiss = true) => {
+export const addAlert = (type, message, header: string | null = null, autoDismiss = true) => {
   alertsManager.add({
     type: type,
     ...(header ? {header: header} : {}),

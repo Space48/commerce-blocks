@@ -46,6 +46,12 @@ BIGCOMMERCE_WEBHOOK_SECRET=<Generate a unique code for this>
 
 You’re now ready to install the app on your store.
 
+## Jobs
+
+Redis is used to manage the job queue. 
+
+Run the 
+
 ## Testing
 
 Tests can be ran via:

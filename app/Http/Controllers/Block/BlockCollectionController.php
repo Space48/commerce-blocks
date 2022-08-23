@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Blocks;
+namespace App\Http\Controllers\Block;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\AlertCollectionResource;
 use App\Http\Resources\BlockCollectionResource;
 use App\Http\Resources\PaginationResource;
 use App\Models\BigcommerceStore;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-class BlocksCollectionController extends Controller
+class BlockCollectionController extends Controller
 {
 
     public function __invoke(Request $request, BigcommerceStore $store)
@@ -24,8 +23,11 @@ class BlocksCollectionController extends Controller
                 $blockQuery->where('channel_id', $params['channel_id']);
             }
             if (isset($params['name:like'])) {
-                $blockQuery->where('name', 'like', '%' . $params['name:like'] . '%');
+                $blockQuery->where(\DB::raw('LOWER(name)'), 'like', '%' . trim(mb_strtolower($params['name:like'])) .    '%');
             }
+
+//            var_dump($blockQuery->toSql());
+//            exit;
 
             $blocks = $blockQuery->paginate($request->get('limit', 100));
             $resource = new BlockCollectionResource($blocks);

@@ -17,6 +17,11 @@ export interface PageHeaderActions extends ButtonProps {
   text: string;
 }
 
+export enum LAYOUT_TYPE {
+  Grid = 'GRID',
+  Carousel = 'CAROUSEL'
+}
+
 export interface Location {
   state: {
     referrer?: string;
@@ -51,19 +56,23 @@ export interface Product {
   images: ProductImage[]
 }
 
+export interface Errors {
+  [key: string]: string;
+}
+
 export interface Block {
-  id: number;
-  bigcommerce_store_id: number;
-  name: string,
-  channel_id: number;
-  design_id: number;
-  block_type: string;
-  valid_domain: string;
-  graphql_access_token: string;
-  graphql_access_token_expires_at: string;
-  graphql_filters: [];
-  created_at: string;
-  updated_at: string;
+  id?: string;
+  bigcommerce_store_id?: number | null;
+  name?: string,
+  channel_id?: number | null;
+  design_id?: number | null;
+  block_type?: string | null;
+  valid_domain?: string;
+  graphql_access_token?: string;
+  graphql_access_token_expires_at?: string | null;
+  graphql_filters?: [];
+  created_at?: string | null;
+  updated_at?: string | null;
 }
 
 export interface Design {

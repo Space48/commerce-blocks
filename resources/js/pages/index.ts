@@ -18,5 +18,6 @@ export {
   InstallationSuccess,
   StoresList,
   WelcomeNewUser,
-
 }
+
+export * from './Blocks';

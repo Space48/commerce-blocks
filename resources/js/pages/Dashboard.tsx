@@ -2,8 +2,12 @@ import React, {useState} from 'react';
 import {useParams, useHistory} from 'react-router-dom';
 import {BlocksTable, PageBody, PageHeader} from '../components';
 import {useBlocks, useChannels} from '../hooks';
-import {Box, Grid, GridItem, Panel, Search, Select} from '@bigcommerce/big-design';
+import {Grid, GridItem, Panel, Search, Select} from '@bigcommerce/big-design';
 import {DeleteIcon} from '@bigcommerce/big-design-icons';
+import {channelsAsSelectOptions, notifyError, notifySuccess} from '../utils';
+import axios from 'axios';
+import {mutate} from 'swr';
+import {useMatchMutate} from '../hooks';
 
 const Dashboard = () => {
   const {store_hash} = useParams();
@@ -42,9 +46,7 @@ const Dashboard = () => {
 
   const [channelsResponse, channelsError] = useChannels(store_hash);
   const channels = channelsResponse?.data ?? [];
-  const channelOptions = channels?.map(({id, icon_url, name}) => {
-    return {content: name, value: id, icon: <img src={icon_url} alt={name}/>};
-  });
+  const channelOptions = channelsAsSelectOptions(channels);
 
   const channelsErrorMessage = channelsError?.response?.data?.error ?? null;
 
@@ -54,31 +56,52 @@ const Dashboard = () => {
   const onSearchSubmit = () => {
   };
 
+  const onEdit = (id: string | null | undefined): void => {
+    if (!id) return;
+    history.push(`/stores/${store_hash}/blocks/${id}`);
+  }
+
+  const matchMutate = useMatchMutate();
+
+  const onDelete = (id: string): void => {
+    axios.delete(`/api/stores/${store_hash}/blocks/${id}`)
+      .then(() => {
+        notifySuccess('Block deleted');
+        mutate(`/api/stores/${store_hash}/blocks`);
+        mutate(`/api/stores/${store_hash}/blocks/${id}`);
+        matchMutate(new RegExp(`^/api/stores/${store_hash}/blocks?`));
+
+      })
+      .catch(error => {
+        const message = error.response?.data?.error ??
+          (error.response?.data?.message ?? 'There was a problem deleting this block. Please try again later');
+        notifyError(message);
+      });
+  }
+
   return (
     <>
       <PageHeader title="Your products anywhere" storeHash={store_hash}/>
       <PageBody>
         <Panel header="Blocks" action={{text: 'Add block', onClick: onAddBlock}}>
-          <Box marginVertical="medium">
-            <Grid gridColumns="3fr 1fr" gridGap="1em">
-              <GridItem>
-                <Search value={searchTerm} onChange={onSearchChange} onSubmit={onSearchSubmit}/>
-              </GridItem>
-              <GridItem>
-                <Select
-                  options={channelOptions}
-                  value={channelFilter}
-                  onOptionChange={onChannelFilterChange}
-                  placeholder={'Filter by channel'}
-                  action={channelFilter ? {
-                    content: 'Remove filter',
-                    icon: <DeleteIcon/>,
-                    onActionClick: () => setChannelFilter(null)
-                  } : undefined}
-                />
-              </GridItem>
-            </Grid>
-          </Box>
+          <Grid gridColumns="3fr 1fr" gridGap="1em">
+            <GridItem>
+              <Search value={searchTerm} onChange={onSearchChange} onSubmit={onSearchSubmit}/>
+            </GridItem>
+            <GridItem>
+              <Select
+                options={channelOptions}
+                value={channelFilter}
+                onOptionChange={onChannelFilterChange}
+                placeholder={'Filter by channel'}
+                action={channelFilter ? {
+                  content: 'Remove filter',
+                  icon: <DeleteIcon/>,
+                  onActionClick: () => setChannelFilter(null)
+                } : undefined}
+              />
+            </GridItem>
+          </Grid>
           <BlocksTable
             storeHash={store_hash}
             blocks={blocks ?? []}
@@ -86,6 +109,8 @@ const Dashboard = () => {
             pagination={pagination}
             error={blocksErrorMessage || channelsErrorMessage}
             searchTerm={searchTerm}
+            onEdit={onEdit}
+            onDelete={onDelete}
           />
         </Panel>
       </PageBody>

@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\BlockCreated;
+use App\Events\BlockUpdated;
 use App\Listeners\StoreEventSubscriber;
+use App\Listeners\UpdateGraphQLAccessToken;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -17,6 +20,12 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        BlockCreated::class => [
+            UpdateGraphQLAccessToken::class,
+        ],
+        BlockUpdated::class => [
+            UpdateGraphQLAccessToken::class,
         ],
     ];
 

@@ -11,12 +11,14 @@ class BlockResource extends JsonResource
         return [
             'id' => $this->id,
             'bigcommerce_store_id' => $this->bigcommerce_store_id,
-            'channel_id' => $this->channel_id,
-            'design' => $this->design->toArray(),
             'block_type' => $this->block_type,
-            'valid_domain' => $this->valid_domain,
+            'channel_id' => $this->channel_id,
+            'design' => $this->design ? $this->design->toArray() : null,
+            'name' => $this->name,
             'graphql_access_token' => $this->graphql_access_token,
-            'graphql_access_token_expires_at' => $this->graphql_access_token_expires_at
+            'graphql_access_token_domain' => $this->graphql_access_token_domain,
+            'graphql_access_token_expires_at' => $this->graphql_access_token_expires_at,
+            'valid_domain' => $this->valid_domain,
         ];
     }
 }

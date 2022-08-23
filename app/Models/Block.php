@@ -3,9 +3,12 @@
 namespace App\Models;
 
 
+use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 /**
  * App\Models\Block
@@ -44,10 +47,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @mixin \Eloquent
  * @property string $name
  * @method static \Illuminate\Database\Eloquent\Builder|Block whereName($value)
+ * @property string $uuid
+ * @method static \Illuminate\Database\Eloquent\Builder|Block whereUuid($value)
+ * @property string|null $graphql_access_token_domain
+ * @property-read \App\Models\Design|null $design
+ * @property-read \App\Models\BigcommerceStore|null $store
+ * @method static \Illuminate\Database\Eloquent\Builder|Block whereGraphqlAccessTokenDomain($value)
  */
 class Block extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasUuid, HasFactory, SoftDeletes;
 
     protected $casts = [
         'graphql_filters' => 'array',
@@ -62,23 +71,62 @@ class Block extends Model
 
     protected $fillable = [
         'bigcommerce_store_id',
+        'block_type',
         'channel_id',
         'design_id',
-        'block_type',
-        'valid_domain',
         'graphql_access_token',
+        'graphql_access_token_domain',
         'graphql_access_token_expires_at',
         'graphql_filters',
+        'name',
+        'valid_domain',
+    ];
+
+    public static array $blockTypes = [
+        'CAROUSEL',
+        'GRID',
     ];
 
     public function design()
     {
-        $this->belongsTo(Design::class);
+        return $this->belongsTo(Design::class);
     }
 
     public function store()
     {
-        $this->belongsTo(BigcommerceStore::class);
+        return $this->belongsTo(BigcommerceStore::class, 'bigcommerce_store_id', 'id');
+    }
+
+    public function setValidDomainAttribute($value)
+    {
+        if (Str::startsWith($value, ['http://', 'https://'])) {
+            $this->attributes['valid_domain'] = $value;
+        } else {
+            $this->attributes['valid_domain'] = "https://" . $value;
+        }
+    }
+
+    public function getValidDomainAttribute($value)
+    {
+        if (Str::startsWith($value, ['http://', 'https://'])) {
+            return $value;
+        }
+
+        return 'https://' . $value;
+    }
+
+    public function requiresTokenUpdate(): bool
+    {
+        // Update if no domain or token yet
+        if (is_null($this->graphql_access_token)) return true;
+        if (is_null($this->graphql_access_token_domain)) return true;
+
+        // Update if token is for a different domain
+        if ($this->graphql_access_token_domain !== $this->valid_domain) return true;
+
+        // Update if token has less than one day left of life.
+        if ($this->graphql_access_token_expires_at->lessThan(Carbon::now()->addDay())) return true;
+        return false;
     }
 
 }
