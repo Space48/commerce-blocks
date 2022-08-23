@@ -6,9 +6,11 @@ import styled from 'styled-components';
 interface Props {
   label: string;
   value: string | number;
+  count: number;
   identifier?: string;
   onCategoryChange?: (value: number) => void;
   onAttributeChange?: (attribute: string, value: string) => void;
+  enabled?: boolean;
 }
 
 const StyledDiv = styled.div`
@@ -26,7 +28,7 @@ const StyledInput = styled.input`
   padding: 5px;
 `;
 
-const Option = ({ label, value, identifier, onCategoryChange, onAttributeChange }: Props) => {
+const Option = ({ label, value, count, identifier, enabled, onCategoryChange, onAttributeChange }: Props) => {
   const handleClick = (value: string | number) => {
     if (onCategoryChange !== undefined && typeof value === 'number') {
       onCategoryChange(value);
@@ -40,12 +42,14 @@ const Option = ({ label, value, identifier, onCategoryChange, onAttributeChange 
   if (label === '') {
     return null;
   }
+
+  const labelWithCount = count > 0 ? `${label} (${count})` :  label;
   
   return (
     <StyledDiv>
       <StyledOption>
-        <label htmlFor={inputId}>{label}</label>
-        <StyledInput id={inputId} type="checkbox" value={value} onChange={() => handleClick(value)} />
+        <label htmlFor={inputId}>{labelWithCount}</label>
+        <StyledInput disabled={!enabled} id={inputId} type="checkbox" value={value} onChange={() => handleClick(value)} />
       </StyledOption>
     </StyledDiv>
   );

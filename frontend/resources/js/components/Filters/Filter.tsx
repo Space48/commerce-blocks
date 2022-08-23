@@ -11,6 +11,7 @@ interface Props {
   onAttributeChange?: (attribute: string, value: string) => void;
 }
 
+// todo: enabled should disable on-click of the nav.
 const StyledDiv = styled.div`
   margin-right: 20px;
   width: 100%;
@@ -33,6 +34,8 @@ const Filter = ({ filter, onCategoryChange, onAttributeChange }: Props) => {
             label={category.node.name}
             value={category.node.entityId}
             onCategoryChange={onCategoryChange}
+            enabled={category.node.enabled}
+            count={category.node.productCount}
           />
         ))
       )}
@@ -44,6 +47,8 @@ const Filter = ({ filter, onCategoryChange, onAttributeChange }: Props) => {
             value={attribute.node.value}
             identifier={filter.name}
             onAttributeChange={onAttributeChange}
+            enabled={attribute.node.enabled}
+            count={attribute.node.productCount}
           />
         ))
       )}

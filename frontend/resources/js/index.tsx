@@ -19,14 +19,16 @@ const client = createClient({
 });
 
 
-const root = document.getElementsByClassName('s48-your-products-anywhere');
+const rootElements = document.getElementsByClassName('s48-your-products-anywhere');
 
 /** @jsx h */
-if (root) {
-  render(
-    <Provider value={client}>
-      <App />
-    </Provider>,
-    root[0],
-  );
+if (rootElements && rootElements.length > 0) {
+  Array.from(rootElements).forEach(element => {
+    render(
+      <Provider value={client}>
+        <App />
+      </Provider>,
+      element,
+    );
+  });
 }
