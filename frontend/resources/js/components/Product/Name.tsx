@@ -8,9 +8,6 @@ interface Props {
 }
 
 const StyledName = styled.p`
-  font-family: ${props => props.fontFamily ?? 'inherit'};
-  font-size: ${props => props.fontSize ?? 'inherit'};
-  color: ${props => props.textColor ?? 'inherit'};
   margin: 0 0 10px 0;
 `;
 
