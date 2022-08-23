@@ -1,19 +1,23 @@
 import AccountLoggedOut from './Account/LoggedOut';
+import Dashboard from './Dashboard';
+import Default from './Default';
 import EmbeddedAppNotAvailable from './EmbeddedAppNotAvailable';
 import ErrorPage from './ErrorPage';
 import FourOhFour from './FourOhFour';
-import Default from './Default';
 import InstallationSuccess from './InstallationSuccess';
+import StoresList from './StoresList';
 import WelcomeNewUser from './WelcomeNewUser';
-import Dashboard from './Dashboard';
 
 export {
   AccountLoggedOut,
+  Dashboard,
+  Default,
   EmbeddedAppNotAvailable,
   ErrorPage,
   FourOhFour,
-  Default,
   InstallationSuccess,
+  StoresList,
   WelcomeNewUser,
-  Dashboard
 }
+
+export * from './Blocks';

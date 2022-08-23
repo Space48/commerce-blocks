@@ -1,47 +1,118 @@
-import React, {useMemo, useState} from 'react';
-import {ContentLoading, PageBody, PageHeader} from '../components';
-import {Panel} from '@bigcommerce/big-design';
-import {useParams} from 'react-router-dom';
-import {useProducts} from '../hooks';
-import ProductsTable from '../components/ProductsTable';
-import {ProductPagination} from '../types';
+import React, {useState} from 'react';
+import {useParams, useHistory} from 'react-router-dom';
+import {BlocksTable, PageBody, PageHeader} from '../components';
+import {useBlocks, useChannels} from '../hooks';
+import {Grid, GridItem, Panel, Search, Select} from '@bigcommerce/big-design';
+import {DeleteIcon} from '@bigcommerce/big-design-icons';
+import {channelsAsSelectOptions, notifyError, notifySuccess} from '../utils';
+import axios from 'axios';
+import {mutate} from 'swr';
+import {useMatchMutate} from '../hooks';
 
 const Dashboard = () => {
-  const [page, setPage] = useState<number>(1);
-  const [perPage, setPerPage] = useState<number>(25);
   const {store_hash} = useParams();
-  const [productsData, productMeta, productError, isProductsLoading] = useProducts(store_hash, {
-    page: page,
-    limit: perPage,
-    include: 'images'
-  })
+  const history = useHistory();
 
-  const pagination: ProductPagination = useMemo(() => {
-    return {
-      currentPage: productMeta?.pagination?.current_page ?? 1,
-      itemsPerPage: productMeta?.pagination?.per_page ?? 1,
-      itemsPerPageOptions: [50, 100, 200],
-      totalItems: productMeta?.pagination?.total ?? 1,
-      onPageChange: (page) => setPage(page),
-      onItemsPerPageChange: (amount) => setPerPage(amount)
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(25);
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [channelFilter, setChannelFilter] = useState(null);
+  const onChannelFilterChange = channel => setChannelFilter(channel);
+
+  const [blocksResponse, blocksError] = useBlocks(
+    store_hash,
+    {
+      page: currentPage,
+      limit: itemsPerPage,
+      ...(searchTerm) ? {['name:like']: searchTerm} : {},
+      ...(channelFilter) ? {channel_id: channelFilter} : {}
     }
-  }, [productMeta, perPage, page]);
+  );
+  const blocks = blocksResponse?.data?.filter(block => block.name.includes(searchTerm)) ?? [];
+  const blocksErrorMessage = blocksError?.response?.data?.error ?? null;
+
+  const pagination = {
+    currentPage: currentPage,
+    itemsPerPage: itemsPerPage,
+    totalItems: blocksResponse?.meta?.total,
+    onPageChange: (val) => setCurrentPage(val),
+    onItemsPerPageChange: (val) => {
+      setCurrentPage(1)
+      setItemsPerPage(val);
+    },
+    itemsPerPageOptions: [25, 50, 100]
+  };
+
+  const [channelsResponse, channelsError] = useChannels(store_hash);
+  const channels = channelsResponse?.data ?? [];
+  const channelOptions = channelsAsSelectOptions(channels);
+
+  const channelsErrorMessage = channelsError?.response?.data?.error ?? null;
+
+  const onAddBlock = () => history.push(`/stores/${store_hash}/blocks/create`);
+  const onSearchChange = event => setSearchTerm(event.target.value);
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  const onSearchSubmit = () => {
+  };
+
+  const onEdit = (id: string | null | undefined): void => {
+    if (!id) return;
+    history.push(`/stores/${store_hash}/blocks/${id}`);
+  }
+
+  const matchMutate = useMatchMutate();
+
+  const onDelete = (id: string): void => {
+    axios.delete(`/api/stores/${store_hash}/blocks/${id}`)
+      .then(() => {
+        notifySuccess('Block deleted');
+        mutate(`/api/stores/${store_hash}/blocks`);
+        mutate(`/api/stores/${store_hash}/blocks/${id}`);
+        matchMutate(new RegExp(`^/api/stores/${store_hash}/blocks?`));
+
+      })
+      .catch(error => {
+        const message = error.response?.data?.error ??
+          (error.response?.data?.message ?? 'There was a problem deleting this block. Please try again later');
+        notifyError(message);
+      });
+  }
 
   return (
     <>
-      <PageHeader title="Example Product List" />
+      <PageHeader title="Your products anywhere" storeHash={store_hash}/>
       <PageBody>
-        <ContentLoading
-          loading={isProductsLoading}
-          error={productError}
-        >
-          <Panel>
-            <ProductsTable
-              products={productsData}
-              pagination={pagination}
-            />
-          </Panel>
-        </ContentLoading>
+        <Panel header="Blocks" action={{text: 'Add block', onClick: onAddBlock}}>
+          <Grid gridColumns="3fr 1fr" gridGap="1em">
+            <GridItem>
+              <Search value={searchTerm} onChange={onSearchChange} onSubmit={onSearchSubmit}/>
+            </GridItem>
+            <GridItem>
+              <Select
+                options={channelOptions}
+                value={channelFilter}
+                onOptionChange={onChannelFilterChange}
+                placeholder={'Filter by channel'}
+                action={channelFilter ? {
+                  content: 'Remove filter',
+                  icon: <DeleteIcon/>,
+                  onActionClick: () => setChannelFilter(null)
+                } : undefined}
+              />
+            </GridItem>
+          </Grid>
+          <BlocksTable
+            storeHash={store_hash}
+            blocks={blocks ?? []}
+            channels={channels}
+            pagination={pagination}
+            error={blocksErrorMessage || channelsErrorMessage}
+            searchTerm={searchTerm}
+            onEdit={onEdit}
+            onDelete={onDelete}
+          />
+        </Panel>
       </PageBody>
     </>
   );

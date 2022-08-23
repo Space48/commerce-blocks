@@ -2,9 +2,11 @@
 
 namespace App\Jobs;
 
-use App\Services\Bigcommerce;
 use App\Models\BigcommerceStore;
+use App\Models\Block;
+use App\Services\Bigcommerce;
 use App\Services\Bigcommerce\Request\Payload\StorefrontApiTokenPayload;
+use Illuminate\Support\Facades\Log;
 
 class CreateToken extends BigcommerceJob
 {
@@ -13,24 +15,38 @@ class CreateToken extends BigcommerceJob
      *
      * @return void
      */
-    public function __construct(protected BigcommerceStore $store, protected int $channelId, protected string $domain)
+    public function __construct(protected Block $block)
     {
     }
 
     /**
      * Execute the job.
      *
-     * @return void
+     * @throws Bigcommerce\Response\Exception
+     * @throws Bigcommerce\Response\NotFoundException
+     * @throws Bigcommerce\Response\TooManyRequestsException
+     * @throws Bigcommerce\Response\UnauthorizedException
+     * @throws Bigcommerce\Response\UnprocessableException
      */
     public function handle(Bigcommerce $bc)
     {
+        $expiryDate = now()->addDays(30);
         $payload = new StorefrontApiTokenPayload(
-            $this->domain,
-            $this->channelId,
-            now()->addDay(20)->unix()
+            $this->block->valid_domain,
+            $this->block->channel_id,
+            $expiryDate->unix()
         );
-        $result = $bc->createStoreFrontApiToken($this->store->access_token, $this->store->store_hash, $payload);
-        // todo: store token against product block.
-        dd($result);
+        /** @var BigcommerceStore $store */
+        $store = $this->block->store;
+
+        $result = $bc->createStoreFrontApiToken($store->access_token, $store->store_hash, $payload);
+
+        $token = $result['data']['token'] ?? throw new \UnexpectedValueException('No token in response');
+
+        $this->block->update([
+            'graphql_access_token' => $token,
+            'graphql_access_token_expires_at' => $expiryDate,
+            'graphql_access_token_domain' => $this->block->valid_domain,
+        ]);
     }
 }

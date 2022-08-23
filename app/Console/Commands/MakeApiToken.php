@@ -2,7 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\CreateToken;
 use App\Models\BigcommerceStore;
+use App\Services\Bigcommerce;
+use App\Services\Bigcommerce\Request\Payload\StorefrontApiTokenPayload;
 use Illuminate\Console\Command;
 
 class MakeApiToken extends Command
@@ -26,13 +29,21 @@ class MakeApiToken extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(Bigcommerce $bc)
     {
         $storeHash = $this->argument('store_hash');
         $channelId = $this->argument('channel_id');
         $domain = $this->argument('domain');
+
         if ($storeHash && $store = BigcommerceStore::whereStoreHash($storeHash)->first()) {
-            \App\Jobs\CreateToken::dispatchSync($store, $channelId, $domain);
+            $payload = new StorefrontApiTokenPayload(
+                $domain,
+                $channelId,
+                now()->addDays(30)->unix()
+            );
+
+            $result = $bc->createStoreFrontApiToken($store->access_token, $store->store_hash, $payload);
+            dd($result);
         }
     }
 }

@@ -11,6 +11,68 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 use InvalidArgumentException;
 
+/**
+ * App\Models\BigcommerceStore
+ *
+ * @property int $id
+ * @property string $store_hash
+ * @property string $scope
+ * @property string $access_token
+ * @property bool $installed
+ * @property string|null $domain
+ * @property string|null $name
+ * @property string|null $country
+ * @property string|null $currency
+ * @property string|null $plan_name
+ * @property string|null $plan_level
+ * @property string|null $plan_is_trial
+ * @property string|null $status
+ * @property int|null $store_id
+ * @property string|null $timezone_name
+ * @property int|null $timezone_raw_offset
+ * @property int|null $timezone_dst_offset
+ * @property bool|null $timezone_dst_correction
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read mixed $active
+ * @property-read int|null $timezone_offset
+ * @property-read Collection|\App\Models\User[] $owners
+ * @property-read int|null $owners_count
+ * @property-read Collection|\App\Models\BigcommerceStoreUser[] $store_users
+ * @property-read int|null $store_users_count
+ * @property-read Collection|\App\Models\User[] $users
+ * @property-read int|null $users_count
+ * @method static \Database\Factories\BigcommerceStoreFactory factory(...$parameters)
+ * @method static Builder|BigcommerceStore installed()
+ * @method static Builder|BigcommerceStore newModelQuery()
+ * @method static Builder|BigcommerceStore newQuery()
+ * @method static Builder|BigcommerceStore query()
+ * @method static Builder|BigcommerceStore whereAccessToken($value)
+ * @method static Builder|BigcommerceStore whereCountry($value)
+ * @method static Builder|BigcommerceStore whereCreatedAt($value)
+ * @method static Builder|BigcommerceStore whereCurrency($value)
+ * @method static Builder|BigcommerceStore whereDomain($value)
+ * @method static Builder|BigcommerceStore whereId($value)
+ * @method static Builder|BigcommerceStore whereInstalled($value)
+ * @method static Builder|BigcommerceStore whereName($value)
+ * @method static Builder|BigcommerceStore wherePlanIsTrial($value)
+ * @method static Builder|BigcommerceStore wherePlanLevel($value)
+ * @method static Builder|BigcommerceStore wherePlanName($value)
+ * @method static Builder|BigcommerceStore whereScope($value)
+ * @method static Builder|BigcommerceStore whereStatus($value)
+ * @method static Builder|BigcommerceStore whereStoreHash($value)
+ * @method static Builder|BigcommerceStore whereStoreId($value)
+ * @method static Builder|BigcommerceStore whereTimezoneDstCorrection($value)
+ * @method static Builder|BigcommerceStore whereTimezoneDstOffset($value)
+ * @method static Builder|BigcommerceStore whereTimezoneName($value)
+ * @method static Builder|BigcommerceStore whereTimezoneRawOffset($value)
+ * @method static Builder|BigcommerceStore whereUpdatedAt($value)
+ * @method static Builder|BigcommerceStore withStoreHash(string $storeHash)
+ * @method static Builder|BigcommerceStore withStoreId(int $storeId)
+ * @mixin \Eloquent
+ * @property-read Collection|\App\Models\Block[] $blocks
+ * @property-read int|null $blocks_count
+ */
 class BigcommerceStore extends Model
 {
     use HasFactory;
@@ -74,6 +136,11 @@ class BigcommerceStore extends Model
     public function owners()
     {
         return $this->users()->where('is_owner', true);
+    }
+
+    public function blocks(): HasMany
+    {
+        return $this->hasMany(Block::class);
     }
 
     /**

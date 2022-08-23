@@ -25,8 +25,8 @@ Then:
 Next, if you haven’t already, create an app on your Bigcommerce developer account. You’ll need to populate the following fields under the technical tab, to match your local development domain.
 
 - Remove User Callback URL: **https://your-local-domain.com/api/bc/remove-user**
-- Auth Callback URL: **https://your-local-domain.com/api/bc/install**
-- Load Callback URL: **https://your-local-domain.com/api/bc/load**
+- Auth Callback URL: **https://your-local-domain.com/bc/install**
+- Load Callback URL: **https://your-local-domain.com/bc/load**
 - Uninstall Callback URL: **https://your-local-domain.com/api/bc/uninstall**
 
 You’ll also need to set the following OAuth scopes:
@@ -45,6 +45,16 @@ BIGCOMMERCE_WEBHOOK_SECRET=<Generate a unique code for this>
 ```
 
 You’re now ready to install the app on your store.
+
+## Jobs
+
+The database is used to manage the job queue. 
+
+Run the workers with:
+
+```
+php artisan queue:work high,low
+```
 
 ## Testing
 

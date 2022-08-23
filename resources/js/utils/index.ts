@@ -3,7 +3,6 @@ export {
   openAppInNewWindow
 } from './iframe'
 
-export {
-  alertsManager
-} from './alerts'
-
+export * from './alerts'
+export * from './channels';
+export * from './strings';
