@@ -58,9 +58,6 @@ const BlockForm = (
   const channelOptions = channelsAsSelectOptions(channels);
   const designOptions = [{content: 'Default', value: null}]
 
-
-  console.log('Block: ', block);
-
   // Auto-select the first channel
   useEffect(() => {
     if (block?.channel_id) return;
