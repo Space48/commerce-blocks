@@ -153,6 +153,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    console.log('DATA', data?.site?.search?.searchProducts?.filters?.edges);
     setFilters(prev => {
       // update the existing
       if (prev && prev.length > 0 && data?.site?.search?.searchProducts?.filters?.edges) {
@@ -161,15 +162,17 @@ const App = () => {
           const current = data?.site?.search?.searchProducts?.filters?.edges.find(filter => filter.node.name === previousFilter.node.name);
           previousFilter.node.enabled = current === undefined;
           if (previousFilter.node.attributes?.edges) {
-            previousFilter.node.attributes.edges.forEach(attribute => {
-              const existingAttr = current?.node?.attributes?.edges?.find((currentAttribute) => attribute.node.value === currentAttribute.node.value);
-              attribute.node.enabled = existingAttr !== undefined;
+            previousFilter.node.attributes.edges.forEach(prevAttribute => {
+              const currentAttr = current?.node?.attributes?.edges?.find((currentAttribute) => prevAttribute.node.value === currentAttribute.node.value);
+              prevAttribute.node.enabled = currentAttr !== undefined;
+              prevAttribute.node.productCount = currentAttr !== undefined ? currentAttr.node.productCount : 0;
             });
           }
           if (previousFilter.node.categories?.edges) {
-            previousFilter.node.categories.edges.forEach(attribute => {
-              const existingCategory = current?.node?.categories?.edges?.find((currentAttribute) => attribute.node.entityId === currentAttribute.node.entityId);
-              attribute.node.enabled = existingCategory !== undefined;
+            previousFilter.node.categories.edges.forEach(prevCategory => {
+              const currentCategory = current?.node?.categories?.edges?.find((currentCat) => prevCategory.node.entityId === currentCat.node.entityId);
+              prevCategory.node.enabled = currentCategory !== undefined;
+              prevCategory.node.productCount = currentCategory !== undefined ? currentCategory.node.productCount : 0;
             });
           }
         });
@@ -177,7 +180,9 @@ const App = () => {
       }
       // set defaults on the original data
       if (data?.site?.search?.searchProducts?.filters?.edges) {
-        data?.site?.search?.searchProducts?.filters?.edges.forEach(filter => {
+        // clone the filters, so we don't run into issues when setting product count above
+        const newFilters = JSON.parse(JSON.stringify(data?.site?.search?.searchProducts?.filters?.edges));
+        newFilters?.forEach(filter => {
           filter.node.enabled = true;
           if (filter?.node?.attributes?.edges) {
             filter.node.attributes.edges.forEach(attribute => {
@@ -190,7 +195,7 @@ const App = () => {
             });
           }
         });
-        return data?.site?.search?.searchProducts?.filters?.edges;
+        return newFilters;
       }
       return [];
     });

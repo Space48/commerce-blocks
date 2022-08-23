@@ -36,6 +36,7 @@ const Filter = ({ filter, onCategoryChange, onAttributeChange }: Props) => {
             value={category.node.entityId}
             onCategoryChange={onCategoryChange}
             enabled={category.node.enabled}
+            count={category.node.productCount}
           />
         ))
       )}
@@ -48,6 +49,7 @@ const Filter = ({ filter, onCategoryChange, onAttributeChange }: Props) => {
             identifier={filter.name}
             onAttributeChange={onAttributeChange}
             enabled={attribute.node.enabled}
+            count={attribute.node.productCount}
           />
         ))
       )}
