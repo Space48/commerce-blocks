@@ -48,9 +48,13 @@ You’re now ready to install the app on your store.
 
 ## Jobs
 
-Redis is used to manage the job queue. 
+The database is used to manage the job queue. 
 
-Run the 
+Run the workers with:
+
+```
+php artisan queue:work high,low
+```
 
 ## Testing
 
