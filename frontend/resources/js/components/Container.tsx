@@ -20,7 +20,8 @@ const StyledContainer = styled.div`
   opacity: ${props => props.isLoading ? '0.2' : '1'};
   transition: opacity 0.25s ease-in-out;
   max-width: 1024px;
-  margin: 0px auto;
+  margin: 40px auto;
+  text-align: left;
 `;
 
 const Container = ({ isLoading, children }: Props) => {
