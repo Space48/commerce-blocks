@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { ChevronLeft } from './Icons';
 import ConfigContext from '../context/ConfigContext';
 import { useContext } from 'preact/compat';
-
+import { getClassName } from '../helpers';
 
 /** @jsx h */
 
@@ -29,6 +29,7 @@ const FilterButton = ({ isOpen, onClick }) => {
 
   return (
     <StyledAnchorButton
+      className={getClassName('filter__btn')}
       onClick={onClick}
       href="#"
       textColor={config?.design?.text_colour}

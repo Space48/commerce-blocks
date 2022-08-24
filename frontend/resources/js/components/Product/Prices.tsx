@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { getPriceText } from '../../helpers/price';
 import { useContext } from 'preact/compat';
 import ConfigContext from '../../context/ConfigContext';
+import { getClassName } from '../../helpers';
 
 /** @jsx h */
 
@@ -33,6 +34,7 @@ const Price = ({ msrp, price, sale }: Props) => {
         <Fragment>
           {msrp && (
             <StyledPrice
+              className={getClassName('product__price--msrp')}
               fontFamily={config?.design.price_font_family}
               fontSize={config?.design.price_font_size}
               fontWeight={config?.design.price_font_weight}
@@ -42,6 +44,7 @@ const Price = ({ msrp, price, sale }: Props) => {
             </StyledPrice>
           )}
           <StyledPrice
+            className={getClassName('product__price')}
             fontFamily={config?.design.price_font_family}
             fontSize={config?.design.price_font_size}
             fontWeight={config?.design.price_font_weight}
@@ -50,6 +53,7 @@ const Price = ({ msrp, price, sale }: Props) => {
             Was: {getPriceText(price)}
           </StyledPrice>
           <StyledPrice
+            className={getClassName('product__price--sale')}
             fontFamily={config?.design.sale_price_font_family}
             fontSize={config?.design.sale_price_font_size}
             fontWeight={config?.design.sale_price_font_weight}
@@ -60,6 +64,7 @@ const Price = ({ msrp, price, sale }: Props) => {
         </Fragment>
       ) : (
         <StyledPrice
+          className={getClassName('product__price')}
           fontFamily={config?.design.price_font_family}
           fontSize={config?.design.price_font_size}
           fontWeight={config?.design.price_font_weight}

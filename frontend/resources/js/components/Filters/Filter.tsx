@@ -4,6 +4,7 @@ import { Filter as FilterProp } from '../../types';
 import Option from './Option';
 import ConfigContext from '../../context/ConfigContext';
 import { useContext } from 'preact/compat';
+import { getClassName } from '../../helpers';
 
 /** @jsx h */
 
@@ -28,8 +29,12 @@ const Filter = ({ filter, onCategoryChange, onAttributeChange }: Props) => {
   const hasOptions = filter.categories ?? filter.attributes;
 
   return hasOptions !== undefined ? (
-    <StyledDiv>
-      <StyledHeading textColor={config?.design?.text_colour}>{filter.name}</StyledHeading>
+    <StyledDiv className={getClassName('filter__container')}>
+      <StyledHeading
+        className={getClassName('filter__heading')}
+        textColor={config?.design?.text_colour}
+      >{filter.name}
+      </StyledHeading>
       {filter.categories !== undefined && (
         filter.categories.edges.map((category) => (
           <Option

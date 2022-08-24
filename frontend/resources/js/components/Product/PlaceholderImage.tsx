@@ -1,5 +1,6 @@
 import { h } from 'preact';
 import styled from 'styled-components';
+import { getClassName } from '../../helpers';
 
 /** @jsx h */
 
@@ -15,7 +16,7 @@ const StyledDiv = styled.div`
 `;
 
 const PlaceholderImage = () => (
-  <StyledDiv>
+  <StyledDiv className={getClassName('product__image--placeholder')}>
     No Image
   </StyledDiv>
 );

@@ -2,6 +2,7 @@ import { h } from 'preact';
 import styled from 'styled-components';
 import { useContext } from 'preact/compat';
 import ConfigContext from '../../context/ConfigContext';
+import { getClassName } from '../../helpers';
 
 /** @jsx h */
 
@@ -36,6 +37,7 @@ const LinkButton = ({ label, url }: Props) => {
 
   return (
     <StyledButton
+      className={getClassName('product__btn')}
       href={url}
       target="_blank"
       rel="noreferrer"

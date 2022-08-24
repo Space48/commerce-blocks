@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { SearchIcon } from './Icons';
 import ConfigContext from '../context/ConfigContext';
 import { useContext } from 'preact/compat';
+import { getClassName } from '../helpers';
 
 /** @jsx h */
 
@@ -41,11 +42,12 @@ const SearchInput = ({ searchTerm, onChange }: Props) => {
   const config = useContext(ConfigContext);
 
   return  (
-    <StyledDiv>
-      <StyledIconContainer iconColor={config?.design?.button_colour}>
+    <StyledDiv className={getClassName('search__container')}>
+      <StyledIconContainer iconColor={config?.design?.button_colour} className={getClassName('search__icon')}>
         <SearchIcon />
       </StyledIconContainer>
       <StyledInput
+        className={getClassName('search__input')}
         type="text"
         id="search"
         placeholder="Search"

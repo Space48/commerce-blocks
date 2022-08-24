@@ -1,5 +1,6 @@
 import { h } from 'preact';
 import { CombinedError } from '@urql/core/dist/types/utils/error';
+import { getClassName } from '../helpers';
 
 /** @jsx h */
 
@@ -8,7 +9,7 @@ interface Props {
 }
 
 const Error = ({ error }: Props) => (
-  <div>
+  <div className={getClassName('error')}>
     <div>{error.name}</div>
     <div>{error.message}</div>
   </div>

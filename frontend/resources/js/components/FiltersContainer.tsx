@@ -1,5 +1,6 @@
 import { h } from 'preact';
 import styled from 'styled-components';
+import { getClassName } from '../helpers';
 
 /** @jsx h */
 
@@ -10,12 +11,10 @@ const StyledDiv = styled.div`
    margin-bottom: 20px;
 }`;
 
-const FiltersContainer = ({ children }) => {
-  return (
-    <StyledDiv>
-      {children}
-    </StyledDiv>
-  );
-};
+const FiltersContainer = ({ children }) => (
+  <StyledDiv className={getClassName('filters__container')}>
+    {children}
+  </StyledDiv>
+);
 
 export default FiltersContainer;

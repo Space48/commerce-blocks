@@ -1,6 +1,7 @@
 import { h } from 'preact';
 import styled from 'styled-components';
 import { SortOption } from '../types';
+import { getClassName } from '../helpers';
 
 /** @jsx h */
 
@@ -20,8 +21,8 @@ const StyledSelect = styled.select`
 const SortOptions = ({ selected, options, onChange }: Props) => {
 
   return (
-    <div>
-      <StyledSelect onChange={onChange}>
+    <div className={getClassName('sort__container')}>
+      <StyledSelect onChange={onChange} className={getClassName('sort__select')}>
         {options.map(option => (
           <option
             key={option.value}

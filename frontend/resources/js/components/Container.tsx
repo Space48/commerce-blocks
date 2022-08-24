@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { PreactElement } from 'preact/src/internal';
 import { useContext } from 'preact/compat';
 import ConfigContext from '../context/ConfigContext';
+import { getClassName } from '../helpers';
 
 /** @jsx h */
 
@@ -28,6 +29,7 @@ const Container = ({ isLoading, children }: Props) => {
   const config = useContext(ConfigContext);
   return (
     <StyledContainer
+      className={getClassName('container')}
       fontFamily={config?.design?.text_font_family}
       fontSize={config?.design?.text_font_size}
       fontWeight={config?.design?.text_font_weight}

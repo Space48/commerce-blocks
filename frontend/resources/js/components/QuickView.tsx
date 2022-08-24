@@ -4,7 +4,7 @@ import Slider from 'react-slick';
 import { Product } from '../types';
 import { Image, LinkButton, Name, Prices, Sku, PlaceholderImage } from './Product';
 import 'slick-carousel/slick/slick.css';
-import { Devices } from '../helpers';
+import { Devices, getClassName } from '../helpers';
 import { CloseIcon } from './Icons';
 import ConfigContext from '../context/ConfigContext';
 import { useContext } from 'preact/compat';
@@ -87,13 +87,19 @@ const QuickView = ({ product, onClose }: Props) => {
 
   return (
     <StyledDiv
+      className={getClassName('modal__container')}
       fontFamily={config?.design?.text_font_family}
       fontSize={config?.design?.text_font_size}
       fontWeight={config?.design?.text_font_weight}
       textColor={config?.design?.text_colour}
       hasImage={hasImage}
     >
-      <StyledCloseAnchor onClick={onClose} href="#" iconColor={config?.design?.button_colour}>
+      <StyledCloseAnchor
+        className={getClassName('modal__close-btn')}
+        onClick={onClose}
+        href="#"
+        iconColor={config?.design?.button_colour}
+      >
         <CloseIcon />
       </StyledCloseAnchor>
       {hasImage ? (
@@ -108,7 +114,10 @@ const QuickView = ({ product, onClose }: Props) => {
         <PlaceholderImage />
       )}
 
-      <StyledProductDiv hasImage={hasImage}>
+      <StyledProductDiv
+        className={getClassName('modal__product')}
+        hasImage={hasImage}
+      >
         <Sku sku={product.sku} />
         <Name name={product.name} />
         {product.prices && (

@@ -1,5 +1,6 @@
 import { h } from 'preact';
 import styled from 'styled-components';
+import { getClassName } from '../../helpers';
 
 /** @jsx h */
 
@@ -46,10 +47,16 @@ const Option = ({ label, value, count, identifier, enabled, onCategoryChange, on
   const labelWithCount = count > 0 ? `${label} (${count})` :  label;
   
   return (
-    <StyledDiv>
-      <StyledOption>
-        <label htmlFor={inputId}>{labelWithCount}</label>
-        <StyledInput disabled={!enabled} id={inputId} type="checkbox" value={value} onChange={() => handleClick(value)} />
+    <StyledDiv className={getClassName('option__container')}>
+      <StyledOption className={getClassName('option')}>
+        <label className={getClassName('option__label')} htmlFor={inputId}>{labelWithCount}</label>
+        <StyledInput
+          className={getClassName('option__input')}
+          disabled={!enabled} id={inputId}
+          type="checkbox"
+          value={value}
+          onChange={() => handleClick(value)}
+        />
       </StyledOption>
     </StyledDiv>
   );

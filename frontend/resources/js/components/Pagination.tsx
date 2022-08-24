@@ -2,6 +2,7 @@ import { h } from 'preact';
 import styled from 'styled-components';
 import { PaginateButton, CurrentPage }  from './Paginate/';
 import { ChevronLeft, ChevronRight }  from './Icons/';
+import { getClassName } from '../helpers';
 
 /** @jsx h */
 
@@ -23,7 +24,7 @@ const StyledPagination = styled.div`
 `;
 
 const Pagination = ({ pages, showPreviousPageBtn, showNextPageBtn, onPaginatePrevious, onPaginateNext }: Props) => (
-  <StyledPagination>
+  <StyledPagination className={getClassName('pagination')}>
     {(showNextPageBtn) && (
       <PaginateButton
         onClick={onPaginatePrevious}
