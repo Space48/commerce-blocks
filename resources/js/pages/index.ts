@@ -21,3 +21,4 @@ export {
 }
 
 export * from './Blocks';
+export * from './Designs';

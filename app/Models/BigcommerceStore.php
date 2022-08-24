@@ -143,6 +143,11 @@ class BigcommerceStore extends Model
         return $this->hasMany(Block::class);
     }
 
+    public function designs(): HasMany
+    {
+        return $this->hasMany(Design::class);
+    }
+
     /**
      * @return User|null
      */

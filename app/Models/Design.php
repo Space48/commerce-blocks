@@ -109,6 +109,7 @@ class Design extends Model
         'price_font_size',
         'price_font_weight',
         'price_colour',
+        'sale_price_font_family',
         'sale_price_font_size',
         'sale_price_font_weight',
         'sale_price_colour',
@@ -125,11 +126,11 @@ class Design extends Model
 
     public function blocks()
     {
-        $this->hasMany(Block::class);
+        return $this->hasMany(Block::class);
     }
 
     public function store()
     {
-        $this->belongsTo(BigcommerceStore::class);
+        return $this->belongsTo(BigcommerceStore::class);
     }
 }
