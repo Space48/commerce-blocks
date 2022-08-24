@@ -29,7 +29,8 @@ const ProductsSearchQueryBuilder = ({storeHash, block, onChange}: Props) => {
   const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
   const [products, , productsError] = useProducts(
     storeHash,
-    {['id:in']: selectedProducts.join(',')}
+    {['id:in']: selectedProducts.join(',') || '9999999999999'}, // easiest way to make sure we don't get any products on requests with selectedproducts
+    true
   );
 
   const onNewlySelectedProducts = (ids: number[]) => {
