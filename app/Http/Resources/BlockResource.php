@@ -23,6 +23,7 @@ class BlockResource extends JsonResource
             'product_selection_type' => $this->product_selection_type,
             'product_selection_product_ids' => $this->product_selection_product_ids,
             'product_selection_category_ids' => $this->product_selection_category_ids,
+            'product_selection_search_term' => $this->product_selection_search_term,
             'valid_domain' => $this->valid_domain,
         ];
     }

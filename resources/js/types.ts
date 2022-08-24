@@ -74,6 +74,7 @@ export interface Block {
   graphql_filters?: [];
   product_selection_product_ids?: number[];
   product_selection_category_ids?: number[];
+  product_selection_search_term?: string;
   created_at?: string | null;
   updated_at?: string | null;
 }

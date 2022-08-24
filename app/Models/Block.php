@@ -61,6 +61,10 @@ use Illuminate\Support\Str;
  * @method static \Illuminate\Database\Eloquent\Builder|Block whereEnableSearch($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Block whereProductSelectionProductIds($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Block whereProductSelectionType($value)
+ * @property array|null $product_selection_category_ids
+ * @property string|null $product_selection_search_term
+ * @method static \Illuminate\Database\Eloquent\Builder|Block whereProductSelectionCategoryIds($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Block whereProductSelectionSearchTerm($value)
  */
 class Block extends Model
 {
@@ -97,6 +101,7 @@ class Block extends Model
         'enable_search',
         'product_selection_product_ids',
         'product_selection_category_ids',
+        'product_selection_search_term',
     ];
 
     public static array $blockTypes = [
