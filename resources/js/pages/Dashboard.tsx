@@ -100,7 +100,7 @@ const Dashboard = () => {
       })
       .catch(error => {
         const message = error.response?.data?.error ??
-          (error.response?.data?.message ?? 'There was a problem deleting this block. Please try again later');
+          (error.response?.data?.message ?? 'There was a problem deleting this design. Please try again later');
         notifyError(message);
       });
   }
