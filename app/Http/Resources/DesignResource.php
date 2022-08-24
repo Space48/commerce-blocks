@@ -9,6 +9,7 @@ class DesignResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id ?? null,
             'name' => $this->name ?? null,
             'heading_font_family' => $this->heading_font_family ?? null,
             'heading_font_size' => $this->heading_font_size ?? null,

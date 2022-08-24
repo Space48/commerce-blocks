@@ -8,7 +8,9 @@ import {
   Dashboard,
   StoresList,
   BlockCreate,
-  BlockEdit
+  BlockEdit,
+  DesignCreate,
+  DesignEdit
 } from './pages';
 
 export const routes = [
@@ -19,6 +21,8 @@ export const routes = [
   {path: '/stores/:store_hash', component: Dashboard},
   {path: '/stores/:store_hash/blocks/create', component: BlockCreate},
   {path: '/stores/:store_hash/blocks/:block_id', component: BlockEdit},
+  {path: '/stores/:store_hash/designs/create', component: DesignCreate},
+  {path: '/stores/:store_hash/designs/:design_id', component: DesignEdit},
   {path: '/stores/:store_hash/installed', component: InstallationSuccess},
   {path: '/stores/:store_hash/welcome', component: WelcomeNewUser},
   {path: '/stores/:store_hash/*', component: FourOhFour},

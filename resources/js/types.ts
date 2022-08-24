@@ -75,21 +75,37 @@ export interface Block {
   updated_at?: string | null;
 }
 
-export interface Design {
-  id: number;
-  bigcommerce_store_id: number,
-  name: number,
-  design_id: number,
-  block_type: string,
-  valid_domain: string,
-  graphql_access_token: string,
-  graphql_access_token_expires_at: string,
-  graphql_filters: [];
-  created_at: string;
-  updated_at: string;
-}
-
-
 export interface ProductPagination extends TablePaginationProps {
 
+}
+
+export interface Design {
+  id: number | null;
+  name: string;
+  limit: number | null;
+  columns: number | null;
+  heading_font_family: string | null;
+  heading_font_size: string | null;
+  heading_font_weight: string | null;
+  heading_colour: string | null;
+  text_font_family: string | null;
+  text_font_weight: string | null;
+  text_font_size: string | null;
+  text_colour: string | null;
+  price_font_family: string | null;
+  price_font_size: string | null;
+  price_font_weight: string | null;
+  price_colour: string | null;
+  sale_price_font_size: string | null;
+  sale_price_font_weight: string | null;
+  sale_price_colour: string | null;
+  link_colour: string | null;
+  link_hover_colour: string | null;
+  button_font_family: string | null;
+  button_font_weight: string | null;
+  button_font_size: string | null;
+  button_colour: string | null;
+  button_hover_colour: string | null;
+  button_text_colour: string | null;
+  button_hover_text_colour: string | null;
 }

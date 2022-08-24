@@ -1,5 +1,6 @@
 import AnimatedSwitch from './AnimatedSwitch';
 import BlocksTable from './BlocksTable';
+import {DesignForm} from './DesignForm';
 import PageBody from './PageBody';
 import PageHeader from './PageHeader';
 import Link from './Link';
@@ -12,6 +13,7 @@ export {
   AnimatedSwitch,
   BlocksTable,
   ContentLoading,
+  DesignForm,
   Link,
   PageBody,
   PageHeader,

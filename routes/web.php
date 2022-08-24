@@ -13,6 +13,7 @@ use App\Http\Controllers\Block\BlockPreviewController;
 use App\Http\Controllers\Block\BlockSnippetController;
 use App\Http\Controllers\Block\BlockUpdateController;
 use App\Http\Controllers\Block\BlockViewController;
+use App\Http\Controllers\Design\DesignCollectionController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,7 +42,9 @@ Route::middleware('auth')->group(function () use ($missing) {
         Route::delete('/api/stores/{store}/blocks/{block}', BlockDeleteController::class)->missing($missing);
         Route::get('/api/stores/{store}/blocks/{block}/preview', BlockPreviewController::class)->missing($missing);
         Route::get('/api/stores/{store}/blocks/{block}/snippet', BlockSnippetController::class)->missing($missing);
-        
+
+        Route::get('/api/stores/{store}/designs', DesignCollectionController::class)->missing($missing);
+
         Route::any('/bc-api/stores/{store}/{endpoint}', ProxyController::class)->where('endpoint', 'v2\/.*|v3\/.*');
     });
 });

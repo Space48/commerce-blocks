@@ -1,13 +1,14 @@
 import React, {useState} from 'react';
 import {useParams, useHistory} from 'react-router-dom';
 import {BlocksTable, PageBody, PageHeader} from '../components';
-import {useBlocks, useChannels} from '../hooks';
+import {useBlocks, useChannels, useDesigns} from '../hooks';
 import {Grid, GridItem, Panel, Search, Select} from '@bigcommerce/big-design';
 import {DeleteIcon} from '@bigcommerce/big-design-icons';
 import {channelsAsSelectOptions, notifyError, notifySuccess} from '../utils';
 import axios from 'axios';
 import {mutate} from 'swr';
 import {useMatchMutate} from '../hooks';
+import DesignsTable from "../components/DesignsTable";
 
 const Dashboard = () => {
   const {store_hash} = useParams();
@@ -79,11 +80,14 @@ const Dashboard = () => {
       });
   }
 
+  const onAddDesign = () => history.push(`/stores/${store_hash}/designs/create`);
+  const [designs, designError, isDesignsLoading] = useDesigns(store_hash);
+
   return (
     <>
       <PageHeader title="Your products anywhere" storeHash={store_hash}/>
       <PageBody>
-        <Panel header="Blocks" action={{text: 'Add block', onClick: onAddBlock}}>
+        <Panel header="Blocks" action={{text: 'Add block', onClick: onAddBlock}} marginBottom='xxLarge'>
           <Grid gridColumns="3fr 1fr" gridGap="1em">
             <GridItem>
               <Search value={searchTerm} onChange={onSearchChange} onSubmit={onSearchSubmit}/>
@@ -109,6 +113,15 @@ const Dashboard = () => {
             pagination={pagination}
             error={blocksErrorMessage || channelsErrorMessage}
             searchTerm={searchTerm}
+            onEdit={onEdit}
+            onDelete={onDelete}
+          />
+        </Panel>
+        <Panel header="Designs" action={{text: 'Add design', onClick: onAddDesign}}>
+          <DesignsTable
+            storeHash={store_hash}
+            designs={designs ?? []}
+            error={designError ?? null}
             onEdit={onEdit}
             onDelete={onDelete}
           />
