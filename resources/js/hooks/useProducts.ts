@@ -12,5 +12,5 @@ export const useProducts = (store_hash, queryParams) => {
 
   const isPending = (!error && !data);
   useLogoutOn401Response(error?.response?.status, store_hash);
-  return [data?.data?.data, data?.data?.meta, error, isPending];
+  return [data?.data, data?.meta, error, isPending];
 };
