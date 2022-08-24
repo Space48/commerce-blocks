@@ -220,6 +220,8 @@ const App = () => {
     setCurrentPageCursor(pagination.length > 0 ? pagination[pagination.length - 1] : '');
   }, [pagination]);
 
+  console.log('FILTERS', filters);
+
   // first load
   if (!data && fetching) {
     return <Loading />;
@@ -240,13 +242,13 @@ const App = () => {
           )}
           {queryType.type !== TYPE_SPECIFIC_PRODUCTS && (
             <FiltersContainer>
-              {config?.enable_filters && filters.length > 0 && (
+              {config?.enable_filters && filters.length > 2 && (
                 <FilterButton isOpen={isFilterOpen} onClick={handleFilterButtonClick} />
               )}
               <SortOptions options={SortOptionItems} selected={sortOrder} onChange={handleSortOrderChange} />
             </FiltersContainer>
           )}
-          {queryType.type !== TYPE_SPECIFIC_PRODUCTS && config?.enable_filters && filters.length > 0 && (
+          {queryType.type !== TYPE_SPECIFIC_PRODUCTS && config?.enable_filters && filters.length > 2 && (
             <FiltersList
               filters={filters}
               isOpen={isFilterOpen}
