@@ -42,6 +42,7 @@ export interface ContextType {
   design: DesignContext;
   product_selection_type: "specific_products" | "category" | "search";
   product_selection_product_ids: number[];
+  product_selection_category_ids: number[];
 }
 
 export interface Product {

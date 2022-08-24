@@ -2,6 +2,26 @@ export const TYPE_SPECIFIC_PRODUCTS = 'specific_products';
 export const TYPE_SEARCH = 'search';
 export const TYPE_CATEGORY = 'category';
 
+const getCategoriesFilter = (categoryFilters) => categoryFilters.length > 0
+  ? `categoryEntityIds: [${categoryFilters.join(',')}]` : '';
+
+const getCategoryFilter = (categoryFilter) => categoryFilter.length > 0
+  ? `categoryEntityId: ${categoryFilter[0]}` : '';
+
+const getAttributeFilter = (attributes) => {
+  if (Object.keys(attributes).length === 0) {
+    return '';
+  }
+  const filterItems: string[] = [];
+  Object.keys(attributes).map(key => {
+    filterItems.push(`{
+      attribute: "${key}"
+      values: ["${attributes[key].join('","')}"] 
+    }`);
+  });
+  return `productAttributes: [${filterItems.join(',')}]`;
+};
+
 const getProductQuery = (ids = []) => {
   const selectedProducts = ids && ids.length > 0 ? `, entityIds:[${ids.join(',')}]`  : '';
   return `
@@ -60,32 +80,7 @@ export const productsQuery = (ids, perPage, cursor) => `
  }
 `;
 
-const getCategoryFilter = (categoryFilters) => categoryFilters.length > 0
-  ? `categoryEntityIds: [${categoryFilters.join(',')}]` : '';
-
-const getAttributeFilter = (attributes) => {
-  if (Object.keys(attributes).length === 0) {
-    return '';
-  }
-  const filterItems: string[] = [];
-  Object.keys(attributes).map(key => {
-    filterItems.push(`{
-      attribute: "${key}"
-      values: ["${attributes[key].join('","')}"] 
-    }`);
-  });
-  return `productAttributes: [${filterItems.join(',')}]`;
-};
-
-export const getQuery = (queryType, perPage, cursor, sortOrder, searchTerm, categoryFilters, attributeFilters) => {
-  if (queryType.type === TYPE_SPECIFIC_PRODUCTS) {
-    return productsQuery(queryType.ids, perPage, cursor);
-  }
-  return searchQuery(perPage, cursor, sortOrder, searchTerm, categoryFilters, attributeFilters);
-};
-
-
-export const searchQuery = (perPage, cursor, sortOrder, searchTerm, categoryFilters, attributeFilters) => `
+export const searchQuery = (categoryIds, perPage, cursor, sortOrder, searchTerm, categoryFilters, attributeFilters) => `
   query paginateProducts(
    $pageSize: Int = ${perPage}
    $cursor: String = "${cursor}"
@@ -94,7 +89,8 @@ export const searchQuery = (perPage, cursor, sortOrder, searchTerm, categoryFilt
      search {
       searchProducts(sort: ${sortOrder}, filters: {
         searchTerm: "${searchTerm}"
-        ${getCategoryFilter(categoryFilters)}
+        ${getCategoryFilter(categoryIds)} 
+        ${getCategoriesFilter(categoryFilters)}
         ${getAttributeFilter(attributeFilters)}
         hideOutOfStock: false
         searchSubCategories: true
@@ -105,17 +101,6 @@ export const searchQuery = (perPage, cursor, sortOrder, searchTerm, categoryFilt
               __typename
               name
               isCollapsedByDefault
-              ... on ProductAttributeSearchFilter {
-                attributes {
-                  edges {
-                    node {
-                      value
-                      isSelected
-                      productCount
-                    }
-                  }
-                }
-              }
               ... on CategorySearchFilter {
                 name
                 displayProductCount
@@ -135,6 +120,17 @@ export const searchQuery = (perPage, cursor, sortOrder, searchTerm, categoryFilt
                           }
                         }
                       }
+                    }
+                  }
+                }
+              }
+              ... on ProductAttributeSearchFilter {
+                attributes {
+                  edges {
+                    node {
+                      value
+                      isSelected
+                      productCount
                     }
                   }
                 }
@@ -165,3 +161,10 @@ export const searchQuery = (perPage, cursor, sortOrder, searchTerm, categoryFilt
    }
  }
 `;
+
+export const getQuery = (queryType, perPage, cursor, sortOrder, searchTerm, categoryFilters, attributeFilters) => {
+  if (queryType.type === TYPE_SPECIFIC_PRODUCTS) {
+    return productsQuery(queryType.ids, perPage, cursor);
+  }
+  return searchQuery(queryType.ids, perPage, cursor, sortOrder, searchTerm, categoryFilters, attributeFilters);
+};

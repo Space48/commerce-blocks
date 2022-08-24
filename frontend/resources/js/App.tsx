@@ -17,7 +17,7 @@ import {
 } from './components';
 import { FiltersNode, LAYOUT_TYPE, Product, SelectedAttributes } from './types';
 import Modal from 'react-modal';
-import { SortOptions as SortOptionItems, ModalStyles, getQuery, TYPE_SPECIFIC_PRODUCTS } from './helpers';
+import { SortOptions as SortOptionItems, ModalStyles, getQuery, TYPE_SPECIFIC_PRODUCTS, TYPE_CATEGORY } from './helpers';
 import ConfigContext from './context/ConfigContext';
 
 /** @jsx h */
@@ -37,9 +37,19 @@ const App = () => {
   const [currentSelectedAttributes, setCurrentSelectedAttributes] = useState<SelectedAttributes>({});
   const [filters, setFilters] = useState<FiltersNode[]>([]);
 
+  const getQueryIds = (type) => {
+    if (type === TYPE_SPECIFIC_PRODUCTS) {
+      return config?.product_selection_product_ids;
+    }
+    if (type === TYPE_CATEGORY) {
+      return config?.product_selection_category_ids;
+    }
+    return [];
+  };
+  
   const queryType = {
     type: config?.product_selection_type,
-    ids: config?.product_selection_product_ids
+    ids: getQueryIds(config?.product_selection_type)
   };
 
   const query = getQuery(
