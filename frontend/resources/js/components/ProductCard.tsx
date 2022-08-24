@@ -3,6 +3,7 @@ import { useCallback, useMemo } from 'preact/compat';
 import styled from 'styled-components';
 import { Name, LinkButton, Image, Sku, Prices, PlaceholderImage, Button } from './Product/';
 import { Product } from '../types';
+import { getClassName } from '../helpers';
 
 /** @jsx h */
 
@@ -16,7 +17,7 @@ const StyledProductCard = styled.div`
   flex-direction: column;
   justify-content: space-between;
   position: relative;
-  &:hover .sp48-overlay-btns {
+  &:hover .s48-ypa-product__overlay {
     display: flex;
   }
 `;
@@ -45,7 +46,7 @@ const ProductCard = ({ product, onQuickView }: Props) => {
   }, [product]);
 
   return (
-    <StyledProductCard>
+    <StyledProductCard className={getClassName('product__card')}>
       {image ? (
         <Image src={image.url} altText={image.altText} />
       ) : (
@@ -62,7 +63,7 @@ const ProductCard = ({ product, onQuickView }: Props) => {
           />
         )}
       </div>
-      <StyledOverlayButtons className="sp48-overlay-btns">
+      <StyledOverlayButtons className={getClassName('product__overlay')}>
         <LinkButton label="Add to Cart" url={product.addToCartUrl} />
         <Button label="Quick view" onClick={onClick} />
       </StyledOverlayButtons>

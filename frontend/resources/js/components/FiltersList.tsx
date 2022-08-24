@@ -2,6 +2,7 @@ import { h } from 'preact';
 import styled from 'styled-components';
 import { Filter } from './Filters';
 import { FiltersNode } from '../types';
+import { getClassName } from '../helpers';
 
 /** @jsx h */
 
@@ -32,9 +33,11 @@ const StyledOptionsWrapper = styled.div`
 
 const FiltersList = ({ filters, isOpen, onCategoryChange, onAttributeChange }: Props) => {
 
+  const filterWrapperClass = getClassName('filters__list');
+
   return (
-    <StyledFilterWrapper className={isOpen ? 'active' : ''}>
-      <StyledOptionsWrapper>
+    <StyledFilterWrapper className={isOpen ? `${filterWrapperClass} active` : filterWrapperClass}>
+      <StyledOptionsWrapper className={getClassName('filters__options')}>
         {filters.map(filter => (
           <Filter
             key={filter.node.name}

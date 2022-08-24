@@ -1,5 +1,6 @@
 import { h } from 'preact';
 import styled from 'styled-components';
+import { getClassName } from '../../helpers';
 
 /** @jsx h */
 
@@ -17,7 +18,7 @@ interface Props {
 }
 
 const CurrentPage = ({ page }: Props) => (
-  <StyledSpan>{page}</StyledSpan>
+  <StyledSpan className={getClassName('page__current')}>{page}</StyledSpan>
 );
 
 export default CurrentPage;

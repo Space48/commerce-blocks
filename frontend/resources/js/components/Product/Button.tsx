@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useContext } from 'preact/compat';
 import ConfigContext from '../../context/ConfigContext';
 import { Product } from '../../types';
+import { getClassName } from '../../helpers';
 
 /** @jsx h */
 
@@ -36,6 +37,7 @@ const LinkButton = ({ label, onClick }: Props) => {
   
   return (
     <StyledButton
+      className={getClassName('product__btn')}
       onClick={onClick}
       btnColor={config?.design?.button_colour}
       btnHoverColor={config?.design?.button_hover_colour}

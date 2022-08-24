@@ -1,5 +1,6 @@
 import { h } from 'preact';
 import styled from 'styled-components';
+import { getClassName } from '../../helpers';
 
 /** @jsx h */
 
@@ -12,7 +13,7 @@ const StyledName = styled.p`
 `;
 
 const Name = ({ name }: Props) => (
-  <StyledName>
+  <StyledName className={getClassName('product__name')}>
     {name}
   </StyledName>
 );

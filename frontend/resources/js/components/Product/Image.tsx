@@ -1,5 +1,6 @@
 import { h } from 'preact';
 import styled from 'styled-components';
+import { getClassName } from '../../helpers';
 
 /** @jsx h */
 
@@ -13,7 +14,7 @@ const StyledImage = styled.img`
 `;
 
 const Image = ({ src, altText }: Props) => (
-  <StyledImage src={src} alt={altText} />
+  <StyledImage className={getClassName('product__image')} src={src} alt={altText} />
 );
 
 export default Image;

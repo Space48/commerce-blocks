@@ -2,6 +2,7 @@ import { h } from 'preact';
 import styled from 'styled-components';
 import { useContext } from 'preact/compat';
 import ConfigContext from '../../context/ConfigContext';
+import { getClassName } from '../../helpers';
 
 /** @jsx h */
 
@@ -17,7 +18,11 @@ const PaginateButton = (props) => {
   const config = useContext(ConfigContext);
 
   return (
-    <StyledButton {...props} iconColor={config?.design?.button_colour}>
+    <StyledButton
+      {...props}
+      iconColor={config?.design?.button_colour}
+      className={getClassName('page__btn')}
+    >
       {props.children}
     </StyledButton>
   );
