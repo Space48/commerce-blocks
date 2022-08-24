@@ -5,9 +5,10 @@ import {CategoryListModal} from '../Modal';
 interface Props {
   storeHash: string;
   onSelectionChange: (id: number | undefined) => void;
+  channel?: number
 }
 
-const CategorySelector = ({storeHash, onSelectionChange}: Props) => {
+const CategorySelector = ({storeHash, onSelectionChange, channel}: Props) => {
   const [selectorVisible, setSelectorVisible] = useState(false);
 
   const [selectedCategory, setSelectedCategory] = useState<number | undefined>();
@@ -36,6 +37,7 @@ const CategorySelector = ({storeHash, onSelectionChange}: Props) => {
         setVisible={setSelectorVisible}
         onSelectionChange={onCategorySelectionChange}
         selectable='radio'
+        channelFilter={channel}
       />
     </>
   )

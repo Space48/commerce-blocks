@@ -96,13 +96,17 @@ const ProductsSearchQueryBuilder = ({storeHash, block, onChange}: Props) => {
           }
           {
             block?.product_selection_type === PRODUCTS_SEARCH_SELECTION_TYPE_CATEGORY ?
-              <CategorySelector storeHash={storeHash} onSelectionChange={onNewlySelectedCategory}/>
+              <CategorySelector
+                storeHash={storeHash}
+                onSelectionChange={onNewlySelectedCategory}
+                channel={block?.channel_id ?? undefined}/>
               : null
           }
         </FlexItem>
       </Flex>
       {
-        block?.product_selection_type === PRODUCTS_SEARCH_SELECTION_TYPE_SPECIFIC_PRODUCTS && selectedProducts.length > 0 ?
+        block?.product_selection_type === PRODUCTS_SEARCH_SELECTION_TYPE_SPECIFIC_PRODUCTS
+        && selectedProducts.length > 0 ?
           <Box marginLeft="xxLarge">
             <ContentLoading loading={false} error={productsError ?? null}>
               {selectedProducts.length > 0 && products ?

@@ -10,6 +10,7 @@ interface Props {
   storeHash: string,
   onSelectionChange: (selectedItems: number[]) => void;
   selectable?: TreeSelectableType;
+  channelFilter?: number
 }
 
 const CategoryListModal = (
@@ -18,7 +19,8 @@ const CategoryListModal = (
     setVisible,
     storeHash,
     onSelectionChange,
-    selectable = 'radio'
+    selectable = 'radio',
+    channelFilter
   }: Props
 ) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -39,7 +41,7 @@ const CategoryListModal = (
     allCategoriesResponse.reduce((map, obj) => (map[obj.id] = obj, map), {}) : {};
 
   const [treesResponse, treesError, treesLoading] = useTrees(storeHash, {}, {revalidateOnFocus: false});
-  const applicableTrees = treesResponse?.data.filter(tree => tree.channels.some(channelId => channelIds.includes(channelId))) || [];
+  const applicableTrees = treesResponse?.data.filter(tree => tree.channels.some(channelId => channelIds.includes(channelId) && (!channelFilter || channelFilter === channelId))) || [];
 
   const treeIds = applicableTrees.map(({id}) => id) ?? [];
 
