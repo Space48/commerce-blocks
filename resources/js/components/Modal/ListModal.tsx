@@ -73,7 +73,7 @@ const ListModal = (
       onClose={() => setVisible(false)}
       actions={modalActions}
     >
-      <h2>Select a {label.toLowerCase()}</h2>
+      <h2>Select {selectable === 'multi' ? plural.toLowerCase() : label.toLowerCase()}</h2>
       <Input
         value={searchTerm}
         placeholder='Search'
