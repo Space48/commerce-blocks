@@ -11,6 +11,7 @@ import {useProducts} from '../../hooks';
 import ContentLoading from '../ContentLoading';
 import {theme} from '@bigcommerce/big-design-theme';
 import styled from 'styled-components';
+import {uniq} from 'lodash'
 
 const RemoveProductSelectionButton = styled(StyleableButton)`
   height: 2.15rem;
@@ -26,13 +27,19 @@ interface Props {
 const ProductsSearchQueryBuilder = ({storeHash, block, onChange}: Props) => {
 
   const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
-
-  console.log('These products were selected: ', selectedProducts);
-
-  const [products, , productsError, isProductsLoading] = useProducts(
+  const [products, , productsError] = useProducts(
     storeHash,
     {['id:in']: selectedProducts.join(',')}
   );
+
+  const onNewlySelectedProducts = (ids: number[]) => {
+    if (ids.length === 0) return;
+
+    setSelectedProducts(prev => {
+      return uniq([...prev, ...ids]);
+    });
+
+  }
 
   const unselectProduct = (id) => {
     if (!selectedProducts.includes(id)) return;
@@ -64,7 +71,7 @@ const ProductsSearchQueryBuilder = ({storeHash, block, onChange}: Props) => {
         <FlexItem marginRight="large">
           {
             block?.product_selection_type === PRODUCTS_SEARCH_SELECTION_TYPE_SPECIFIC_PRODUCTS ?
-              <ProductSelector storeHash={storeHash} onSelectionChange={(ids) => setSelectedProducts(ids)}/>
+              <ProductSelector storeHash={storeHash} onSelectionChange={onNewlySelectedProducts}/>
               : null
           }
         </FlexItem>
@@ -72,7 +79,7 @@ const ProductsSearchQueryBuilder = ({storeHash, block, onChange}: Props) => {
       {
         block?.product_selection_type === PRODUCTS_SEARCH_SELECTION_TYPE_SPECIFIC_PRODUCTS && selectedProducts.length > 0 ?
           <Box marginLeft="xxLarge">
-            <ContentLoading loading={isProductsLoading} error={productsError ?? null}>
+            <ContentLoading loading={false} error={productsError ?? null}>
               {selectedProducts.length > 0 && products ?
                 <Flex flexDirection="column">
                   {products.map(({id, name}) => (
