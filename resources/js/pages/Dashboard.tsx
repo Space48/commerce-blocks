@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {useParams, useHistory} from 'react-router-dom';
 import {BlocksTable, PageBody, PageHeader, DesignsTable, ContentLoading} from '../components';
-import {useBlocks, useChannels, useDesigns} from '../hooks';
-import {Grid, GridItem, Panel, Search, Select} from '@bigcommerce/big-design';
+import {useBlocks, useChannels, useDesigns, useTabs} from '../hooks';
+import {Box, Form, Grid, GridItem, Panel, Search, Select, Tabs} from '@bigcommerce/big-design';
 import {DeleteIcon} from '@bigcommerce/big-design-icons';
 import {channelsAsSelectOptions, notifyError, notifySuccess} from '../utils';
 import axios from 'axios';
@@ -10,6 +10,11 @@ import {mutate} from 'swr';
 import {useMatchMutate} from '../hooks';
 
 const Dashboard = () => {
+  const tabs = [
+    {id: 'blocks', title: 'Blocks', ariaControls: 'blocks'},
+    {id: 'designs', title: 'Designs', ariaControls: 'designs'},
+  ];
+  const [activeTab, onTabClick] = useTabs(tabs);
   const {store_hash} = useParams();
   const history = useHistory();
 
@@ -103,6 +108,51 @@ const Dashboard = () => {
   const onAddDesign = () => history.push(`/stores/${store_hash}/designs/create`);
   const [designs, designError, isDesignsLoading] = useDesigns(store_hash);
 
+  const renderBlocks = () => (
+    <Panel header="Blocks" action={{text: 'Add block', onClick: onAddBlock}} marginBottom='xxLarge'>
+      <Grid gridColumns="3fr 1fr" gridGap="1em">
+        <GridItem>
+          <Search value={searchTerm} onChange={onSearchChange} onSubmit={onSearchSubmit}/>
+        </GridItem>
+        <GridItem>
+          <Select
+            options={channelOptions}
+            value={channelFilter}
+            onOptionChange={onChannelFilterChange}
+            placeholder={'Filter by channel'}
+            action={channelFilter ? {
+              content: 'Remove filter',
+              icon: <DeleteIcon/>,
+              onActionClick: () => setChannelFilter(null)
+            } : undefined}
+          />
+        </GridItem>
+      </Grid>
+      <BlocksTable
+        storeHash={store_hash}
+        blocks={blocks ?? []}
+        channels={channels}
+        pagination={pagination}
+        error={blocksErrorMessage || channelsErrorMessage}
+        searchTerm={searchTerm}
+        onEdit={onEdit}
+        onDelete={onDelete}
+      />
+    </Panel>
+  )
+
+  const renderDesigns = () => (
+    <Panel header="Designs" action={{text: 'Add design', onClick: onAddDesign}}>
+      <DesignsTable
+        storeHash={store_hash}
+        designs={designs ?? []}
+        error={designError ?? null}
+        onEdit={onDesignEdit}
+        onDelete={onDesignDelete}
+      />
+    </Panel>
+  );
+
   return (
     <>
       <PageHeader title="Your products anywhere" storeHash={store_hash}/>
@@ -111,45 +161,16 @@ const Dashboard = () => {
           loading={isBlocksLoading || isDesignsLoading}
           error={blocksError ?? designError ?? null}
         >
-          <Panel header="Blocks" action={{text: 'Add block', onClick: onAddBlock}} marginBottom='xxLarge'>
-            <Grid gridColumns="3fr 1fr" gridGap="1em">
-              <GridItem>
-                <Search value={searchTerm} onChange={onSearchChange} onSubmit={onSearchSubmit}/>
-              </GridItem>
-              <GridItem>
-                <Select
-                  options={channelOptions}
-                  value={channelFilter}
-                  onOptionChange={onChannelFilterChange}
-                  placeholder={'Filter by channel'}
-                  action={channelFilter ? {
-                    content: 'Remove filter',
-                    icon: <DeleteIcon/>,
-                    onActionClick: () => setChannelFilter(null)
-                  } : undefined}
-                />
-              </GridItem>
-            </Grid>
-            <BlocksTable
-              storeHash={store_hash}
-              blocks={blocks ?? []}
-              channels={channels}
-              pagination={pagination}
-              error={blocksErrorMessage || channelsErrorMessage}
-              searchTerm={searchTerm}
-              onEdit={onEdit}
-              onDelete={onDelete}
-            />
-          </Panel>
-          <Panel header="Designs" action={{text: 'Add design', onClick: onAddDesign}}>
-            <DesignsTable
-              storeHash={store_hash}
-              designs={designs ?? []}
-              error={designError ?? null}
-              onEdit={onDesignEdit}
-              onDelete={onDesignDelete}
-            />
-          </Panel>
+          <Tabs
+            activeTab={activeTab}
+            id="tabs"
+            items={tabs}
+            onTabClick={onTabClick}
+          />
+          <Box marginTop="large">
+            {activeTab === 'blocks' && renderBlocks()}
+            {activeTab === 'designs' && renderDesigns()}
+          </Box>
         </ContentLoading>
       </PageBody>
   </>
