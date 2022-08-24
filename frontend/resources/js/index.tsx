@@ -8,7 +8,7 @@ const rootElements = document.getElementsByClassName('s48-your-products-anywhere
 
 const getConfiguration = async (apiUrl, storeHash, blockId) => {
   try {
-    const config = await axios(`${apiUrl}/api/block/${storeHash}/${blockId}`);
+    const config = await axios(`${apiUrl}/api/${storeHash}/block/${blockId}`);
     return config?.data?.data;
   }
   catch (e) {

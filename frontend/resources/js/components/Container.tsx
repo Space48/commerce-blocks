@@ -30,6 +30,7 @@ const Container = ({ isLoading, children }: Props) => {
     <StyledContainer
       fontFamily={config?.design?.text_font_family}
       fontSize={config?.design?.text_font_size}
+      fontWeight={config?.design?.text_font_weight}
       textColor={config?.design?.text_colour}
       isLoading={isLoading}
     >

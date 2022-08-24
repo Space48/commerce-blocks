@@ -23,4 +23,4 @@ Route::get('/bc/uninstall', UninstallController::class);
 Route::post('/bc/webhook/app/uninstalled', AppUninstalledController::class)
     ->name('webhook.app.uninstalled');
 
-Route::scopeBindings()->get('block/{store}/{block}', ConfigurationController::class);
+Route::scopeBindings()->get('{store}/block/{block}', ConfigurationController::class);

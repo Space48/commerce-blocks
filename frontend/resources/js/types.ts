@@ -8,6 +8,7 @@ export interface DesignContext {
   heading_colour: string | null;
   text_font_family: string | null;
   text_font_size: string | null;
+  text_font_weight: string | null;
   text_colour: string | null;
   price_font_family: string | null;
   price_font_size: string | null;
