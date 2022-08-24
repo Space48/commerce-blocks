@@ -24,6 +24,7 @@ interface Props {
   blockId?: string | null;
   storeHash: string;
   block: Block | null;
+  snippet: string | undefined;
   channels: Channel[];
   onChange: (key: string, value: any) => void;
   onSubmit: FormEventHandler<HTMLFormElement>;
@@ -36,6 +37,7 @@ const BlockForm = (
     blockId,
     storeHash,
     block,
+    snippet,
     channels,
     onChange,
     onSubmit,
@@ -143,7 +145,8 @@ const BlockForm = (
         <FormGroup>
           <Textarea
             readOnly
-            value={'<script src="TODO.js"></script>\n<div data-your-products-anywhere="" data-id="' + blockId + '"/>'}
+            rows={7}
+            value={snippet ?? ''}
           />
         </FormGroup>
         : <Text>The snippet will be shown once block has been created.</Text>

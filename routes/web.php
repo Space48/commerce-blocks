@@ -9,6 +9,8 @@ use App\Http\Controllers\BigcommerceStore\BigcommerceStoreViewController;
 use App\Http\Controllers\Block\BlockCollectionController;
 use App\Http\Controllers\Block\BlockCreateController;
 use App\Http\Controllers\Block\BlockDeleteController;
+use App\Http\Controllers\Block\BlockPreviewController;
+use App\Http\Controllers\Block\BlockSnippetController;
 use App\Http\Controllers\Block\BlockUpdateController;
 use App\Http\Controllers\Block\BlockViewController;
 use App\Http\Controllers\User\UserController;
@@ -21,10 +23,6 @@ Route::get('/stores/{store}', AppController::class)->name('store.home');
 Route::get('/stores/{store}/installed', AppController::class)->name('store.installed');
 Route::get('/stores/{store}/welcome', AppController::class)->name('store.welcome');
 Route::get('/account/loggedout', AppController::class)->name('account.loggedout');
-
-Route::get('/blocks', function () {
-    return view('frontend');
-});
 
 $missing = function (\Illuminate\Http\Request $request) {
     return response()->json(['error' => 'Page not found'], 404);
@@ -41,6 +39,8 @@ Route::middleware('auth')->group(function () use ($missing) {
         Route::get('/api/stores/{store}/blocks/{block}', BlockViewController::class)->missing($missing);
         Route::patch('/api/stores/{store}/blocks/{block}', BlockUpdateController::class)->missing($missing);
         Route::delete('/api/stores/{store}/blocks/{block}', BlockDeleteController::class)->missing($missing);
+        Route::get('/api/stores/{store}/blocks/{block}/preview', BlockPreviewController::class)->missing($missing);
+        Route::get('/api/stores/{store}/blocks/{block}/snippet', BlockSnippetController::class)->missing($missing);
         
         Route::any('/bc-api/stores/{store}/{endpoint}', ProxyController::class)->where('endpoint', 'v2\/.*|v3\/.*');
     });

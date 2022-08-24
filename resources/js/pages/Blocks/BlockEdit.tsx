@@ -4,16 +4,18 @@ import {BlockForm, ContentLoading, PageBody, PageHeader} from '../../components'
 import {UPDATE} from '../../utils/block';
 import {useBlock, useBlockForm, useChannels} from '../../hooks';
 import {notifyError, notifySuccess} from '../../utils';
+import {useSnippet} from '../../hooks/useSnippet';
 
 const BlockEdit = () => {
   const {store_hash, block_id} = useParams();
   const location = useLocation();
   const backLinkHref = location?.state?.backLinkHref ?? `/stores/${store_hash}`;
-
-
+  
   const [initialBlock, blockError, blockIsLoading] = useBlock(store_hash, block_id);
+  const [snippet, c, snippetIsLoading] = useSnippet(store_hash, block_id);
 
-
+  console.log('snippet', snippet);
+  
   const onSuccess = () => notifySuccess(`Your block was updated.`);
   const onError = (message: string) => notifyError(message ?? `Your block could not be updated.`);
 
@@ -39,12 +41,16 @@ const BlockEdit = () => {
         backLinkHref={backLinkHref}
       />
       <PageBody>
-        <ContentLoading loading={isLoading || isLoading} error={channelsErrorMessage ?? null}>
+        <ContentLoading
+          loading={blockIsLoading || channelsIsLoading || snippetIsLoading}
+          error={blockError ?? null}
+        >
           <BlockForm
             blockId={block_id}
             storeHash={store_hash}
             channels={channels}
             block={block}
+            snippet={snippet}
             onChange={onBlockChange}
             onSubmit={onSubmit}
             errors={errors}
