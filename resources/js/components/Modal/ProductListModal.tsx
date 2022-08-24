@@ -35,6 +35,11 @@ const ProductListModal = (
       include: 'images',
     });
 
+  const productsAsTreeNodes = products ?
+    products.map(product => {
+      return {...product, value: product.id};
+    }) : [];
+
   return (
     <ListModal
       label='Product'
@@ -42,7 +47,7 @@ const ProductListModal = (
       keyId='sku'
       isLoading={isLoading}
       visible={visible}
-      treeNodes={products}
+      treeNodes={productsAsTreeNodes}
       count={meta ? meta.pagination.total : 0}
       onSelectionChange={onSelectionChange}
       setVisible={setVisible}

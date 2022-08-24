@@ -21,6 +21,7 @@ class CreateBlockRequest extends FormRequest
             'design_id' => 'nullable|integer',
             'product_selection_type' => 'nullable|string|max:255',
             'product_selection_product_ids' => 'nullable|array',
+            'product_selection_category_ids' => 'nullable|array',
         ];
     }
 }

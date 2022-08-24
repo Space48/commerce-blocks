@@ -73,6 +73,7 @@ export interface Block {
   graphql_access_token_expires_at?: string | null;
   graphql_filters?: [];
   product_selection_product_ids?: number[];
+  product_selection_category_ids?: number[];
   created_at?: string | null;
   updated_at?: string | null;
 }
