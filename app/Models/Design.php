@@ -76,6 +76,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|Design withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Design withoutTrashed()
  * @mixin \Eloquent
+ * @property string|null $text_font_weight
+ * @property int|null $limit
+ * @property int|null $columns
+ * @property string|null $sale_price_font_family
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Block[] $blocks
+ * @property-read int|null $blocks_count
+ * @property-read \App\Models\BigcommerceStore|null $store
+ * @method static \Illuminate\Database\Eloquent\Builder|Design whereColumns($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Design whereLimit($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Design whereSalePriceFontFamily($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Design whereTextFontWeight($value)
  */
 class Design extends Model
 {

@@ -53,15 +53,24 @@ use Illuminate\Support\Str;
  * @property-read \App\Models\Design|null $design
  * @property-read \App\Models\BigcommerceStore|null $store
  * @method static \Illuminate\Database\Eloquent\Builder|Block whereGraphqlAccessTokenDomain($value)
+ * @property string|null $product_selection_type
+ * @property bool $enable_filters
+ * @property bool $enable_search
+ * @property array|null $product_selection_product_ids
+ * @method static \Illuminate\Database\Eloquent\Builder|Block whereEnableFilters($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Block whereEnableSearch($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Block whereProductSelectionProductIds($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Block whereProductSelectionType($value)
  */
 class Block extends Model
 {
     use HasUuid, HasFactory, SoftDeletes;
 
     protected $casts = [
-        'graphql_filters' => 'array',
         'enable_filters' => 'boolean',
         'enable_search' => 'boolean',
+        'graphql_filters' => 'array',
+        'product_selection_product_ids' => 'array',
     ];
 
     protected $dates = [
@@ -84,7 +93,8 @@ class Block extends Model
         'product_selection_type',
         'valid_domain',
         'enable_filters',
-        'enable_search'
+        'enable_search',
+        'product_selection_product_ids',
     ];
 
     public static array $blockTypes = [

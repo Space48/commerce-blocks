@@ -26,7 +26,8 @@ interface Props {
 
 const ProductsSearchQueryBuilder = ({storeHash, block, onChange}: Props) => {
 
-  const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
+  const selectedProducts = block?.product_selection_product_ids || [];
+
   const [products, , productsError] = useProducts(
     storeHash,
     {['id:in']: selectedProducts.join(',') || '9999999999999'}, // easiest way to make sure we don't get any products on requests with selectedproducts
@@ -35,16 +36,12 @@ const ProductsSearchQueryBuilder = ({storeHash, block, onChange}: Props) => {
 
   const onNewlySelectedProducts = (ids: number[]) => {
     if (ids.length === 0) return;
-
-    setSelectedProducts(prev => {
-      return uniq([...prev, ...ids]);
-    });
-
+    onChange('product_selection_product_ids', uniq([...selectedProducts, ...ids]))
   }
 
   const unselectProduct = (id) => {
     if (!selectedProducts.includes(id)) return;
-    setSelectedProducts(prev => prev.filter((prevId) => prevId !== id));
+    onChange('product_selection_product_ids', selectedProducts.filter((prevId) => prevId !== id))
   }
 
   return (
