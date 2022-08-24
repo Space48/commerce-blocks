@@ -1,10 +1,11 @@
 import React from 'react';
 import {useHistory, useLocation, useParams} from 'react-router-dom';
-import {BlockForm, ContentLoading, PageBody, PageHeader} from '../../components';
+import {ContentLoading, PageBody, PageHeader} from '../../components';
 import {CREATE} from '../../utils/block';
 import {useBlockForm, useChannels} from '../../hooks';
 import {Block} from '../../types';
 import {notifyError, notifySuccess} from '../../utils';
+import {BlockForm} from '../../components/BlockForm';
 
 const BlockCreate = () => {
   const {store_hash} = useParams();
