@@ -81,6 +81,7 @@ class Block extends Model
         'graphql_access_token_expires_at',
         'graphql_filters',
         'name',
+        'product_selection_type',
         'valid_domain',
         'enable_filters',
         'enable_search'
