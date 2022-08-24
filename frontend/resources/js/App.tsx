@@ -219,9 +219,7 @@ const App = () => {
   useEffect(() => {
     setCurrentPageCursor(pagination.length > 0 ? pagination[pagination.length - 1] : '');
   }, [pagination]);
-
-  console.log('FILTERS', filters);
-
+  
   // first load
   if (!data && fetching) {
     return <Loading />;
