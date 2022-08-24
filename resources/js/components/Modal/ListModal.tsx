@@ -16,10 +16,10 @@ interface Props {
   count?: number;
   onSelectionChange: (selectedItems: number[]) => void;
   currentPage?: number;
-  setCurrentPage: (number) => void;
-  itemsPerPageOptions: number[];
+  setCurrentPage?: (number) => void;
+  itemsPerPageOptions?: number[];
   itemsPerPage?: number,
-  setItemsPerPage: (number) => void;
+  setItemsPerPage?: (number) => void;
   searchTerm: string;
   onSearch: (string) => void;
   error: object;
@@ -39,10 +39,12 @@ const ListModal = (
     count = 1,
     onSelectionChange,
     currentPage = 1,
-    setCurrentPage,
+    setCurrentPage = () => {
+    },
     itemsPerPageOptions = [],
     itemsPerPage = 1,
-    setItemsPerPage,
+    setItemsPerPage = () => {
+    },
     searchTerm,
     onSearch,
     error,
@@ -63,7 +65,10 @@ const ListModal = (
   ];
 
   const selectModalAction = {text: 'Choose', variant: 'primary', onClick: () => setVisible(false)}
-  const modalActions = [...defaultModalActions, selectable === 'multi' ? selectModalAction : {}]
+  const modalActions = [
+    ...defaultModalActions,
+    ...selectable === 'multi' ? [selectModalAction] : []
+  ]
 
   return (
     <Modal

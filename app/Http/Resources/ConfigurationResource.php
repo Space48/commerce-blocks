@@ -23,6 +23,7 @@ class ConfigurationResource extends JsonResource
             'enable_filters' => $this->enable_filters ?? true,
             'product_selection_type' => $this->product_selection_type,
             'product_selection_product_ids' => $this->product_selection_product_ids,
+            'product_selection_category_ids' => $this->product_selection_category_ids,
             'design' => $design->toArray($request),
         ];
     }

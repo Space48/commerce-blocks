@@ -1,10 +1,26 @@
 import React, {useCallback, useMemo, useState} from 'react';
-import PropTypes from 'prop-types';
 import {ListModal} from './ListModal';
 import {cloneDeep} from 'lodash';
 import {useCategories, useCategoryTrees, useSWRFetch, useTrees} from '../../hooks';
+import {TreeSelectableType} from '@bigcommerce/big-design/dist/components/Tree/types';
 
-const CategoryListModal = ({visible, setVisible, storeHash, onSelect}) => {
+interface Props {
+  visible: boolean,
+  setVisible: (boolean) => void;
+  storeHash: string,
+  onSelectionChange: (selectedItems: number[]) => void;
+  selectable?: TreeSelectableType;
+}
+
+const CategoryListModal = (
+  {
+    visible,
+    setVisible,
+    storeHash,
+    onSelectionChange,
+    selectable = 'radio'
+  }: Props
+) => {
   const [searchTerm, setSearchTerm] = useState('');
   const onSearchTermChange = useCallback(value => setSearchTerm(value), []);
 
@@ -100,6 +116,7 @@ const CategoryListModal = ({visible, setVisible, storeHash, onSelect}) => {
         children: category.children ? transformCategoriesToTreeNodes(category.children, allCategories) : [],
         nodeMatchesSearchTerm: category.nodeMatchesSearchTerm,
         hasChildThatMatchesSearchTerm: category.hasChildThatMatchesSearchTerm,
+        value: category.id
       });
       return tree;
     }, []);
@@ -155,19 +172,15 @@ const CategoryListModal = ({visible, setVisible, storeHash, onSelect}) => {
       visible={visible}
       treeNodes={treeNodes ?? []}
       defaultExpanded={defaultExpanded}
-      onSelect={onSelect}
+      onSelectionChange={onSelectionChange}
       setVisible={setVisible}
       onSearch={onSearchTermChange}
       error={error}
+      selectable={selectable}
+      searchTerm={searchTerm}
     />
   );
 }
 
-CategoryListModal.propTypes = {
-  visible: PropTypes.bool,
-  setVisible: PropTypes.func,
-  storeHash: PropTypes.string,
-  onSelect: PropTypes.func,
-}
 
 export {CategoryListModal};
