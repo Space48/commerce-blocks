@@ -14,6 +14,7 @@ export interface DesignContext {
   price_font_size: string | null;
   price_font_weight: string | null;
   price_colour: string | null;
+  sale_price_font_family: string | null;
   sale_price_font_size: string | null;
   sale_price_font_weight: string | null;
   sale_price_colour: string | null;
@@ -118,23 +119,6 @@ export interface ProductNode {
 
 export interface FiltersNode {
   node: Filter
-}
-
-export interface Config {
-  type: string;
-  columns: number;
-  perPage: number;
-  btnColor: string;
-  btnHoverColor: string;
-  btnTextColor: string;
-  btnTextHoverColor: string;
-  fontFamily: string;
-  textColor: string;
-  iconColor: string;
-  enableSearch: boolean;
-  enableFilters: boolean;
-  source: string;
-  gaId: string;
 }
 
 export interface SortOption {

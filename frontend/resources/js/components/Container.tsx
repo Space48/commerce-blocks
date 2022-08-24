@@ -15,9 +15,9 @@ const StyledContainer = styled.div`
   font-family: ${props => props.fontFamily ?? 'inherit'};
   font-size: ${props => props.fontSize ?? 'inherit'};
   font-weight: ${props => props.fontWeight ?? 'inherit'};
-  color: ${props => props.textColor ?? 'inherit'}
-  height: 100%;
+  color: ${props => props.textColor ?? 'inherit'};
   opacity: ${props => props.isLoading ? '0.2' : '1'};
+  height: 100%;
   transition: opacity 0.25s ease-in-out;
   max-width: 1024px;
   margin: 40px auto;

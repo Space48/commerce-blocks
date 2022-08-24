@@ -17,6 +17,10 @@ interface Props {
 }
 
 const StyledDiv = styled.div`
+  font-family: ${props => props.fontFamily ?? 'inherit'};
+  font-size: ${props => props.fontSize ?? 'inherit'};
+  font-weight: ${props => props.fontWeight ?? 'inherit'};
+  color: ${props => props.textColor ?? 'inherit'};
   display: flex;
   flex-direction: column;
   
@@ -82,7 +86,13 @@ const QuickView = ({ product, onClose }: Props) => {
   const hasImage = product?.images.edges.length > 0;
 
   return (
-    <StyledDiv hasImage={hasImage}>
+    <StyledDiv
+      fontFamily={config?.design?.text_font_family}
+      fontSize={config?.design?.text_font_size}
+      fontWeight={config?.design?.text_font_weight}
+      textColor={config?.design?.text_colour}
+      hasImage={hasImage}
+    >
       <StyledCloseAnchor onClick={onClose} href="#" iconColor={config?.design?.button_colour}>
         <CloseIcon />
       </StyledCloseAnchor>

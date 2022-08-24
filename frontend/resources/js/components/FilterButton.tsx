@@ -10,9 +10,11 @@ import { useContext } from 'preact/compat';
 const StyledAnchorButton = styled.a`
   display: flex;
   justify-content: center;
+  align-items: center;
   padding: 10px;
   border-radius: 5px;
   text-decoration: none;
+  color: ${props => props.textColor ?? '#000'};
 `;
 
 const StyledChevron = styled.div`
@@ -29,6 +31,7 @@ const FilterButton = ({ isOpen, onClick }) => {
     <StyledAnchorButton
       onClick={onClick}
       href="#"
+      textColor={config?.design?.text_colour}
     >
       Show Filters
       <StyledChevron isOpen={isOpen} iconColor={config?.design?.button_colour}>

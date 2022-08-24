@@ -13,6 +13,7 @@ interface Props {
 
 const StyledDiv = styled.div`
   position: relative;
+  margin-bottom: 20px;
 }`;
 
 const StyledInput = styled.input`
@@ -20,13 +21,18 @@ const StyledInput = styled.input`
   width: 100%;
   border: 1px solid #CCC;
   border-radius: 5px;
-  margin-bottom: 20px;
+  min-height: 39px;
 }`;
 
 const StyledIconContainer = styled.div`
   position: absolute;
   left: 10px;
-  top: 10px;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   opacity: 0.25;
   color: ${props => props.iconColor ?? '#000'}
 `;

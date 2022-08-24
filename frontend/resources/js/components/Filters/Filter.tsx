@@ -2,6 +2,8 @@ import { h } from 'preact';
 import styled from 'styled-components';
 import { Filter as FilterProp } from '../../types';
 import Option from './Option';
+import ConfigContext from '../../context/ConfigContext';
+import { useContext } from 'preact/compat';
 
 /** @jsx h */
 
@@ -18,14 +20,16 @@ const StyledDiv = styled.div`
 
 const StyledHeading = styled.h4`
   margin-top: 0px;
+  color: ${props => props.textColor ?? 'inherit'};
 `;
 
 const Filter = ({ filter, onCategoryChange, onAttributeChange }: Props) => {
+  const config = useContext(ConfigContext);
   const hasOptions = filter.categories ?? filter.attributes;
 
   return hasOptions !== undefined ? (
     <StyledDiv>
-      <StyledHeading>{filter.name}</StyledHeading>
+      <StyledHeading textColor={config?.design?.text_colour}>{filter.name}</StyledHeading>
       {filter.categories !== undefined && (
         filter.categories.edges.map((category) => (
           <Option
