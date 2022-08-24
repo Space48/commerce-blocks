@@ -1,18 +1,26 @@
 import {Button} from '@bigcommerce/big-design';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ProductListModal} from '../Modal';
 
 interface Props {
   storeHash: string;
+  onSelectionChange: (ids: number[]) => void;
 }
 
-const ProductSelector = ({storeHash}: Props) => {
+const ProductSelector = ({storeHash, onSelectionChange}: Props) => {
   const [selectorVisible, setSelectorVisible] = useState(false);
 
-  const onProductSelected = (id: number | string, url: string) => {
-    console.log('Selected product ID: ' + id);
-    setSelectorVisible(false);
+  const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
+
+  const onProductSelectionChange = (ids: number[]) => {
+    setSelectedProducts(ids);
   }
+
+  useEffect(() => {
+    if (selectorVisible) return;
+    onSelectionChange(selectedProducts);
+
+  }, [selectorVisible])
 
   return (
     <>
@@ -21,7 +29,8 @@ const ProductSelector = ({storeHash}: Props) => {
         storeHash={storeHash}
         visible={selectorVisible}
         setVisible={setSelectorVisible}
-        onSelect={onProductSelected}
+        onSelectionChange={onProductSelectionChange}
+        selectable='multi'
       />
     </>
   )
