@@ -3,9 +3,9 @@ import {Message} from '@bigcommerce/big-design';
 import Spinner from './Spinner';
 
 interface Props {
-  loading: boolean,
-  error: string | null,
-  children: React.ReactNode,
+  loading: boolean;
+  error: string | null;
+  children: React.ReactNode;
 }
 
 const ContentLoading = ({loading, error, children}: Props) => {
