@@ -14,8 +14,6 @@ const BlockEdit = () => {
   const [initialBlock, blockError, blockIsLoading] = useBlock(store_hash, block_id);
   const [snippet, snippetError, snippetIsLoading] = useSnippet(store_hash, block_id);
 
-  console.log('snippet', snippet);
-  
   const onSuccess = () => notifySuccess(`Your block was updated.`);
   const onError = (message: string) => notifyError(message ?? `Your block could not be updated.`);
 
