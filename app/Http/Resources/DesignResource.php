@@ -23,6 +23,7 @@ class DesignResource extends JsonResource
             'price_font_size' => $this->price_font_size ?? null,
             'price_font_weight' => $this->price_font_weight ?? null,
             'price_colour' => $this->price_colour ?? null,
+            'sale_price_font_family' => $this->sale_price_font_family ?? null,
             'sale_price_font_size' => $this->sale_price_font_size ?? null,
             'sale_price_font_weight' => $this->sale_price_font_weight ?? null,
             'sale_price_colour' => $this->sale_price_colour ?? null,

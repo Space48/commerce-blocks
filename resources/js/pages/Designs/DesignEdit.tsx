@@ -11,15 +11,14 @@ const DesignEdit = () => {
   const {store_hash, design_id} = useParams();
   const history = useHistory();
   const location = useLocation();
-  const backLinkHref = location?.state?.backLinkHref ?? `/stores/${store_hash}`;
+  const backLinkHref = location?.state?.backLinkHref ?? `/stores/${store_hash}?tab=designs`;
   const [initialDesign, designError, isDesignLoading] = useDesign(store_hash, design_id);
 
   const onSuccess = (design: Design) => {
-    notifySuccess(`Your design was created.`);
-    history.push(`/stores/${store_hash}/designs/${design.id}`)
+    notifySuccess(`Your design was updated.`);
   }
 
-  const onError = (message: string) => notifyError(message ?? `Your design could not be created.`);
+  const onError = (message: string) => notifyError(message ?? `Your design could not be updated.`);
 
   const [{design, setDesign, onDesignChange, onSubmit, errors, isLoading}] = useDesignForm(
     `/api/stores/${store_hash}/designs/${design_id}`,

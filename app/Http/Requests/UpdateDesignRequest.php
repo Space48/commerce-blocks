@@ -29,6 +29,7 @@ class UpdateDesignRequest extends FormRequest
             'price_font_size' => 'nullable|string|max:10',
             'price_font_weight' => 'nullable|string|max:10',
             'price_colour' => 'nullable|string|max:10',
+            'sale_price_font_family' => 'nullable|string',
             'sale_price_font_size' => 'nullable|string|max:10',
             'sale_price_font_weight' => 'nullable|string|max:10',
             'sale_price_colour' => 'nullable|string|max:10',

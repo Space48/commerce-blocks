@@ -9,7 +9,7 @@ import {
 } from '@bigcommerce/big-design';
 import SaveBar from './SaveBar';
 import {Design, Errors} from '../types';
-import {useTabs} from "../hooks";
+import {useTabs} from '../hooks';
 
 interface Props {
   designId?: string | null;
@@ -37,10 +37,10 @@ const DesignForm = (
     {id: 'settings', title: 'Settings', ariaControls: 'settings'},
     {id: 'headings', title: 'Headings', ariaControls: 'headings'},
     {id: 'buttons', title: 'Buttons', ariaControls: 'buttons'},
+    {id: 'links', title: 'Links', ariaControls: 'links'},
     {id: 'text', title: 'Text', ariaControls: 'text'},
     {id: 'prices', title: 'Prices', ariaControls: 'price'},
     {id: 'sale-prices', title: 'Sale prices', ariaControls: 'sale-price'},
-    {id: 'links', title: 'Links', ariaControls: 'links'},
   ];
   const [activeTab, onTabClick] = useTabs(tabs);
 
@@ -103,7 +103,7 @@ const DesignForm = (
     <Panel header='Headings'>
       <FormGroup>
         <Input
-          label="Heading font family"
+          label="Font family"
           type="text"
           name="heading_font_family"
           placeholder="sans-serif"
@@ -114,7 +114,7 @@ const DesignForm = (
       </FormGroup>
       <FormGroup>
         <Input
-          label="Heading font size"
+          label="Font size"
           type="text"
           name="heading_font_size"
           placeholder="14px"
@@ -125,7 +125,7 @@ const DesignForm = (
       </FormGroup>
       <FormGroup>
         <Input
-          label="Heading font weight"
+          label="Font weight"
           type="text"
           name="heading_font_weight"
           placeholder="bold"
@@ -136,7 +136,7 @@ const DesignForm = (
       </FormGroup>
       <FormGroup>
         <Input
-          label="Heading colour"
+          label="Colour"
           type="text"
           name="heading_colour"
           placeholder="#EBEBEB"
@@ -152,7 +152,7 @@ const DesignForm = (
     <Panel header='Text'>
       <FormGroup>
         <Input
-          label="Text font family"
+          label="Font family"
           type="text"
           name="text_font_family"
           placeholder="sans-serif"
@@ -163,7 +163,7 @@ const DesignForm = (
       </FormGroup>
       <FormGroup>
         <Input
-          label="Text font weight"
+          label="Font weight"
           type="text"
           name="text_font_weight"
           placeholder="bold"
@@ -174,7 +174,7 @@ const DesignForm = (
       </FormGroup>
       <FormGroup>
         <Input
-          label="Text font size"
+          label="Font size"
           type="text"
           name="text_font_size"
           placeholder="14px"
@@ -185,7 +185,7 @@ const DesignForm = (
       </FormGroup>
       <FormGroup>
         <Input
-          label="Text colour"
+          label="Colour"
           type="text"
           name="text_colour"
           placeholder="#EBEBEB"
@@ -201,7 +201,7 @@ const DesignForm = (
     <Panel header='Prices'>
       <FormGroup>
         <Input
-          label="Price font family"
+          label="Font family"
           type="text"
           name="price_font_family"
           placeholder="sans-serif"
@@ -212,7 +212,7 @@ const DesignForm = (
       </FormGroup>
       <FormGroup>
         <Input
-          label="Price font weight"
+          label="Font weight"
           type="text"
           name="price_font_weight"
           placeholder="bold"
@@ -223,7 +223,7 @@ const DesignForm = (
       </FormGroup>
       <FormGroup>
         <Input
-          label="Price font size"
+          label="Font size"
           type="text"
           name="price_font_size"
           placeholder="14px"
@@ -234,7 +234,7 @@ const DesignForm = (
       </FormGroup>
       <FormGroup>
         <Input
-          label="Price colour"
+          label="Colour"
           type="text"
           name="price_colour"
           placeholder="#EBEBEB"
@@ -250,7 +250,18 @@ const DesignForm = (
     <Panel header='Sale prices'>
       <FormGroup>
         <Input
-          label="Sale price font size"
+          label="Font family"
+          type="text"
+          name="sale_price_font_family"
+          placeholder="14px"
+          value={design?.sale_price_font_family ?? ''}
+          error={errors?.sale_price_font_family}
+          onChange={onInputChange}
+        />
+      </FormGroup>
+      <FormGroup>
+        <Input
+          label="Font size"
           type="text"
           name="sale_price_font_size"
           placeholder="14px"
@@ -261,7 +272,7 @@ const DesignForm = (
       </FormGroup>
       <FormGroup>
         <Input
-          label="Sale price font weight"
+          label="Font weight"
           type="text"
           name="sale_price_font_weight"
           placeholder="bold"
@@ -272,7 +283,7 @@ const DesignForm = (
       </FormGroup>
       <FormGroup>
         <Input
-          label="Sale price colour"
+          label="Colour"
           type="text"
           name="sale_price_colour"
           placeholder="#EBEBEB"
@@ -288,7 +299,7 @@ const DesignForm = (
     <Panel header='Links'>
       <FormGroup>
         <Input
-          label="Link colour"
+          label="Colour"
           type="text"
           name="link_colour"
           placeholder="#EBEBEB"
@@ -299,7 +310,7 @@ const DesignForm = (
       </FormGroup>
       <FormGroup>
         <Input
-          label="Link hover colour"
+          label="Hover colour"
           type="text"
           name="link_hover_colour"
           placeholder="#EBEBEB"
@@ -315,7 +326,7 @@ const DesignForm = (
     <Panel header='Buttons'>
       <FormGroup>
         <Input
-          label="Button font family"
+          label="Font family"
           type="text"
           name="button_font_family"
           placeholder="sans-serif"
@@ -326,7 +337,7 @@ const DesignForm = (
       </FormGroup>
       <FormGroup>
         <Input
-          label="Button font weight"
+          label="Font weight"
           type="text"
           name="button_font_weight"
           placeholder="bold"
@@ -337,7 +348,7 @@ const DesignForm = (
       </FormGroup>
       <FormGroup>
         <Input
-          label="Button font size"
+          label="Font size"
           type="text"
           name="button_font_size"
           placeholder="14px"
@@ -348,7 +359,7 @@ const DesignForm = (
       </FormGroup>
       <FormGroup>
         <Input
-          label="Button colour"
+          label="Background colour"
           type="text"
           name="button_colour"
           placeholder="#EBEBEB"
@@ -359,7 +370,7 @@ const DesignForm = (
       </FormGroup>
       <FormGroup>
         <Input
-          label="Button hover colour"
+          label="Background hover colour"
           type="text"
           name="button_hover_colour"
           placeholder="#EBEBEB"
@@ -370,7 +381,7 @@ const DesignForm = (
       </FormGroup>
       <FormGroup>
         <Input
-          label="Button text colour"
+          label="Text colour"
           type="text"
           name="button_text_colour"
           placeholder="#EBEBEB"
@@ -381,7 +392,7 @@ const DesignForm = (
       </FormGroup>
       <FormGroup>
         <Input
-          label="Button hover text colour"
+          label="Text hover colour"
           type="text"
           name="button_text_colour"
           placeholder="#EBEBEB"

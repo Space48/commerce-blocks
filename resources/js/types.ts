@@ -97,6 +97,7 @@ export interface Design {
   price_font_size: string | null;
   price_font_weight: string | null;
   price_colour: string | null;
+  sale_price_font_family: string | null;
   sale_price_font_size: string | null;
   sale_price_font_weight: string | null;
   sale_price_colour: string | null;

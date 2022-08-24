@@ -10,7 +10,7 @@ const DesignCreate = () => {
   const {store_hash} = useParams();
   const history = useHistory();
   const location = useLocation();
-  const backLinkHref = location?.state?.backLinkHref ?? `/stores/${store_hash}`;
+  const backLinkHref = location?.state?.backLinkHref ?? `/stores/${store_hash}?tab=designs`;
 
   const onSuccess = (design: Design) => {
     notifySuccess(`Your design was created.`);
@@ -29,9 +29,9 @@ const DesignCreate = () => {
   return (
     <>
       <PageHeader
-        title="Create block"
+        title="Create design"
         storeHash={store_hash}
-        backLinkText="Blocks"
+        backLinkText="Designs"
         backLinkHref={backLinkHref}
       />
       <PageBody>
