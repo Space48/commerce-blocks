@@ -19,8 +19,6 @@ class ConfigurationResource extends JsonResource
             'store_url' => $this->store->domain,
             'block_type' => $this->block_type,
             'access_token' => $this->graphql_access_token,
-            'columns' => $this->cols,
-            'limit' => $this->limit,
             'enable_search' => $this->enable_search ?? true,
             'enable_filters' => $this->enable_filters ?? true,
             'design' => $design->toArray($request),

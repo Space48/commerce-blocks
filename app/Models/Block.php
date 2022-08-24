@@ -60,6 +60,8 @@ class Block extends Model
 
     protected $casts = [
         'graphql_filters' => 'array',
+        'enable_filters' => 'boolean',
+        'enable_search' => 'boolean',
     ];
 
     protected $dates = [
@@ -80,6 +82,8 @@ class Block extends Model
         'graphql_filters',
         'name',
         'valid_domain',
+        'enable_filters',
+        'enable_search'
     ];
 
     public static array $blockTypes = [

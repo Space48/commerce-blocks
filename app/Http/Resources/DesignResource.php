@@ -15,6 +15,7 @@ class DesignResource extends JsonResource
             'heading_font_weight' => $this->heading_font_weight ?? null,
             'heading_colour' => $this->heading_colour ?? null,
             'text_font_family' => $this->text_font_family ?? null,
+            'text_font_weight' => $this->text_font_family ?? null,
             'text_font_size' => $this->text_font_size ?? null,
             'text_colour' => $this->text_colour ?? null,
             'price_font_family' => $this->price_font_family ?? null,
@@ -32,7 +33,9 @@ class DesignResource extends JsonResource
             'button_colour' => $this->button_colour ?? null,
             'button_hover_colour' => $this->button_hover_colour ?? null,
             'button_text_colour' => $this->button_text_colour ?? null,
-            'button_hover_text_colour' => $this->button_hover_text_colour ?? null
+            'button_hover_text_colour' => $this->button_hover_text_colour ?? null,
+            'columns' => $this->columns ?? null,
+            'limit' => $this->limit ?? null,
         ];
     }
 }

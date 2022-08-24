@@ -1,5 +1,7 @@
 export interface DesignContext {
   name: string | null;
+  limit: number | null;
+  columns: number | null;
   heading_font_family: string | null;
   heading_font_size: string | null;
   heading_font_weight: string | null;
@@ -29,10 +31,8 @@ export interface ContextType {
   store_url: string;
   block_type: string;
   access_token: string;
-  columns: number | null;
   enable_search: boolean;
   enable_filters: boolean;
-  limit: number | null;
   design: DesignContext
 }
 

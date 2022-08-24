@@ -40,7 +40,7 @@ const App = () => {
 
   const [result] = useQuery({
     query: searchQuery(
-      config?.limit ?? 12,
+      config?.design?.limit ?? 12,
       currentPageCursor,
       sortOrder,
       searchTerm,
@@ -241,7 +241,7 @@ const App = () => {
             <ProductsGrid
               products={products}
               filters={filters}
-              columns={config.columns ?? 3}
+              columns={config?.design?.columns ?? 3}
               pages={pagination}
               showPreviousPageBtn={pagination.length > 0}
               showNextPageBtn={pageInfo?.hasNextPage}
@@ -253,7 +253,7 @@ const App = () => {
           {config?.block_type === LAYOUT_TYPE.Carousel && products.length > 0 && (
             <ProductsCarousel
               products={products}
-              slidesToShow={config.columns ?? 3}
+              slidesToShow={config?.design?.columns ?? 3}
               pages={pagination}
               showPreviousPageBtn={pagination.length > 0}
               showNextPageBtn={pageInfo?.hasNextPage}

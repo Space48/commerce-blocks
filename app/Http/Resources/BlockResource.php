@@ -15,6 +15,8 @@ class BlockResource extends JsonResource
             'channel_id' => $this->channel_id,
             'design' => $this->design ? $this->design->toArray() : null,
             'name' => $this->name,
+            'enable_search' => $this->enable_search,
+            'enable_filters' => $this->enable_filters,
             'graphql_access_token' => $this->graphql_access_token,
             'graphql_access_token_domain' => $this->graphql_access_token_domain,
             'graphql_access_token_expires_at' => $this->graphql_access_token_expires_at,
