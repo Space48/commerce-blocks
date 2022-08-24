@@ -72,6 +72,8 @@ use InvalidArgumentException;
  * @mixin \Eloquent
  * @property-read Collection|\App\Models\Block[] $blocks
  * @property-read int|null $blocks_count
+ * @property-read Collection|\App\Models\Design[] $designs
+ * @property-read int|null $designs_count
  */
 class BigcommerceStore extends Model
 {

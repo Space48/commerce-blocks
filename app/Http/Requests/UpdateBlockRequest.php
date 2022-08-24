@@ -20,6 +20,7 @@ class UpdateBlockRequest extends FormRequest
             'channel_id' => 'integer',
             'design_id' => 'nullable|integer',
             'product_selection_type' => 'nullable|string|max:255',
+            'product_selection_product_ids' => 'nullable|array',
         ];
     }
 }
