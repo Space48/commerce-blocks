@@ -53,5 +53,5 @@ export const useDesignForm = (
       });
   };
 
-  return [{onSubmit, onDesignChange, design, errors, isLoading}];
+  return [{onSubmit, onDesignChange, design, setDesign, errors, isLoading}];
 };

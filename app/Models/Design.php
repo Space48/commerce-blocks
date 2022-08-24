@@ -125,11 +125,11 @@ class Design extends Model
 
     public function blocks()
     {
-        $this->hasMany(Block::class);
+        return $this->hasMany(Block::class);
     }
 
     public function store()
     {
-        $this->belongsTo(BigcommerceStore::class);
+        return $this->belongsTo(BigcommerceStore::class);
     }
 }

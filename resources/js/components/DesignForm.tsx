@@ -56,7 +56,7 @@ const DesignForm = (
             type="text"
             name="name"
             placeholder="E.g. Featured products"
-            required={true}
+            // required={true}
             value={design?.name ?? ''}
             error={errors?.name}
             onChange={onInputChange}
@@ -356,4 +356,4 @@ const DesignForm = (
   );
 }
 
-export {DesignForm};
+export default DesignForm;

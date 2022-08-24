@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Design;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateBlockRequest;
 use App\Http\Requests\CreateDesignRequest;
-use App\Http\Resources\BlockResource;
 use App\Http\Resources\DesignResource;
 use App\Models\BigcommerceStore;
 use Illuminate\Http\JsonResponse;
