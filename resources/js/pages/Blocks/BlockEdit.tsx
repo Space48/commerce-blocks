@@ -12,10 +12,8 @@ const BlockEdit = () => {
   const backLinkHref = location?.state?.backLinkHref ?? `/stores/${store_hash}`;
   
   const [initialBlock, blockError, blockIsLoading] = useBlock(store_hash, block_id);
-  const [snippet, c, snippetIsLoading] = useSnippet(store_hash, block_id);
+  const [snippet, snippetError, snippetIsLoading] = useSnippet(store_hash, block_id);
 
-  console.log('snippet', snippet);
-  
   const onSuccess = () => notifySuccess(`Your block was updated.`);
   const onError = (message: string) => notifyError(message ?? `Your block could not be updated.`);
 
@@ -43,7 +41,7 @@ const BlockEdit = () => {
       <PageBody>
         <ContentLoading
           loading={blockIsLoading || channelsIsLoading || snippetIsLoading}
-          error={blockError ?? null}
+          error={blockError ?? channelsErrorMessage ?? snippetError ?? null}
         >
           <BlockForm
             blockId={block_id}
