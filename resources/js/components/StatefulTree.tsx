@@ -75,6 +75,9 @@ const StatefulTree = (
 
   const tableRows = transformTreeNodesToTableRows(treeNodes);
 
+  const emptyFunc = () => {
+  };
+
   return (
     <Table
       border='0px'
@@ -88,7 +91,7 @@ const StatefulTree = (
           header: 'Name',
           hash: 'name',
           withPadding: false,
-          render: ({id, images, name, has_children, level}) => {
+          render: ({id, images, name, has_children, level, value}) => {
             return (
               <Box style={{
                 marginLeft: (level - 1) * 2 + 'rem',
@@ -125,9 +128,8 @@ const StatefulTree = (
                     style={{cursor: 'pointer', display: 'flex', alignItems: 'center'}}
                     onClick={() => onItemClick(id)}
                   >
-                    {selectable === 'radio' && <Radio label=''/>}
-                    {selectable === 'multi' && <Checkbox checked={selectedItems.includes(id)} onChange={() => {
-                    }} label=''/>}
+                    {value && selectable === 'radio' && <Radio label='' checked={selectedItems.includes(id)} onChange={emptyFunc}/>}
+                    {value && selectable === 'multi' && <Checkbox checked={selectedItems.includes(id)} onChange={emptyFunc} label=''/>}
                     {images && images.length > 0 ? (
                       <Box as='span' marginLeft='medium'>
                         <img style={{width: 25}} src={images[0].url_thumbnail} alt={`${name} image`}/>

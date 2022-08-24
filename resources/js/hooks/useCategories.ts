@@ -1,10 +1,12 @@
 import axios from 'axios';
 import useSWR from 'swr';
 import {useLogoutOn401Response} from './useLogoutOn401Response';
+import {laggy} from '../utils';
 
 export const useCategories = (
   store_hash: string,
-  queryParams: string[][] | Record<string, string> | string | URLSearchParams = []
+  queryParams: string[][] | Record<string, string> | string | URLSearchParams = [],
+  useLaggy = false
 ) => {
   const fetcher = url => axios.get(url).then(res => res.data);
   const params = new URLSearchParams(queryParams);
@@ -12,6 +14,7 @@ export const useCategories = (
     fetcher,
     {
       revalidateOnFocus: false,
+      ...(useLaggy) ? {use: [laggy]} : {}
     }
   );
   const isPending = (!error && !data);

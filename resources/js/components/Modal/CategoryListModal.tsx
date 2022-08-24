@@ -1,10 +1,28 @@
 import React, {useCallback, useMemo, useState} from 'react';
-import PropTypes from 'prop-types';
 import {ListModal} from './ListModal';
 import {cloneDeep} from 'lodash';
 import {useCategories, useCategoryTrees, useSWRFetch, useTrees} from '../../hooks';
+import {TreeSelectableType} from '@bigcommerce/big-design/dist/components/Tree/types';
 
-const CategoryListModal = ({visible, setVisible, storeHash, onSelect}) => {
+interface Props {
+  visible: boolean,
+  setVisible: (boolean) => void;
+  storeHash: string,
+  onSelectionChange: (selectedItems: number[]) => void;
+  selectable?: TreeSelectableType;
+  channelFilter?: number
+}
+
+const CategoryListModal = (
+  {
+    visible,
+    setVisible,
+    storeHash,
+    onSelectionChange,
+    selectable = 'radio',
+    channelFilter
+  }: Props
+) => {
   const [searchTerm, setSearchTerm] = useState('');
   const onSearchTermChange = useCallback(value => setSearchTerm(value), []);
 
@@ -23,7 +41,7 @@ const CategoryListModal = ({visible, setVisible, storeHash, onSelect}) => {
     allCategoriesResponse.reduce((map, obj) => (map[obj.id] = obj, map), {}) : {};
 
   const [treesResponse, treesError, treesLoading] = useTrees(storeHash, {}, {revalidateOnFocus: false});
-  const applicableTrees = treesResponse?.data.filter(tree => tree.channels.some(channelId => channelIds.includes(channelId))) || [];
+  const applicableTrees = treesResponse?.data.filter(tree => tree.channels.some(channelId => channelIds.includes(channelId) && (!channelFilter || channelFilter === channelId))) || [];
 
   const treeIds = applicableTrees.map(({id}) => id) ?? [];
 
@@ -100,6 +118,7 @@ const CategoryListModal = ({visible, setVisible, storeHash, onSelect}) => {
         children: category.children ? transformCategoriesToTreeNodes(category.children, allCategories) : [],
         nodeMatchesSearchTerm: category.nodeMatchesSearchTerm,
         hasChildThatMatchesSearchTerm: category.hasChildThatMatchesSearchTerm,
+        value: category.id
       });
       return tree;
     }, []);
@@ -155,19 +174,15 @@ const CategoryListModal = ({visible, setVisible, storeHash, onSelect}) => {
       visible={visible}
       treeNodes={treeNodes ?? []}
       defaultExpanded={defaultExpanded}
-      onSelect={onSelect}
+      onSelectionChange={onSelectionChange}
       setVisible={setVisible}
       onSearch={onSearchTermChange}
       error={error}
+      selectable={selectable}
+      searchTerm={searchTerm}
     />
   );
 }
 
-CategoryListModal.propTypes = {
-  visible: PropTypes.bool,
-  setVisible: PropTypes.func,
-  storeHash: PropTypes.string,
-  onSelect: PropTypes.func,
-}
 
 export {CategoryListModal};

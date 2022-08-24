@@ -22,6 +22,7 @@ class BlockResource extends JsonResource
             'graphql_access_token_expires_at' => $this->graphql_access_token_expires_at,
             'product_selection_type' => $this->product_selection_type,
             'product_selection_product_ids' => $this->product_selection_product_ids,
+            'product_selection_category_ids' => $this->product_selection_category_ids,
             'valid_domain' => $this->valid_domain,
         ];
     }
