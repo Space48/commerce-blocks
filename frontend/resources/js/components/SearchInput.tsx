@@ -1,7 +1,8 @@
 import { h } from 'preact';
 import styled from 'styled-components';
 import { SearchIcon } from './Icons';
-import useConfig from '../hooks/useConfig';
+import ConfigContext from '../context/ConfigContext';
+import { useContext } from 'preact/compat';
 
 /** @jsx h */
 
@@ -27,15 +28,15 @@ const StyledIconContainer = styled.div`
   left: 10px;
   top: 10px;
   opacity: 0.25;
-  color: ${props => props.iconColor}
+  color: ${props => props.iconColor ?? '#000'}
 `;
 
 const SearchInput = ({ searchTerm, onChange }: Props) => {
-  const [config] = useConfig();
+  const config = useContext(ConfigContext);
 
   return  (
     <StyledDiv>
-      <StyledIconContainer iconColor={config.iconColor}>
+      <StyledIconContainer iconColor={config?.design?.button_colour}>
         <SearchIcon />
       </StyledIconContainer>
       <StyledInput

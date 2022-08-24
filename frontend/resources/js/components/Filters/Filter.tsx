@@ -11,7 +11,6 @@ interface Props {
   onAttributeChange?: (attribute: string, value: string) => void;
 }
 
-// todo: enabled should disable on-click of the nav.
 const StyledDiv = styled.div`
   margin-right: 20px;
   width: 100%;

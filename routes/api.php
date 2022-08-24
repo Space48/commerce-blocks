@@ -3,7 +3,7 @@
 use App\Http\Controllers\Bigcommerce\RemoveUserController;
 use App\Http\Controllers\Bigcommerce\UninstallController;
 use App\Http\Controllers\Bigcommerce\Webhooks\AppUninstalledController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Frontend\ConfigurationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,3 +22,5 @@ Route::get('/bc/uninstall', UninstallController::class);
 
 Route::post('/bc/webhook/app/uninstalled', AppUninstalledController::class)
     ->name('webhook.app.uninstalled');
+
+Route::scopeBindings()->get('{store}/block/{block}', ConfigurationController::class);

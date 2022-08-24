@@ -1,7 +1,7 @@
 import { h } from 'preact';
-import {useCallback, useMemo} from 'preact/compat';
+import { useCallback, useMemo } from 'preact/compat';
 import styled from 'styled-components';
-import {Name, LinkButton, Image, Sku, Prices, PlaceholderImage, Button} from './Product/';
+import { Name, LinkButton, Image, Sku, Prices, PlaceholderImage, Button } from './Product/';
 import { Product } from '../types';
 
 /** @jsx h */

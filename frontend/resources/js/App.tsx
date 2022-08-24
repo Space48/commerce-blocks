@@ -16,16 +16,17 @@ import {
   FiltersContainer
 } from './components';
 import { FiltersNode, LAYOUT_TYPE, Product, SelectedAttributes } from './types';
-import useConfig from './hooks/useConfig';
 import Modal from 'react-modal';
 import { SortOptions as SortOptionItems, ModalStyles, searchQuery } from './helpers';
+import ConfigContext from './context/ConfigContext';
+import { useContext } from 'preact/compat';
 
 /** @jsx h */
 
 Modal.setAppElement('body');
 
 const App = () => {
-  const [config] = useConfig();
+  const config = useContext(ConfigContext);
   const [pagination, setPagination] = useState<string[]>([]);
   const [currentPageCursor, setCurrentPageCursor] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -39,7 +40,7 @@ const App = () => {
 
   const [result] = useQuery({
     query: searchQuery(
-      config.perPage,
+      config?.design?.limit ?? 12,
       currentPageCursor,
       sortOrder,
       searchTerm,
@@ -216,19 +217,19 @@ const App = () => {
       )}
       {data && (
         <div>
-          {config.enableSearch && (
+          {config?.enable_search && (
             <SearchInput
               searchTerm={searchTerm}
               onChange={handleSearchChange}
             />
           )}
           <FiltersContainer>
-            {config.enableFilters && filters.length > 0 && (
+            {config?.enable_filters && filters.length > 0 && (
               <FilterButton isOpen={isFilterOpen} onClick={handleFilterButtonClick} />
             )}
             <SortOptions options={SortOptionItems} selected={sortOrder} onChange={handleSortOrderChange} />
           </FiltersContainer>
-          {config.enableFilters && filters.length > 0 && (
+          {config?.enable_filters && filters.length > 0 && (
             <FiltersList
               filters={filters}
               isOpen={isFilterOpen}
@@ -236,11 +237,11 @@ const App = () => {
               onAttributeChange={handleAttributeSelection}
             />
           )}
-          {config.type === LAYOUT_TYPE.Grid && products.length > 0 && (
+          {config?.block_type === LAYOUT_TYPE.Grid && products.length > 0 && (
             <ProductsGrid
               products={products}
               filters={filters}
-              columns={config.columns}
+              columns={config?.design?.columns ?? 3}
               pages={pagination}
               showPreviousPageBtn={pagination.length > 0}
               showNextPageBtn={pageInfo?.hasNextPage}
@@ -249,10 +250,10 @@ const App = () => {
               onQuickView={handleOnQuickView}
             />
           )}
-          {config.type === LAYOUT_TYPE.Carousel && products.length > 0 && (
+          {config?.block_type === LAYOUT_TYPE.Carousel && products.length > 0 && (
             <ProductsCarousel
               products={products}
-              slidesToShow={config.columns}
+              slidesToShow={config?.design?.columns ?? 3}
               pages={pagination}
               showPreviousPageBtn={pagination.length > 0}
               showNextPageBtn={pageInfo?.hasNextPage}
