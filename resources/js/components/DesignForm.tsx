@@ -79,6 +79,7 @@ const DesignForm = (
           label="Limit"
           name="limit"
           placeholder="12"
+          required={true}
           value={design?.limit ?? 12}
           error={errors?.limit}
           onCountChange={(value) => onCounterChange('limit', value)}
@@ -89,6 +90,7 @@ const DesignForm = (
           label="Columns"
           name="columns"
           placeholder="4"
+          required={true}
           value={design?.columns ?? 4}
           error={errors?.columns}
           onCountChange={(value) => onCounterChange('columns', value)}
