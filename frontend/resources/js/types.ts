@@ -29,10 +29,6 @@ export interface DesignContext {
   button_hover_text_colour: string | null;
 }
 
-export interface ProductSelectionType {
-
-}
-
 export interface ContextType {
   store_url: string;
   block_type: string;
