@@ -20,18 +20,20 @@ const ProductListModal = (
     onSelectionChange,
     selectable = 'radio'
   }: Props) => {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPageOptions] = useState<number[]>([25, 50, 100, 200]);
-  const [itemsPerPage, setItemsPerPage] = useState(25);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [itemsPerPage, setItemsPerPage] = useState<number>(25);
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
-  const [products, meta, error, isLoading] = useProducts(storeHash, {
-    limit: itemsPerPage,
-    page: currentPage,
-    keyword: debouncedSearchTerm,
-    include_fields: ['id', 'sku', 'name', 'custom_url', 'image_url'],
-    include: 'images',
-  });
+  const [products, meta, error, isLoading] = useProducts(
+    storeHash,
+    {
+      limit: itemsPerPage.toString(),
+      page: currentPage.toString(),
+      keyword: debouncedSearchTerm,
+      include_fields: ['id', 'sku', 'name', 'custom_url', 'image_url'].join(','),
+      include: 'images',
+    });
 
   return (
     <ListModal
