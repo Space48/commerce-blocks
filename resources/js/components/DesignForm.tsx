@@ -2,7 +2,7 @@ import React, {FormEventHandler} from 'react';
 import {useHistory, useLocation} from 'react-router-dom';
 import {
   Box,
-  Button,
+  Button, Counter,
   FlexItem,
   Form, FormGroup, Input,
   Panel, Tabs,
@@ -47,6 +47,7 @@ const DesignForm = (
   const returnLocation = location?.state?.backLinkHref ?? `/stores/${storeHash}`;
 
   const onInputChange = (event) => onChange(event.target.name, event.target.value);
+  const onCounterChange = (input, value) => onChange(input, value);
 
   const renderSave = () => (
     <SaveBar isLoading={isLoading}>
@@ -74,26 +75,23 @@ const DesignForm = (
         />
       </FormGroup>
       <FormGroup>
-        <Input
+        <Counter
           label="Limit"
-          type="text"
           name="limit"
           placeholder="12"
-          required={true}
-          value={design?.limit ?? ''}
+          value={design?.limit ?? 12}
           error={errors?.limit}
-          onChange={onInputChange}
+          onCountChange={(value) => onCounterChange('limit', value)}
         />
       </FormGroup>
       <FormGroup>
-        <Input
+        <Counter
           label="Columns"
-          type="text"
           name="columns"
           placeholder="4"
-          value={design?.columns ?? ''}
+          value={design?.columns ?? 4}
           error={errors?.columns}
-          onChange={onInputChange}
+          onCountChange={(value) => onCounterChange('columns', value)}
         />
       </FormGroup>
     </Panel>
