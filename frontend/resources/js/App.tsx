@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { useCallback, useEffect, useMemo, useState } from 'preact/compat';
+import { useCallback, useEffect, useMemo, useState, useContext } from 'preact/compat';
 import { useQuery } from '@urql/preact';
 import {
   Loading,
@@ -17,9 +17,8 @@ import {
 } from './components';
 import { FiltersNode, LAYOUT_TYPE, Product, SelectedAttributes } from './types';
 import Modal from 'react-modal';
-import { SortOptions as SortOptionItems, ModalStyles, searchQuery } from './helpers';
+import { SortOptions as SortOptionItems, ModalStyles, getQuery, TYPE_SPECIFIC_PRODUCTS } from './helpers';
 import ConfigContext from './context/ConfigContext';
-import { useContext } from 'preact/compat';
 
 /** @jsx h */
 
@@ -38,16 +37,22 @@ const App = () => {
   const [currentSelectedAttributes, setCurrentSelectedAttributes] = useState<SelectedAttributes>({});
   const [filters, setFilters] = useState<FiltersNode[]>([]);
 
-  const [result] = useQuery({
-    query: searchQuery(
-      config?.design?.limit ?? 12,
-      currentPageCursor,
-      sortOrder,
-      searchTerm,
-      currentSelectedCategories,
-      currentSelectedAttributes
-    )
-  });
+  const queryType = {
+    type: config?.product_selection_type,
+    ids: config?.product_selection_product_ids
+  };
+
+  const query = getQuery(
+    queryType,
+    config?.design?.limit ?? 12,
+    currentPageCursor,
+    sortOrder,
+    searchTerm,
+    currentSelectedCategories,
+    currentSelectedAttributes
+  );
+
+  const [result] = useQuery({ query });
   const { data, fetching, error } = result;
 
   const pageInfo = useMemo(() => {
@@ -217,19 +222,21 @@ const App = () => {
       )}
       {data && (
         <div>
-          {config?.enable_search && (
+          {queryType.type !== TYPE_SPECIFIC_PRODUCTS && config?.enable_search && (
             <SearchInput
               searchTerm={searchTerm}
               onChange={handleSearchChange}
             />
           )}
-          <FiltersContainer>
-            {config?.enable_filters && filters.length > 0 && (
-              <FilterButton isOpen={isFilterOpen} onClick={handleFilterButtonClick} />
-            )}
-            <SortOptions options={SortOptionItems} selected={sortOrder} onChange={handleSortOrderChange} />
-          </FiltersContainer>
-          {config?.enable_filters && filters.length > 0 && (
+          {queryType.type !== TYPE_SPECIFIC_PRODUCTS && (
+            <FiltersContainer>
+              {config?.enable_filters && filters.length > 0 && (
+                <FilterButton isOpen={isFilterOpen} onClick={handleFilterButtonClick} />
+              )}
+              <SortOptions options={SortOptionItems} selected={sortOrder} onChange={handleSortOrderChange} />
+            </FiltersContainer>
+          )}
+          {queryType.type !== TYPE_SPECIFIC_PRODUCTS && config?.enable_filters && filters.length > 0 && (
             <FiltersList
               filters={filters}
               isOpen={isFilterOpen}

@@ -29,13 +29,19 @@ export interface DesignContext {
   button_hover_text_colour: string | null;
 }
 
+export interface ProductSelectionType {
+
+}
+
 export interface ContextType {
   store_url: string;
   block_type: string;
   access_token: string;
   enable_search: boolean;
   enable_filters: boolean;
-  design: DesignContext
+  design: DesignContext;
+  product_selection_type: "specific_products" | "category" | "search";
+  product_selection_product_ids: number[];
 }
 
 export interface Product {

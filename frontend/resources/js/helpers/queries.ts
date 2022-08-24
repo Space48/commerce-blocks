@@ -1,5 +1,11 @@
-const product = `
-  products (first: $pageSize, after:$cursor) {
+export const TYPE_SPECIFIC_PRODUCTS = 'specific_products';
+export const TYPE_SEARCH = 'search';
+export const TYPE_CATEGORY = 'category';
+
+const getProductQuery = (ids = []) => {
+  const selectedProducts = ids && ids.length > 0 ? `, entityIds:[${ids.join(',')}]`  : '';
+  return `
+  products (first: $pageSize, after:$cursor${selectedProducts}) {
    pageInfo {
      hasNextPage
      hasPreviousPage
@@ -41,14 +47,15 @@ const product = `
    }
  }
 `;
+};
 
-export const productsQuery = (perPage, cursor) => `
+export const productsQuery = (ids, perPage, cursor) => `
   query paginateProducts(
    $pageSize: Int = ${perPage}
    $cursor: String = "${cursor}"
  ) {
    site {
-     ${product}
+     ${getProductQuery(ids)}
    }
  }
 `;
@@ -70,6 +77,14 @@ const getAttributeFilter = (attributes) => {
   return `productAttributes: [${filterItems.join(',')}]`;
 };
 
+export const getQuery = (queryType, perPage, cursor, sortOrder, searchTerm, categoryFilters, attributeFilters) => {
+  if (queryType.type === TYPE_SPECIFIC_PRODUCTS) {
+    return productsQuery(queryType.ids, perPage, cursor);
+  }
+  return searchQuery(perPage, cursor, sortOrder, searchTerm, categoryFilters, attributeFilters);
+};
+
+
 export const searchQuery = (perPage, cursor, sortOrder, searchTerm, categoryFilters, attributeFilters) => `
   query paginateProducts(
    $pageSize: Int = ${perPage}
@@ -84,7 +99,6 @@ export const searchQuery = (perPage, cursor, sortOrder, searchTerm, categoryFilt
         hideOutOfStock: false
         searchSubCategories: true
       }) {
-       
         filters(first: $pageSize, after: $cursor) {
           edges {
             node {
@@ -145,7 +159,7 @@ export const searchQuery = (perPage, cursor, sortOrder, searchTerm, categoryFilt
             }
           }
         }
-        ${product}
+        ${getProductQuery()}
       }
      }
    }
