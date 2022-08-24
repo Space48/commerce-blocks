@@ -1,11 +1,14 @@
-import React from 'react';
-import {Box, Radio, Table, TablePaginationProps, Text} from '@bigcommerce/big-design';
+import React, {useEffect, useState} from 'react';
+import {Box, Checkbox, Radio, StatefulTreeProps, Table, TablePaginationProps, Text} from '@bigcommerce/big-design';
 import {
   ChevronRightIcon,
   ExpandMoreIcon,
 } from '@bigcommerce/big-design-icons';
 import {useExpandable} from '../hooks';
 import {StyleableButton} from './StyleableButton';
+import {TreeSelectableType} from '@bigcommerce/big-design/dist/components/Tree/types';
+import {Simulate} from 'react-dom/test-utils';
+import select = Simulate.select;
 
 interface Props {
   treeNodes: [];
@@ -14,11 +17,11 @@ interface Props {
   pagination: TablePaginationProps;
   defaultExpanded: string[];
   emptyComponent: JSX.Element;
-  onSelect: (id: number | string, url: string) => void,
-  onAddChild?: () => void,
-  onDelete?: () => void,
+  onSelectionChange: (selectedItems: number[]) => void;
+  onAddChild?: () => void;
+  onDelete?: () => void;
+  selectable?: TreeSelectableType;
 }
-
 
 const StatefulTree = (
   {
@@ -27,10 +30,34 @@ const StatefulTree = (
     keyField,
     defaultExpanded,
     emptyComponent,
-    onSelect,
-    pagination
-  }: Props) => {
+    onSelectionChange,
+    pagination,
+    selectable = 'radio'
+  }: Props
+) => {
+
   const {expandedIds, onToggle} = useExpandable({defaultExpanded});
+  const [selectedItems, setSelectedItems] = useState<number[]>([]);
+
+  useEffect(() => {
+    if (typeof onSelectionChange === 'function') {
+      onSelectionChange(selectedItems);
+    }
+  }, [onSelectionChange, selectedItems]);
+
+  const onItemClick = (id: number) => {
+    if (selectable === 'multi') {
+      if (selectedItems.includes(id)) {
+        setSelectedItems(prev => prev.filter((prevId) => prevId !== id));
+      } else {
+        setSelectedItems([...selectedItems, id]);
+      }
+    }
+
+    if (selectable === 'radio' && !selectedItems.includes(id)) {
+      setSelectedItems([id]);
+    }
+  };
 
   const transformTreeNodesToTableRows = (treeNodes, level = 1) => {
     return treeNodes !== undefined && treeNodes.reduce((rows, treeNode) => {
@@ -61,7 +88,7 @@ const StatefulTree = (
           header: 'Name',
           hash: 'name',
           withPadding: false,
-          render: ({id, images, custom_url, name, has_children, level}) => {
+          render: ({id, images, name, has_children, level}) => {
             return (
               <Box style={{
                 marginLeft: (level - 1) * 2 + 'rem',
@@ -96,9 +123,11 @@ const StatefulTree = (
                   <Box
                     as="span"
                     style={{cursor: 'pointer', display: 'flex', alignItems: 'center'}}
-                    onClick={custom_url ? () => onSelect(id, custom_url.url) : undefined}
+                    onClick={() => onItemClick(id)}
                   >
-                    {custom_url && <Radio/>}
+                    {selectable === 'radio' && <Radio label=''/>}
+                    {selectable === 'multi' && <Checkbox checked={selectedItems.includes(id)} onChange={() => {
+                    }} label=''/>}
                     {images && images.length > 0 ? (
                       <Box as='span' marginLeft='medium'>
                         <img style={{width: 25}} src={images[0].url_thumbnail} alt={`${name} image`}/>

@@ -2,6 +2,7 @@ import React from 'react';
 import {Box, H3, Input, Modal, Small} from '@bigcommerce/big-design';
 import {ContentLoading, StatefulTree} from '../index';
 import {SearchIcon} from '@bigcommerce/big-design-icons';
+import {TreeSelectableType} from '@bigcommerce/big-design/dist/components/Tree/types';
 
 interface Props {
   label: string;
@@ -13,7 +14,7 @@ interface Props {
   treeNodes: [];
   defaultExpanded?: string[];
   count?: number;
-  onSelect: () => void;
+  onSelectionChange: (selectedItems: number[]) => void;
   currentPage?: number;
   setCurrentPage: (number) => void;
   itemsPerPageOptions: number[];
@@ -22,8 +23,8 @@ interface Props {
   searchTerm: string;
   onSearch: (string) => void;
   error: object;
+  selectable?: TreeSelectableType;
 }
-
 
 const ListModal = (
   {
@@ -36,7 +37,7 @@ const ListModal = (
     treeNodes,
     defaultExpanded = [],
     count = 1,
-    onSelect,
+    onSelectionChange,
     currentPage = 1,
     setCurrentPage,
     itemsPerPageOptions = [],
@@ -45,6 +46,7 @@ const ListModal = (
     searchTerm,
     onSearch,
     error,
+    selectable
   }: Props) => {
 
   const onItemsPerPageChange = (newRange) => {
@@ -52,19 +54,26 @@ const ListModal = (
     setItemsPerPage(newRange);
   };
 
+  const defaultModalActions = [
+    {
+      text: 'Cancel',
+      variant: 'subtle',
+      onClick: () => setVisible(false),
+    }
+  ];
+
+  const selectModalAction = {text: 'Choose', variant: 'primary', onClick: () => setVisible(false)}
+  const modalActions = [...defaultModalActions, selectable === 'multi' ? selectModalAction : {}]
+
   return (
     <Modal
       isOpen={visible}
       closeOnClickOutside={true}
       closeOnEscKey={true}
       onClose={() => setVisible(false)}
-      actions={[{
-        text: 'Cancel',
-        variant: 'subtle',
-        onClick: () => setVisible(false),
-      }]}
+      actions={modalActions}
     >
-      <h2>Select a {label.toLowerCase()}</h2>
+      <h2>Select {selectable === 'multi' ? plural.toLowerCase() : label.toLowerCase()}</h2>
       <Input
         value={searchTerm}
         placeholder='Search'
@@ -75,10 +84,9 @@ const ListModal = (
         <ContentLoading loading={isLoading} error={error && error.toString()}>
           <StatefulTree
             headerless={true}
-            itemName={`${label}s`}
             treeNodes={treeNodes}
             keyField={keyId}
-            onSelect={onSelect}
+            onSelectionChange={onSelectionChange}
             defaultExpanded={defaultExpanded}
             pagination={{
               currentPage,
@@ -94,6 +102,7 @@ const ListModal = (
                 <Small>Add {label}s or adjust your search term</Small>
               </Box>
             }
+            selectable={selectable}
           />
         </ContentLoading>
       </Box>
