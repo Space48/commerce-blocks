@@ -19,6 +19,7 @@ class CreateBlockRequest extends FormRequest
             'block_type' => 'required|string|max:255',
             'channel_id' => 'required|integer',
             'design_id' => 'nullable|integer',
+            'product_selection_type' => 'nullable|string|max:255',
         ];
     }
 }

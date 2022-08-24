@@ -1,15 +1,16 @@
-import React, {FormEventHandler, useEffect} from 'react';
+import React, {FormEventHandler, useEffect, useState} from 'react';
 import {useHistory, useLocation} from 'react-router-dom';
 import {
   Box,
-  Button,
+  Button, Flex,
   FlexItem,
   Form,
   FormGroup,
   Input,
   Panel,
   Select,
-  Tabs
+  Tabs,
+  Text
 } from '@bigcommerce/big-design';
 import {useTabs} from '../../hooks';
 import SaveBar from '../SaveBar';
@@ -19,6 +20,9 @@ import {DeleteIcon} from '@bigcommerce/big-design-icons';
 import {blockTypeOptions} from '../../utils/block';
 import {BlockPreview} from './BlockPreview';
 import {BlockSnippet} from './BlockSnippet';
+import {FeatureBadge} from '../FeatureBadge';
+import {Bullet} from '../Bullet';
+import {ProductsSearchQueryBuilder} from './ProductsSearchQueryBuilder';
 
 interface Props {
   blockId?: string | null;
@@ -157,7 +161,7 @@ const BlockForm = (
 
   const renderProductSelections = () => (
     <Panel header='Products'>
-
+      <ProductsSearchQueryBuilder storeHash={storeHash} block={block} onChange={onChange}/>
     </Panel>
   )
 

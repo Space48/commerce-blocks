@@ -3,7 +3,7 @@ import React from 'react';
 import {Block} from '../../types';
 
 interface Props {
-  block: Block
+  block: Block | null
 }
 
 const BlockPreview = ({block}: Props) => {

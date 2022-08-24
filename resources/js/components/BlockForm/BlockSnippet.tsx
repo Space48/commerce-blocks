@@ -1,6 +1,5 @@
 import {FormGroup, Panel, Text, Textarea} from '@bigcommerce/big-design';
 import React from 'react';
-import {Block} from '../../types';
 
 interface Props {
   blockId?: string | null;

@@ -68,6 +68,7 @@ export interface Block {
   design_id?: number | null;
   block_type?: string | null;
   valid_domain?: string;
+  product_selection_type?: string
   graphql_access_token?: string;
   graphql_access_token_expires_at?: string | null;
   graphql_filters?: [];
