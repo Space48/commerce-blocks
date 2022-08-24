@@ -81,8 +81,8 @@ export interface ProductPagination extends TablePaginationProps {
 }
 
 export interface Design {
-  id: number | null;
-  name: string;
+  id?: number;
+  name?: string;
   limit: number | null;
   columns: number | null;
   heading_font_family: string | null;

@@ -14,13 +14,13 @@ const DesignCreate = () => {
 
   const onSuccess = (design: Design) => {
     notifySuccess(`Your design was created.`);
-    history.push(`/stores/${store_hash}/design/${design.id}`)
+    history.push(`/stores/${store_hash}/designs/${design.id}`)
   }
 
   const onError = (message: string) => notifyError(message ?? `Your design could not be created.`);
 
   const [{design, onDesignChange, onSubmit, errors, isLoading}] = useDesignForm(
-    `/api/stores/${store_hash}/blocks`,
+    `/api/stores/${store_hash}/designs`,
     CREATE,
     onSuccess,
     onError

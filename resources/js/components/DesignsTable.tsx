@@ -3,7 +3,6 @@ import { Text, Table, Dropdown} from '@bigcommerce/big-design';
 import {Design} from '../types';
 import Link from './Link';
 import TableEmptyComponent from './TableEmptyComponent';
-import {toTitle} from '../utils';
 import {DeleteIcon, EditIcon, MoreHorizIcon} from '@bigcommerce/big-design-icons';
 
 interface Props {

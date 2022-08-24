@@ -16,6 +16,7 @@ export const useDesignForm = (
   const [errors, setErrors] = useState({});
 
   const onDesignChange = (key, value) => {
+    // @ts-ignore
     setDesign((prevState) => {
       return {...prevState, [key]: value}
     });

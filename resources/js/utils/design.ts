@@ -1,7 +1,6 @@
 import {Design} from '../types';
 
 export const blankDesign: Design = {
-  id: null,
   name: '',
   limit: 12,
   columns: 4,
