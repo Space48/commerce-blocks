@@ -14,8 +14,8 @@ const ConfigProvider = ({children}: Props) => {
   return (
     <ConfigContext.Provider value={{
       appId,
-      appName: 'Your Products Anywhere',
-      appDescription: 'Add your Bigcommerce products to any website',
+      appName: 'Commerce Blocks',
+      appDescription: 'Sell your products on any website',
       csrfToken,
     }}>
       {children}

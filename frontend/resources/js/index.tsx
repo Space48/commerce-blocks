@@ -4,7 +4,7 @@ import axios from 'axios';
 import App from './App';
 import ConfigContext from './context/ConfigContext';
 
-const rootElements = document.getElementsByClassName('s48-your-products-anywhere');
+const rootElements = document.getElementsByClassName('s48-commerce-blocks');
 
 const getConfiguration = async (apiUrl, storeHash, blockId) => {
   try {
