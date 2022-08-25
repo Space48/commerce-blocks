@@ -13,6 +13,7 @@ class BlockResource extends JsonResource
             'bigcommerce_store_id' => $this->bigcommerce_store_id,
             'block_type' => $this->block_type,
             'channel_id' => $this->channel_id,
+            'design_id' => $this->design_id,
             'design' => $this->design ? $this->design->toArray() : null,
             'name' => $this->name,
             'enable_search' => $this->enable_search,

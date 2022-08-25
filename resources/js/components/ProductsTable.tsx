@@ -1,11 +1,11 @@
 import React from 'react';
-import {Table} from '@bigcommerce/big-design';
+import {Table, TablePaginationProps} from '@bigcommerce/big-design';
 import styled from 'styled-components';
-import {Product, ProductPagination} from '../types';
+import {Product} from '../types';
 
 interface Props {
   products: Product[],
-  pagination: ProductPagination,
+  pagination: TablePaginationProps,
 }
 
 const Image = styled.img`
