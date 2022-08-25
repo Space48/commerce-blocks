@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Block;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateBlockRequest extends FormRequest
 {
@@ -23,6 +25,10 @@ class CreateBlockRequest extends FormRequest
             'product_selection_product_ids' => 'nullable|array',
             'product_selection_category_ids' => 'nullable|array',
             'product_selection_search_term' => 'nullable|string|max:255',
+            'product_selection_sort_order' => [
+                'nullable',
+                Rule::in(array_keys(Block::$sortOrders)),
+            ],
         ];
     }
 }

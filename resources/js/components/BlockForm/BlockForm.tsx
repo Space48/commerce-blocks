@@ -76,6 +76,12 @@ const BlockForm = (
     onChange('block_type', LAYOUT_TYPE.Carousel);
   }, [])
 
+  // Auto-select sort order
+  useEffect(() => {
+    if (block?.product_selection_sort_order) return;
+    onChange('product_selection_sort_order', 'RELEVANCE');
+  }, [])
+
   const renderSettings = () => (
     <>
       <Panel header='Settings' id='settings-content'>

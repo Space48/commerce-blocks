@@ -65,6 +65,8 @@ use Illuminate\Support\Str;
  * @property string|null $product_selection_search_term
  * @method static \Illuminate\Database\Eloquent\Builder|Block whereProductSelectionCategoryIds($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Block whereProductSelectionSearchTerm($value)
+ * @property string|null $product_selection_sort_order
+ * @method static \Illuminate\Database\Eloquent\Builder|Block whereProductSelectionSortOrder($value)
  */
 class Block extends Model
 {
@@ -102,11 +104,24 @@ class Block extends Model
         'product_selection_product_ids',
         'product_selection_category_ids',
         'product_selection_search_term',
+        'product_selection_sort_order',
     ];
 
     public static array $blockTypes = [
         'CAROUSEL',
         'GRID',
+    ];
+
+    public static array $sortOrders = [
+        'A_TO_Z' => 'A to Z',
+        'BEST_REVIEWED' => 'Best reviewed',
+        'BEST_SELLING' => 'Best selling',
+        'FEATURED' => 'Featured',
+        'HIGHEST_PRICE' => 'Price (High to low)',
+        'LOWEST_PRICE' => 'Price (Low to High',
+        'NEWEST' => 'Newest',
+        'RELEVANCE' => 'Relevance',
+        'Z_TO_A' => 'Z to A'
     ];
 
     public function design()
