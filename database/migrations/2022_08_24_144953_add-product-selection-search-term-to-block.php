@@ -13,7 +13,7 @@ return new class extends Migration {
     public function up()
     {
         Schema::table('blocks', function (Blueprint $table) {
-            $table->json('product_selection_category_ids')->nullable();
+            $table->string('product_selection_search_term')->nullable();
         });
     }
 
@@ -25,7 +25,7 @@ return new class extends Migration {
     public function down()
     {
         Schema::table('blocks', function (Blueprint $table) {
-            $table->dropColumn('product_selection_category_ids');
+            $table->dropColumn('product_selection_search_term');
         });
     }
 };

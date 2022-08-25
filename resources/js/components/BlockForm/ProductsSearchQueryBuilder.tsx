@@ -1,27 +1,39 @@
-import React, {useState} from 'react';
-import {Box, Flex, FlexItem, Select, Small} from '@bigcommerce/big-design';
-import {CloseIcon, DeleteIcon} from '@bigcommerce/big-design-icons';
+import React, {useEffect, useState} from 'react';
+import {
+  Box,
+  Button,
+  Flex,
+  FlexItem,
+  Input,
+  Select,
+  SelectOption,
+  SelectOptionGroup,
+  Small
+} from '@bigcommerce/big-design';
+import {CloseIcon, DeleteIcon, FilterListIcon} from '@bigcommerce/big-design-icons';
 import {FeatureBadge} from '../FeatureBadge';
 import {Bullet} from '../Bullet';
 import {
-  PRODUCTS_SEARCH_SELECTION_TYPE_CATEGORY,
-  PRODUCTS_SEARCH_SELECTION_TYPE_SPECIFIC_PRODUCTS,
-  productsSearchSelectionTypeOptions
+  PRODUCTS_SEARCH_FILTER_CATEGORIES,
+  PRODUCTS_SEARCH_FILTER_SEARCH_TERM,
+  PRODUCTS_SEARCH_SELECTION_TYPE_CATEGORY, PRODUCTS_SEARCH_SELECTION_TYPE_SEARCH,
+  PRODUCTS_SEARCH_SELECTION_TYPE_SPECIFIC_PRODUCTS, productsSearchFilterOptions,
+  productsSearchSelectionTypeOptions,
 } from './config';
 import {Block} from '../../types';
+import {CategorySelector} from './CategorySelector';
 import {ProductSelector} from './ProductSelector';
-import {StyleableButton} from '../StyleableButton';
 import {useCategories, useProducts} from '../../hooks';
 import ContentLoading from '../ContentLoading';
 import {theme} from '@bigcommerce/big-design-theme';
-import styled from 'styled-components';
 import {uniq} from 'lodash'
-import {CategorySelector} from './CategorySelector';
-
-const RemoveSelectionButton = styled(StyleableButton)`
-  height: 2.15rem;
-  vertical-align: bottom;
-`;
+import {CategoriesSelector} from './CategoriesSelector';
+import {Fragment} from 'preact';
+import {SortOrderSelector} from './SortOrderSelector';
+import {CategoryBadgesList} from './CategoryBadgesList';
+import {RemoveSelectionButton} from './styled';
+import {ProductBadgesList} from './ProductBadgesList';
+import {SearchFilters} from './SearchFilters';
 
 interface Props {
   storeHash: string;
@@ -51,7 +63,7 @@ const ProductsSearchQueryBuilder = ({storeHash, block, onChange}: Props) => {
     onChange('product_selection_product_ids', uniq([...selectedProducts, ...ids]))
   }
 
-  const unselectProduct = (id) => {
+  const onDeselectProduct = (id) => {
     if (!selectedProducts.includes(id)) return;
     onChange('product_selection_product_ids', selectedProducts.filter((prevId) => prevId !== id))
   }
@@ -61,7 +73,7 @@ const ProductsSearchQueryBuilder = ({storeHash, block, onChange}: Props) => {
     onChange('product_selection_category_ids', [id]);
   }
 
-  const unselectCategory = (id) => {
+  const onDeselectCategory = (id) => {
     if (!selectedCategories.includes(id)) return;
     onChange('product_selection_category_ids', selectedCategories.filter((prevId) => prevId !== id))
   }
@@ -75,7 +87,7 @@ const ProductsSearchQueryBuilder = ({storeHash, block, onChange}: Props) => {
         <FlexItem marginTop="small">
           <Bullet/>
         </FlexItem>
-        <FlexItem marginRight="large">
+        <FlexItem marginRight="medium">
           <Select
             options={productsSearchSelectionTypeOptions}
             value={block?.product_selection_type ?? ''}
@@ -88,7 +100,7 @@ const ProductsSearchQueryBuilder = ({storeHash, block, onChange}: Props) => {
             placeholder="Choose product selection type"
           />
         </FlexItem>
-        <FlexItem marginRight="large">
+        <FlexItem marginRight="medium">
           {
             block?.product_selection_type === PRODUCTS_SEARCH_SELECTION_TYPE_SPECIFIC_PRODUCTS ?
               <ProductSelector storeHash={storeHash} onSelectionChange={onNewlySelectedProducts}/>
@@ -110,24 +122,7 @@ const ProductsSearchQueryBuilder = ({storeHash, block, onChange}: Props) => {
           <Box marginLeft="xxLarge">
             <ContentLoading loading={false} error={productsError ?? null}>
               {selectedProducts.length > 0 && products ?
-                <Flex flexDirection="column">
-                  {products.map(({id, name}) => (
-                    <FlexItem key={id} marginLeft="xSmall" marginVertical="xxSmall">
-                      <FeatureBadge bold={false} color={theme.colors.secondary20}>
-                        <Small color="secondary70" bold={true}>{name}</Small>
-                      </FeatureBadge>
-                      <RemoveSelectionButton
-                        variant="subtle"
-                        iconOnly={<CloseIcon/>}
-                        type="button"
-                        onClick={() => unselectProduct(id)}
-                      >
-                        Remove
-                      </RemoveSelectionButton>
-                    </FlexItem>
-
-                  ))}
-                </Flex>
+                <ProductBadgesList products={products} onDeselect={onDeselectProduct}/>
                 : null
               }
             </ContentLoading>
@@ -135,30 +130,31 @@ const ProductsSearchQueryBuilder = ({storeHash, block, onChange}: Props) => {
           : null
       }
       {
-        block?.product_selection_type === PRODUCTS_SEARCH_SELECTION_TYPE_CATEGORY && selectedProducts.length > 0 ?
-          <Box marginLeft="xxLarge">
-            <ContentLoading loading={false} error={categoriesError ?? null}>
+        block?.product_selection_type === PRODUCTS_SEARCH_SELECTION_TYPE_CATEGORY && selectedCategories.length > 0 ?
+          <ContentLoading loading={false} error={categoriesError ?? null}>
+            <Box marginLeft="xxLarge">
               {selectedCategories.length > 0 && categories ?
-                <Flex flexDirection="column">
-                  {categories.map(({id, name}) => (
-                    <FlexItem key={id} marginLeft="xSmall" marginVertical="xxSmall">
-                      <FeatureBadge bold={false} color={theme.colors.secondary20}>
-                        <Small color="secondary70" bold={true}>{name}</Small>
-                      </FeatureBadge>
-                      <RemoveSelectionButton
-                        variant="subtle"
-                        iconOnly={<CloseIcon/>}
-                        type="button"
-                        onClick={() => unselectCategory(id)}
-                      >
-                        Remove
-                      </RemoveSelectionButton>
-                    </FlexItem>
-
-                  ))}
-                </Flex>
+                <CategoryBadgesList categories={categories} onDeselect={onDeselectCategory}/>
                 : null
               }
+            </Box>
+            <Box marginLeft="xSmall">
+              <SortOrderSelector block={block} onChange={onChange}/>
+            </Box>
+          </ContentLoading>
+          : null
+      }
+      {
+        block?.product_selection_type === PRODUCTS_SEARCH_SELECTION_TYPE_SEARCH ?
+          <Box marginLeft="xxLarge">
+            <ContentLoading loading={false} error={categoriesError ?? null}>
+              <SearchFilters
+                storeHash={storeHash}
+                block={block}
+                onChange={onChange}
+                categories={categories}
+                onDeselectCategory={onDeselectCategory}
+              />
             </ContentLoading>
           </Box>
           : null

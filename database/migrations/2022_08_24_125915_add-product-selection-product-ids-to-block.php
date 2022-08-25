@@ -25,7 +25,7 @@ return new class extends Migration {
     public function down()
     {
         Schema::table('blocks', function (Blueprint $table) {
-            $table->json('product_selection_product_ids');
+            $table->dropColumn('product_selection_product_ids');
         });
     }
 };
