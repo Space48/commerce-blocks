@@ -4,6 +4,10 @@ if ($http_x_forwarded_proto != 'https') {
     rewrite ^ https://$host$request_uri? permanent;
 }
 
+location ~* \.(eot|ttf|woff|woff2|css|js)$ {
+    add_header Access-Control-Allow-Origin *;
+}
+
 location / {
     try_files $uri @rewriteapp;
 }
