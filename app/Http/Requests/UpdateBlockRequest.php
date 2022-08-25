@@ -21,6 +21,8 @@ class UpdateBlockRequest extends FormRequest
             'block_type' => 'string|max:255',
             'channel_id' => 'integer',
             'design_id' => 'nullable|integer',
+            'enable_filters' => 'boolean',
+            'enable_search' => 'boolean',
             'product_selection_type' => 'nullable|string|max:255',
             'product_selection_category_ids' => 'nullable|array',
             'product_selection_search_term' => 'nullable|string|max:255',

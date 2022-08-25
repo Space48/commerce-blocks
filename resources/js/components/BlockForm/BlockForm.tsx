@@ -1,8 +1,9 @@
-import React, {FormEventHandler, useEffect, useState} from 'react';
+import React, {FormEventHandler, useEffect} from 'react';
 import {useHistory, useLocation} from 'react-router-dom';
 import {
   Box,
-  Button, Flex,
+  Button,
+  Checkbox,
   FlexItem,
   Form,
   FormGroup,
@@ -10,7 +11,6 @@ import {
   Panel,
   Select,
   Tabs,
-  Text
 } from '@bigcommerce/big-design';
 import {useTabs} from '../../hooks';
 import SaveBar from '../SaveBar';
@@ -20,8 +20,6 @@ import {DeleteIcon} from '@bigcommerce/big-design-icons';
 import {blockTypeOptions} from '../../utils/block';
 import {BlockPreview} from './BlockPreview';
 import {BlockSnippet} from './BlockSnippet';
-import {FeatureBadge} from '../FeatureBadge';
-import {Bullet} from '../Bullet';
 import {ProductsSearchQueryBuilder} from './ProductsSearchQueryBuilder';
 
 interface Props {
@@ -124,6 +122,24 @@ const BlockForm = (
             placeholder="Choose type"
           />
         </FormGroup>
+        {
+          block?.block_type === LAYOUT_TYPE.Grid ?
+            <>
+              <FormGroup>
+                <Checkbox
+                  label="Show filters"
+                  checked={block?.enable_filters ?? true}
+                  onChange={() => onChange('enable_filters', block.enable_filters === undefined ? false : !block.enable_filters)}/>
+              </FormGroup>
+              <FormGroup>
+                <Checkbox
+                  label="Show search"
+                  checked={block?.enable_search ?? true}
+                  onChange={() => onChange('enable_search', block.enable_search === undefined ? false : !block.enable_search)}/>
+              </FormGroup>
+            </>
+            : null
+        }
         <FormGroup>
           <Select
             name="design_id"
