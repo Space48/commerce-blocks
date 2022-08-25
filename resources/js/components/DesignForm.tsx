@@ -10,6 +10,7 @@ import {
 import SaveBar from './SaveBar';
 import {Design, Errors} from '../types';
 import {useTabs} from '../hooks';
+import {ColourInput} from './ColourInput';
 
 interface Props {
   designId?: string | null;
@@ -40,7 +41,6 @@ const DesignForm = (
     {id: 'links', title: 'Links', ariaControls: 'links'},
     {id: 'text', title: 'Text', ariaControls: 'text'},
     {id: 'prices', title: 'Prices', ariaControls: 'price'},
-    {id: 'sale-prices', title: 'Sale prices', ariaControls: 'sale-price'},
   ];
   const [activeTab, onTabClick] = useTabs(tabs);
 
@@ -76,7 +76,7 @@ const DesignForm = (
       </FormGroup>
       <FormGroup>
         <Counter
-          label="Limit"
+          label="Products per page"
           name="limit"
           placeholder="12"
           required={true}
@@ -87,11 +87,11 @@ const DesignForm = (
       </FormGroup>
       <FormGroup>
         <Counter
-          label="Columns"
+          label="Products per grid row"
           name="columns"
-          placeholder="4"
+          placeholder="3"
           required={true}
-          value={design?.columns ?? 4}
+          value={design?.columns ?? 3}
           error={errors?.columns}
           onCountChange={(value) => onCounterChange('columns', value)}
         />
@@ -135,15 +135,16 @@ const DesignForm = (
         />
       </FormGroup>
       <FormGroup>
-        <Input
+        <ColourInput
           label="Colour"
-          type="text"
           name="heading_colour"
-          placeholder="#EBEBEB"
           value={design?.heading_colour ?? ''}
+          onChange={(colour) => onChange('heading_colour', colour)}
+          placeholder="#EBEBEB"
           error={errors?.heading_colour}
-          onChange={onInputChange}
         />
+      </FormGroup>
+      <FormGroup>
       </FormGroup>
     </Panel>
   )
@@ -184,14 +185,13 @@ const DesignForm = (
         />
       </FormGroup>
       <FormGroup>
-        <Input
+        <ColourInput
           label="Colour"
-          type="text"
           name="text_colour"
           placeholder="#EBEBEB"
           value={design?.text_colour ?? ''}
           error={errors?.text_colour}
-          onChange={onInputChange}
+          onChange={(colour) => onChange('text_colour', colour)}
         />
       </FormGroup>
     </Panel>
@@ -233,14 +233,13 @@ const DesignForm = (
         />
       </FormGroup>
       <FormGroup>
-        <Input
+        <ColourInput
           label="Colour"
-          type="text"
           name="price_colour"
           placeholder="#EBEBEB"
           value={design?.price_colour ?? ''}
           error={errors?.price_colour}
-          onChange={onInputChange}
+          onChange={(colour) => onChange('price_colour', colour)}
         />
       </FormGroup>
     </Panel>
@@ -282,14 +281,13 @@ const DesignForm = (
         />
       </FormGroup>
       <FormGroup>
-        <Input
+        <ColourInput
           label="Colour"
-          type="text"
           name="sale_price_colour"
           placeholder="#EBEBEB"
           value={design?.sale_price_colour ?? ''}
           error={errors?.sale_price_colour}
-          onChange={onInputChange}
+          onChange={(colour) => onChange('sale_price_colour', colour)}
         />
       </FormGroup>
     </Panel>
@@ -298,25 +296,24 @@ const DesignForm = (
   const renderLinks = () => (
     <Panel header='Links'>
       <FormGroup>
-        <Input
+        <ColourInput
           label="Colour"
-          type="text"
           name="link_colour"
           placeholder="#EBEBEB"
           value={design?.link_colour ?? ''}
           error={errors?.link_colour}
-          onChange={onInputChange}
+          onChange={(colour) => onChange('link_colour', colour)}
+
         />
       </FormGroup>
       <FormGroup>
-        <Input
+        <ColourInput
           label="Hover colour"
-          type="text"
           name="link_hover_colour"
           placeholder="#EBEBEB"
           value={design?.link_hover_colour ?? ''}
           error={errors?.link_hover_colour}
-          onChange={onInputChange}
+          onChange={(colour) => onChange('link_hover_colour', colour)}
         />
       </FormGroup>
     </Panel>
@@ -358,47 +355,43 @@ const DesignForm = (
         />
       </FormGroup>
       <FormGroup>
-        <Input
+        <ColourInput
           label="Background colour"
-          type="text"
           name="button_colour"
           placeholder="#EBEBEB"
           value={design?.button_colour ?? ''}
           error={errors?.button_colour}
-          onChange={onInputChange}
+          onChange={(colour) => onChange('button_colour', colour)}
         />
       </FormGroup>
       <FormGroup>
-        <Input
+        <ColourInput
           label="Background hover colour"
-          type="text"
           name="button_hover_colour"
           placeholder="#EBEBEB"
           value={design?.button_hover_colour ?? ''}
           error={errors?.button_hover_colour}
-          onChange={onInputChange}
+          onChange={(colour) => onChange('button_hover_colour', colour)}
         />
       </FormGroup>
       <FormGroup>
-        <Input
+        <ColourInput
           label="Text colour"
-          type="text"
           name="button_text_colour"
           placeholder="#EBEBEB"
           value={design?.button_text_colour ?? ''}
           error={errors?.button_text_colour}
-          onChange={onInputChange}
+          onChange={(colour) => onChange('button_text_colour', colour)}
         />
       </FormGroup>
       <FormGroup>
-        <Input
+        <ColourInput
           label="Text hover colour"
-          type="text"
-          name="button_text_colour"
+          name="button_hover_text_colour"
           placeholder="#EBEBEB"
           value={design?.button_hover_text_colour ?? ''}
           error={errors?.button_hover_text_colour}
-          onChange={onInputChange}
+          onChange={(colour) => onChange('button_hover_text_colour', colour)}
         />
       </FormGroup>
     </Panel>
@@ -416,8 +409,7 @@ const DesignForm = (
         {activeTab === 'settings' && renderSettings()}
         {activeTab === 'headings' && renderHeadings()}
         {activeTab === 'text' && renderText()}
-        {activeTab === 'prices' && renderPrices()}
-        {activeTab === 'sale-prices' && renderSalePrices()}
+        {activeTab === 'prices' && <>{renderPrices()}{renderSalePrices()}</>}
         {activeTab === 'links' && renderLinks()}
         {activeTab === 'buttons' && renderButtons()}
       </Box>
