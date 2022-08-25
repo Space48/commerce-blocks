@@ -67,6 +67,8 @@ export interface Block {
   channel_id?: number | null;
   design_id?: number | null;
   block_type?: string | null;
+  enable_filters?: boolean;
+  enable_search?: boolean;
   valid_domain?: string;
   product_selection_type?: string
   graphql_access_token?: string;

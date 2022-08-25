@@ -21,6 +21,8 @@ class CreateBlockRequest extends FormRequest
             'block_type' => 'required|string|max:255',
             'channel_id' => 'required|integer',
             'design_id' => 'nullable|integer',
+            'enable_filters' => 'boolean',
+            'enable_search' => 'boolean',
             'product_selection_type' => 'nullable|string|max:255',
             'product_selection_product_ids' => 'nullable|array',
             'product_selection_category_ids' => 'nullable|array',
