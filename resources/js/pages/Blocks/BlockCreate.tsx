@@ -37,7 +37,6 @@ const BlockCreate = () => {
     <>
       <PageHeader
         title="Create block"
-        storeHash={store_hash}
         backLinkText="Blocks"
         backLinkHref={backLinkHref}
       />

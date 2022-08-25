@@ -37,7 +37,6 @@ const DesignEdit = () => {
     <>
       <PageHeader
         title={design?.name ? `Edit ${design.name}` : 'Edit design'}
-        storeHash={store_hash}
         backLinkText="Designs"
         backLinkHref={backLinkHref}
       />

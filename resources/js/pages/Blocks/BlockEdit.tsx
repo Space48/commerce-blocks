@@ -11,7 +11,7 @@ const BlockEdit = () => {
   const {store_hash, block_id} = useParams();
   const location = useLocation();
   const backLinkHref = location?.state?.backLinkHref ?? `/stores/${store_hash}`;
-  
+
   const [initialBlock, blockError, blockIsLoading] = useBlock(store_hash, block_id);
   const [snippet, snippetError, snippetIsLoading] = useSnippet(store_hash, block_id);
   const [designs, designError, isDesignsLoading] = useDesigns(store_hash);
@@ -35,8 +35,7 @@ const BlockEdit = () => {
   return (
     <>
       <PageHeader
-        title={block?.name ?? 'Update block'}
-        storeHash={store_hash}
+        title={block?.name ? `Edit ${block.name}` : 'Edit design'}
         backLinkText="Blocks"
         backLinkHref={backLinkHref}
       />

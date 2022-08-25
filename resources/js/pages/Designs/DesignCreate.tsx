@@ -25,12 +25,11 @@ const DesignCreate = () => {
     onSuccess,
     onError
   );
-  
+
   return (
     <>
       <PageHeader
         title="Create design"
-        storeHash={store_hash}
         backLinkText="Designs"
         backLinkHref={backLinkHref}
       />
