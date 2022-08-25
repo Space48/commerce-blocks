@@ -42,6 +42,7 @@ export interface ContextType {
   product_selection_category_ids: number[];
   product_selection_search_term: string;
   product_selection_sort_order: string;
+  hide_out_of_stock_products: boolean;
 }
 
 export interface Product {

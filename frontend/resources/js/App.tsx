@@ -59,7 +59,8 @@ const App = () => {
     sortOrder,
     searchTerm,
     currentSelectedCategories,
-    currentSelectedAttributes
+    currentSelectedAttributes,
+    config?.hide_out_of_stock_products ?? false,
   );
 
   const [result] = useQuery({ query });
