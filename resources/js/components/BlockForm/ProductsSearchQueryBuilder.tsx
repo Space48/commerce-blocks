@@ -63,11 +63,11 @@ const ProductsSearchQueryBuilder = ({storeHash, block, onChange}: Props) => {
       return;
     }
 
-    if (block?.product_selection_search_term) {
+    if (block?.product_selection_search_term && block.product_selection_search_term?.length > 0) {
       addSearchFilter({type: PRODUCTS_SEARCH_FILTER_SEARCH_TERM});
     }
 
-    if (block?.product_selection_category_ids) {
+    if (block?.product_selection_category_ids && block.product_selection_category_ids?.length > 0) {
       addSearchFilter({type: PRODUCTS_SEARCH_FILTER_CATEGORIES});
     }
   }, [block?.product_selection_type]);
@@ -336,7 +336,7 @@ const ProductsSearchQueryBuilder = ({storeHash, block, onChange}: Props) => {
               ))
             }
             {availableSearchFilterOptions.length > 0 ?
-              <Button variant="subtle" onClick={() => addSearchFilter()} type="button" iconLeft={<FilterListIcon/>}>
+              <Button variant="subtle" marginLeft="small" onClick={() => addSearchFilter()} type="button" iconLeft={<FilterListIcon/>}>
                 Add search filter
               </Button>
               : null
