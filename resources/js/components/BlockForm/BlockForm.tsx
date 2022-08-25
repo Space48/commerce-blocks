@@ -1,4 +1,4 @@
-import React, {FormEventHandler, useEffect} from 'react';
+import React, {FormEventHandler, useEffect, useMemo} from 'react';
 import {useHistory, useLocation} from 'react-router-dom';
 import {
   Box,
@@ -14,7 +14,7 @@ import {
 } from '@bigcommerce/big-design';
 import {useTabs} from '../../hooks';
 import SaveBar from '../SaveBar';
-import {Block, Channel, Errors, LAYOUT_TYPE} from '../../types';
+import {Block, Channel, Design, DesignOptions, Errors, LAYOUT_TYPE} from '../../types';
 import {channelsAsSelectOptions} from '../../utils';
 import {DeleteIcon} from '@bigcommerce/big-design-icons';
 import {blockTypeOptions} from '../../utils/block';
@@ -26,6 +26,7 @@ interface Props {
   blockId?: string | null;
   storeHash: string;
   block: Block | null;
+  designs: Design[] | null;
   snippet: string | undefined;
   channels: Channel[];
   onChange: (key: string, value: any) => void;
@@ -39,6 +40,7 @@ const BlockForm = (
     blockId,
     storeHash,
     block,
+    designs,
     snippet,
     channels,
     onChange,
@@ -60,25 +62,37 @@ const BlockForm = (
   const onInputChange = (event) => onChange(event.target.name, event.target.value);
 
   const channelOptions = channelsAsSelectOptions(channels);
-  const designOptions = [{content: 'Default', value: null}]
+  const designOptions = useMemo(() => {
+    const options : DesignOptions[] = [];
+    options.push({content: 'Default', value: null})
+    if (designs && designs.length > 0) {
+      designs?.forEach((design) => {
+        options.push({
+          content: design.name,
+          value: design.id
+        })
+      });
+    }
+    return options;
+  }, [designs]);
 
   // Auto-select the first channel
   useEffect(() => {
     if (block?.channel_id) return;
     onChange('channel_id', channels[0]?.id);
-  }, [channels])
+  }, [channels]);
 
   // Auto-select block type
   useEffect(() => {
     if (block?.block_type) return;
     onChange('block_type', LAYOUT_TYPE.Carousel);
-  }, [])
+  }, []);
 
   // Auto-select sort order
   useEffect(() => {
     if (block?.product_selection_sort_order) return;
     onChange('product_selection_sort_order', 'RELEVANCE');
-  }, [])
+  }, []);
 
   const renderSettings = () => (
     <>

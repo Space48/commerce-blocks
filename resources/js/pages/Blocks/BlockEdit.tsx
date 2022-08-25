@@ -2,7 +2,7 @@ import React from 'react';
 import {useLocation, useParams} from 'react-router-dom';
 import {ContentLoading, PageBody, PageHeader} from '../../components';
 import {UPDATE} from '../../utils/block';
-import {useBlock, useBlockForm, useChannels} from '../../hooks';
+import {useBlock, useBlockForm, useChannels, useDesigns} from '../../hooks';
 import {notifyError, notifySuccess} from '../../utils';
 import {useSnippet} from '../../hooks/useSnippet';
 import {BlockForm} from '../../components/BlockForm';
@@ -14,6 +14,7 @@ const BlockEdit = () => {
   
   const [initialBlock, blockError, blockIsLoading] = useBlock(store_hash, block_id);
   const [snippet, snippetError, snippetIsLoading] = useSnippet(store_hash, block_id);
+  const [designs, designError, isDesignsLoading] = useDesigns(store_hash);
 
   const onSuccess = () => notifySuccess(`Your block was updated.`);
   const onError = (message: string) => notifyError(message ?? `Your block could not be updated.`);
@@ -41,14 +42,15 @@ const BlockEdit = () => {
       />
       <PageBody>
         <ContentLoading
-          loading={blockIsLoading || channelsIsLoading || snippetIsLoading}
-          error={blockError ?? channelsErrorMessage ?? snippetError ?? null}
+          loading={blockIsLoading || channelsIsLoading || snippetIsLoading || isDesignsLoading}
+          error={blockError ?? channelsErrorMessage ?? snippetError ?? designError ?? null}
         >
           <BlockForm
             blockId={block_id}
             storeHash={store_hash}
             channels={channels}
             block={block}
+            designs={designs}
             snippet={snippet}
             onChange={onBlockChange}
             onSubmit={onSubmit}

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Box, Checkbox, Radio, StatefulTreeProps, Table, TablePaginationProps, Text} from '@bigcommerce/big-design';
+import {Box, Checkbox, Radio, Table, TablePaginationProps, Text} from '@bigcommerce/big-design';
 import {
   ChevronRightIcon,
   ExpandMoreIcon,
@@ -7,8 +7,6 @@ import {
 import {useExpandable} from '../hooks';
 import {StyleableButton} from './StyleableButton';
 import {TreeSelectableType} from '@bigcommerce/big-design/dist/components/Tree/types';
-import {Simulate} from 'react-dom/test-utils';
-import select = Simulate.select;
 
 interface Props {
   treeNodes: [];
@@ -76,11 +74,11 @@ const StatefulTree = (
   const tableRows = transformTreeNodesToTableRows(treeNodes);
 
   const emptyFunc = () => {
+    return null;
   };
 
   return (
     <Table
-      border='0px'
       items={tableRows}
       pagination={pagination}
       headerless={headerless}

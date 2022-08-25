@@ -66,6 +66,7 @@ export interface Block {
   name?: string,
   channel_id?: number | null;
   design_id?: number | null;
+  design?: Design;
   block_type?: string | null;
   enable_filters?: boolean;
   enable_search?: boolean;
@@ -82,13 +83,9 @@ export interface Block {
   updated_at?: string | null;
 }
 
-export interface ProductPagination extends TablePaginationProps {
-
-}
-
 export interface Design {
-  id?: number;
-  name?: string;
+  id: number;
+  name: string;
   limit: number | null;
   columns: number | null;
   heading_font_family: string | null;
@@ -116,4 +113,9 @@ export interface Design {
   button_hover_colour: string | null;
   button_text_colour: string | null;
   button_hover_text_colour: string | null;
+}
+
+export interface  DesignOptions {
+  content: string;
+  value: number | null;
 }
