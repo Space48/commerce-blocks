@@ -155,7 +155,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <PageHeader title="Commerce Block Party" storeHash={store_hash}/>
+      <PageHeader title="Commerce Block Party"/>
       <PageBody>
         <ContentLoading
           loading={isBlocksLoading || isDesignsLoading}
