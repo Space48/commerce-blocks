@@ -1,23 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {
   Box,
-  Button,
   Flex,
   FlexItem,
-  Input,
   Select,
-  SelectOption,
-  SelectOptionGroup,
-  Small
 } from '@bigcommerce/big-design';
-import {CloseIcon, DeleteIcon, FilterListIcon} from '@bigcommerce/big-design-icons';
+import {DeleteIcon} from '@bigcommerce/big-design-icons';
 import {FeatureBadge} from '../FeatureBadge';
 import {Bullet} from '../Bullet';
 import {
-  PRODUCTS_SEARCH_FILTER_CATEGORIES,
-  PRODUCTS_SEARCH_FILTER_SEARCH_TERM,
   PRODUCTS_SEARCH_SELECTION_TYPE_CATEGORY, PRODUCTS_SEARCH_SELECTION_TYPE_SEARCH,
-  PRODUCTS_SEARCH_SELECTION_TYPE_SPECIFIC_PRODUCTS, productsSearchFilterOptions,
+  PRODUCTS_SEARCH_SELECTION_TYPE_SPECIFIC_PRODUCTS,
   productsSearchSelectionTypeOptions,
 } from './config';
 import {Block} from '../../types';
@@ -25,13 +18,9 @@ import {CategorySelector} from './CategorySelector';
 import {ProductSelector} from './ProductSelector';
 import {useCategories, useProducts} from '../../hooks';
 import ContentLoading from '../ContentLoading';
-import {theme} from '@bigcommerce/big-design-theme';
 import {uniq} from 'lodash'
-import {CategoriesSelector} from './CategoriesSelector';
-import {Fragment} from 'preact';
 import {SortOrderSelector} from './SortOrderSelector';
 import {CategoryBadgesList} from './CategoryBadgesList';
-import {RemoveSelectionButton} from './styled';
 import {ProductBadgesList} from './ProductBadgesList';
 import {SearchFilters} from './SearchFilters';
 
