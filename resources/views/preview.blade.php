@@ -1,5 +1,5 @@
 <div
-    class="s48-your-products-anywhere"
+    class="s48-commerce-blocks"
     data-api-url="TODO"
     data-store-hash="TODO"
     data-block-id="TODO"

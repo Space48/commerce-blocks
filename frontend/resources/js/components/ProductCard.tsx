@@ -17,7 +17,7 @@ const StyledProductCard = styled.div`
   flex-direction: column;
   justify-content: space-between;
   position: relative;
-  &:hover .s48-ypa-product__overlay {
+  &:hover .s48-cb-product__overlay {
     display: flex;
   }
 `;

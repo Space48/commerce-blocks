@@ -155,7 +155,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <PageHeader title="Your products anywhere" storeHash={store_hash}/>
+      <PageHeader title="Commerce Block Party" storeHash={store_hash}/>
       <PageBody>
         <ContentLoading
           loading={isBlocksLoading || isDesignsLoading}
@@ -173,8 +173,8 @@ const Dashboard = () => {
           </Box>
         </ContentLoading>
       </PageBody>
-  </>
-);
+    </>
+  );
 }
 
 export default Dashboard;

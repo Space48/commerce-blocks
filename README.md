@@ -1,4 +1,4 @@
-# Your Products Anywhere - Space48
+# Commerce Blocks - Space48
 
 _Description goes here._
 
