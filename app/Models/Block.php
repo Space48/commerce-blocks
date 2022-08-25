@@ -78,6 +78,7 @@ class Block extends Model
         'graphql_filters' => 'array',
         'product_selection_product_ids' => 'array',
         'product_selection_category_ids' => 'array',
+        'hide_out_of_stock_products' => 'boolean',
     ];
 
     protected $dates = [
@@ -105,6 +106,7 @@ class Block extends Model
         'product_selection_category_ids',
         'product_selection_search_term',
         'product_selection_sort_order',
+        'hide_out_of_stock_products',
     ];
 
     public static array $blockTypes = [

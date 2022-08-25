@@ -70,6 +70,7 @@ export interface Block {
   block_type?: string | null;
   enable_filters?: boolean;
   enable_search?: boolean;
+  hide_out_of_stock_products?: boolean;
   valid_domain?: string;
   product_selection_type?: string
   graphql_access_token?: string;

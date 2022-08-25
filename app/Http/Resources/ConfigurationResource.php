@@ -23,6 +23,7 @@ class ConfigurationResource extends JsonResource
             'access_token' => $this->graphql_access_token,
             'enable_search' => $this->enable_search ?? true,
             'enable_filters' => $this->enable_filters ?? true,
+            'hide_out_of_stock_products' => $this->hide_out_of_stock_products ?? false,
             'product_selection_type' => $this->product_selection_type,
             'product_selection_product_ids' => $this->product_selection_product_ids,
             'product_selection_category_ids' => $this->product_selection_category_ids,
