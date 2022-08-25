@@ -1,4 +1,4 @@
-import React, {FormEventHandler, useEffect, useMemo} from 'react';
+import React, {FormEventHandler, useEffect, useMemo, useState} from 'react';
 import {useHistory, useLocation} from 'react-router-dom';
 import {
   Box,
@@ -16,11 +16,12 @@ import {useTabs} from '../../hooks';
 import SaveBar from '../SaveBar';
 import {Block, Channel, Design, DesignOptions, Errors, LAYOUT_TYPE} from '../../types';
 import {channelsAsSelectOptions} from '../../utils';
-import {DeleteIcon} from '@bigcommerce/big-design-icons';
+import {AddIcon, DeleteIcon} from '@bigcommerce/big-design-icons';
 import {blockTypeOptions} from '../../utils/block';
 import {BlockPreview} from './BlockPreview';
 import {BlockSnippet} from './BlockSnippet';
 import {ProductsSearchQueryBuilder} from './ProductsSearchQueryBuilder';
+import {FeatureBadge} from "../FeatureBadge";
 
 interface Props {
   blockId?: string | null;
@@ -54,6 +55,7 @@ const BlockForm = (
     {id: 'preview', title: 'Preview', ariaControls: 'preview-content'},
   ];
   const [activeTab, onTabClick] = useTabs(tabs);
+  const [showExclusionSection, setShowExclusionSection] = useState(false);
   const history = useHistory();
   const location = useLocation();
 
@@ -198,6 +200,26 @@ const BlockForm = (
   const renderProductSelections = () => (
     <Panel header='Products'>
       <ProductsSearchQueryBuilder storeHash={storeHash} block={block} onChange={onChange}/>
+      <Button
+        marginTop='large'
+        variant='subtle' iconLeft={<AddIcon />}
+        onClick={() => setShowExclusionSection(prev => !prev)}
+      >
+        Add exclusion rule
+      </Button>
+      {showExclusionSection && (
+        <Box marginTop='large'>
+          <FeatureBadge>Hide...</FeatureBadge>
+          <Box marginTop='large' marginLeft='large'>
+            <FormGroup>
+              <Checkbox
+                label="Out of stock products"
+                checked={block?.hide_out_of_stock_products ?? false}
+                onChange={() => onChange('hide_out_of_stock_products', block?.hide_out_of_stock_products === undefined ? false : !block.hide_out_of_stock_products)}/>
+            </FormGroup>
+          </Box>
+        </Box>
+      )}
     </Panel>
   )
 

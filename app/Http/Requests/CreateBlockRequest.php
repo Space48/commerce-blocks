@@ -31,6 +31,7 @@ class CreateBlockRequest extends FormRequest
                 'nullable',
                 Rule::in(array_keys(Block::$sortOrders)),
             ],
+            'hide_out_of_stock_products' => 'boolean'
         ];
     }
 }
