@@ -2,7 +2,7 @@ import React from 'react';
 import {useHistory, useLocation, useParams} from 'react-router-dom';
 import {ContentLoading, PageBody, PageHeader} from '../../components';
 import {CREATE} from '../../utils/block';
-import {useBlockForm, useChannels} from '../../hooks';
+import {useBlockForm, useChannels, useDesigns} from '../../hooks';
 import {Block} from '../../types';
 import {notifyError, notifySuccess} from '../../utils';
 import {BlockForm} from '../../components/BlockForm';
@@ -31,6 +31,8 @@ const BlockCreate = () => {
   const channels = channelsResponse?.data ?? [];
   const channelsErrorMessage = channelsError?.response?.data?.error ?? null;
 
+  const [designs, designError, isDesignsLoading] = useDesigns(store_hash);
+
   return (
     <>
       <PageHeader
@@ -40,11 +42,15 @@ const BlockCreate = () => {
         backLinkHref={backLinkHref}
       />
       <PageBody>
-        <ContentLoading loading={isLoading || isLoading} error={channelsErrorMessage ?? null}>
+        <ContentLoading
+          loading={isLoading || channelsIsLoading || isDesignsLoading}
+          error={channelsErrorMessage ?? designError ?? null}
+        >
           <BlockForm
             storeHash={store_hash}
             channels={channels}
             block={block}
+            designs={designs}
             onChange={onBlockChange}
             onSubmit={onSubmit}
             errors={errors}
