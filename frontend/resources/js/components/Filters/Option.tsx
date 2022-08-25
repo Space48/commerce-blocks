@@ -1,5 +1,7 @@
 import { h } from 'preact';
 import styled from 'styled-components';
+import { useContext } from 'preact/compat';
+import ConfigContext from '../../context/ConfigContext';
 import { getClassName } from '../../helpers';
 
 /** @jsx h */
@@ -30,6 +32,7 @@ const StyledInput = styled.input`
 `;
 
 const Option = ({ label, value, count, identifier, enabled, onCategoryChange, onAttributeChange }: Props) => {
+  const config = useContext(ConfigContext);
   const handleClick = (value: string | number) => {
     if (onCategoryChange !== undefined && typeof value === 'number') {
       onCategoryChange(value);
@@ -45,14 +48,20 @@ const Option = ({ label, value, count, identifier, enabled, onCategoryChange, on
   }
 
   const labelWithCount = count > 0 ? `${label} (${count})` :  label;
+
+  const getUniqueId = (inputId) => {
+    const name = config?.block_name ?? '';
+    return `${name}_${inputId}`;
+  };
   
   return (
     <StyledDiv className={getClassName('option__container')}>
       <StyledOption className={getClassName('option')}>
-        <label className={getClassName('option__label')} htmlFor={inputId}>{labelWithCount}</label>
+        <label className={getClassName('option__label')} htmlFor={getUniqueId(inputId)}>{labelWithCount}</label>
         <StyledInput
+          id={getUniqueId(inputId)}
           className={getClassName('option__input')}
-          disabled={!enabled} id={inputId}
+          disabled={!enabled}
           type="checkbox"
           value={value}
           onChange={() => handleClick(value)}

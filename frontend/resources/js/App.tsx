@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { useCallback, useEffect, useMemo, useState } from 'preact/compat';
+import { useCallback, useEffect, useMemo, useState, useContext } from 'preact/compat';
 import { useQuery } from '@urql/preact';
 import {
   Loading,
@@ -17,9 +17,8 @@ import {
 } from './components';
 import { FiltersNode, LAYOUT_TYPE, Product, SelectedAttributes } from './types';
 import Modal from 'react-modal';
-import { SortOptions as SortOptionItems, ModalStyles, searchQuery } from './helpers';
+import { SortOptions as SortOptionItems, ModalStyles, getQuery, TYPE_SPECIFIC_PRODUCTS, TYPE_CATEGORY, TYPE_SEARCH } from './helpers';
 import ConfigContext from './context/ConfigContext';
-import { useContext } from 'preact/compat';
 
 /** @jsx h */
 
@@ -29,25 +28,41 @@ const App = () => {
   const config = useContext(ConfigContext);
   const [pagination, setPagination] = useState<string[]>([]);
   const [currentPageCursor, setCurrentPageCursor] = useState<string>('');
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState<string>(config?.product_selection_search_term ?? '');
   const [selectedProduct, setSelectedProduct] = useState<Product>();
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [sortOrder, setSortOrder] = useState('RELEVANCE');
+  const [sortOrder, setSortOrder] = useState(config?.product_selection_sort_order ?? 'RELEVANCE');
   const [currentSelectedCategories, setCurrentSelectedCategories] = useState<number[]>([]);
   const [currentSelectedAttributes, setCurrentSelectedAttributes] = useState<SelectedAttributes>({});
   const [filters, setFilters] = useState<FiltersNode[]>([]);
 
-  const [result] = useQuery({
-    query: searchQuery(
-      config?.design?.limit ?? 12,
-      currentPageCursor,
-      sortOrder,
-      searchTerm,
-      currentSelectedCategories,
-      currentSelectedAttributes
-    )
-  });
+  const getQueryIds = (type) => {
+    if (type === TYPE_SPECIFIC_PRODUCTS) {
+      return config?.product_selection_product_ids;
+    }
+    if (type === TYPE_CATEGORY || type === TYPE_SEARCH) {
+      return config?.product_selection_category_ids;
+    }
+    return [];
+  };
+  
+  const queryType = {
+    type: config?.product_selection_type,
+    ids: getQueryIds(config?.product_selection_type)
+  };
+
+  const query = getQuery(
+    queryType,
+    config?.design?.limit ?? 12,
+    currentPageCursor,
+    sortOrder,
+    searchTerm,
+    currentSelectedCategories,
+    currentSelectedAttributes
+  );
+
+  const [result] = useQuery({ query });
   const { data, fetching, error } = result;
 
   const pageInfo = useMemo(() => {
@@ -201,35 +216,38 @@ const App = () => {
     });
   }, [data?.site?.search?.searchProducts?.filters?.edges]);
 
+
   useEffect(() => {
     setCurrentPageCursor(pagination.length > 0 ? pagination[pagination.length - 1] : '');
   }, [pagination]);
-
+  
   // first load
   if (!data && fetching) {
     return <Loading />;
   }
 
   return (
-    <Container isLoading={fetching}>
+    <Container isLoading={fetching} id={config?.block_name ?? ''}>
       {error && (
         <Error error={error} />
       )}
       {data && (
         <div>
-          {config?.enable_search && (
+          {queryType.type === TYPE_CATEGORY && config?.enable_search && (
             <SearchInput
               searchTerm={searchTerm}
               onChange={handleSearchChange}
             />
           )}
-          <FiltersContainer>
-            {config?.enable_filters && filters.length > 0 && (
-              <FilterButton isOpen={isFilterOpen} onClick={handleFilterButtonClick} />
-            )}
-            <SortOptions options={SortOptionItems} selected={sortOrder} onChange={handleSortOrderChange} />
-          </FiltersContainer>
-          {config?.enable_filters && filters.length > 0 && (
+          {queryType.type !== TYPE_SPECIFIC_PRODUCTS && (
+            <FiltersContainer>
+              {config?.enable_filters && filters.length > 2 && (
+                <FilterButton isOpen={isFilterOpen} onClick={handleFilterButtonClick} />
+              )}
+              <SortOptions options={SortOptionItems} selected={sortOrder} onChange={handleSortOrderChange} />
+            </FiltersContainer>
+          )}
+          {queryType.type !== TYPE_SPECIFIC_PRODUCTS && config?.enable_filters && filters.length > 2 && (
             <FiltersList
               filters={filters}
               isOpen={isFilterOpen}

@@ -8,6 +8,7 @@ import { getClassName } from '../helpers';
 /** @jsx h */
 
 interface Props {
+  id: string;
   isLoading: boolean;
   children: PreactElement[];
 }
@@ -25,10 +26,11 @@ const StyledContainer = styled.div`
   text-align: left;
 `;
 
-const Container = ({ isLoading, children }: Props) => {
+const Container = ({ id, isLoading, children }: Props) => {
   const config = useContext(ConfigContext);
   return (
     <StyledContainer
+      id={id}
       className={getClassName('container')}
       fontFamily={config?.design?.text_font_family}
       fontSize={config?.design?.text_font_size}

@@ -1,6 +1,6 @@
 import { ModalStyles } from './modal';
 import { getPriceText } from './price';
-import { searchQuery } from './queries';
+import { getQuery, TYPE_SPECIFIC_PRODUCTS, TYPE_CATEGORY, TYPE_SEARCH } from './queries';
 import { Sizes, Devices } from './responsive';
 import { SortOptions } from './sort';
 import { getClassName } from './className';
@@ -10,7 +10,10 @@ export {
   getPriceText,
   getClassName,
   ModalStyles,
-  searchQuery,
+  getQuery,
   Sizes,
-  SortOptions
+  SortOptions,
+  TYPE_CATEGORY,
+  TYPE_SEARCH,
+  TYPE_SPECIFIC_PRODUCTS
 };

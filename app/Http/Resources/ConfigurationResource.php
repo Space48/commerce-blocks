@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Models\BigcommerceStore;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 class ConfigurationResource extends JsonResource
 {
@@ -17,6 +18,7 @@ class ConfigurationResource extends JsonResource
         $design = new DesignResource($this->design);
         return [
             'store_url' => $this->store->domain,
+            'block_name' => Str::slug($this->name),
             'block_type' => $this->block_type,
             'access_token' => $this->graphql_access_token,
             'enable_search' => $this->enable_search ?? true,
