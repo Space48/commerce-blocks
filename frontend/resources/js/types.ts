@@ -32,6 +32,7 @@ export interface DesignContext {
 export interface ContextType {
   store_url: string;
   block_type: string;
+  block_name: string;
   access_token: string;
   enable_search: boolean;
   enable_filters: boolean;
@@ -39,6 +40,8 @@ export interface ContextType {
   product_selection_type: "specific_products" | "category" | "search";
   product_selection_product_ids: number[];
   product_selection_category_ids: number[];
+  product_selection_search_term: string;
+  product_selection_sort_order: string;
 }
 
 export interface Product {

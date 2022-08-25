@@ -17,7 +17,7 @@ import {
 } from './components';
 import { FiltersNode, LAYOUT_TYPE, Product, SelectedAttributes } from './types';
 import Modal from 'react-modal';
-import { SortOptions as SortOptionItems, ModalStyles, getQuery, TYPE_SPECIFIC_PRODUCTS, TYPE_CATEGORY } from './helpers';
+import { SortOptions as SortOptionItems, ModalStyles, getQuery, TYPE_SPECIFIC_PRODUCTS, TYPE_CATEGORY, TYPE_SEARCH } from './helpers';
 import ConfigContext from './context/ConfigContext';
 
 /** @jsx h */
@@ -28,11 +28,11 @@ const App = () => {
   const config = useContext(ConfigContext);
   const [pagination, setPagination] = useState<string[]>([]);
   const [currentPageCursor, setCurrentPageCursor] = useState<string>('');
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState<string>(config?.product_selection_search_term ?? '');
   const [selectedProduct, setSelectedProduct] = useState<Product>();
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [sortOrder, setSortOrder] = useState('RELEVANCE');
+  const [sortOrder, setSortOrder] = useState(config?.product_selection_sort_order ?? 'RELEVANCE');
   const [currentSelectedCategories, setCurrentSelectedCategories] = useState<number[]>([]);
   const [currentSelectedAttributes, setCurrentSelectedAttributes] = useState<SelectedAttributes>({});
   const [filters, setFilters] = useState<FiltersNode[]>([]);
@@ -41,7 +41,7 @@ const App = () => {
     if (type === TYPE_SPECIFIC_PRODUCTS) {
       return config?.product_selection_product_ids;
     }
-    if (type === TYPE_CATEGORY) {
+    if (type === TYPE_CATEGORY || type === TYPE_SEARCH) {
       return config?.product_selection_category_ids;
     }
     return [];
@@ -216,6 +216,7 @@ const App = () => {
     });
   }, [data?.site?.search?.searchProducts?.filters?.edges]);
 
+
   useEffect(() => {
     setCurrentPageCursor(pagination.length > 0 ? pagination[pagination.length - 1] : '');
   }, [pagination]);
@@ -226,13 +227,13 @@ const App = () => {
   }
 
   return (
-    <Container isLoading={fetching}>
+    <Container isLoading={fetching} id={config?.block_name ?? ''}>
       {error && (
         <Error error={error} />
       )}
       {data && (
         <div>
-          {queryType.type !== TYPE_SPECIFIC_PRODUCTS && config?.enable_search && (
+          {queryType.type === TYPE_CATEGORY && config?.enable_search && (
             <SearchInput
               searchTerm={searchTerm}
               onChange={handleSearchChange}

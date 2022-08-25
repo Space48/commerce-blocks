@@ -2,10 +2,10 @@ export const TYPE_SPECIFIC_PRODUCTS = 'specific_products';
 export const TYPE_SEARCH = 'search';
 export const TYPE_CATEGORY = 'category';
 
-const getCategoriesFilter = (categoryFilters) => categoryFilters.length > 0
+const getCategoriesFilter = (categoryFilters) => categoryFilters && categoryFilters.length > 0
   ? `categoryEntityIds: [${categoryFilters.join(',')}]` : '';
 
-const getCategoryFilter = (categoryFilter) => categoryFilter.length > 0
+const getCategoryFilter = (categoryFilter) => categoryFilter && categoryFilter.length > 0
   ? `categoryEntityId: ${categoryFilter[0]}` : '';
 
 const getAttributeFilter = (attributes) => {
