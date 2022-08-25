@@ -1,0 +1,25 @@
+{
+    "name": "Commerce Blocks",
+    "description": "Sell your products on any website",
+    "repository": "https://github.com/Space48/commerce-blocks",
+    "stack": "heroku-22",
+    "addons": [
+        "heroku-postgresql:hobby-dev",
+        "scheduler:standard"
+    ],
+    "buildpacks": [
+        {
+            "url": "heroku/node"
+        },
+        {
+            "url": "heroku/php"
+        }
+    ],
+    "env": {
+        "APP_KEY": {
+            "generator": "secret"
+        },
+        "LOG_CHANNEL": "errorlog"
+    }
+}
+
