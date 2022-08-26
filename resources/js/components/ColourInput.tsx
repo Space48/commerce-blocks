@@ -25,7 +25,6 @@ const Cover = styled.div`
 
 const StyledPreview = styled.div`
   background-color: ${props => props.backgroundColor};
-  display: inline-block;
   width: 18px;
   height: 18px;
   border-radius: 5px;
