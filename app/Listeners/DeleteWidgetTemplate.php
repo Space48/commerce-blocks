@@ -23,6 +23,6 @@ class DeleteWidgetTemplate
      */
     public function handle(StoreUninstalled $event)
     {
-        \App\Jobs\DeleteWidget::dispatchSync($event->store);
+        \App\Jobs\DeleteWidget::dispatch($event->store)->onQueue('high');
     }
 }

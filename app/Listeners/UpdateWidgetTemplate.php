@@ -10,6 +10,6 @@ class UpdateWidgetTemplate
 
     public function handle(BlockEvent $event): void
     {
-        PublishWidget::dispatchSync($event->block->store);
+        PublishWidget::dispatch($event->block->store)->onQueue('high');
     }
 }
