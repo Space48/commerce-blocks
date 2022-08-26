@@ -58,7 +58,7 @@ const ColourInput = (
       <Flex flexDirection="row" alignItems="flex-end">
         <FlexItem marginRight="small">
           <Input
-            iconLeft={value ? <StyledPreview backgroundColor={value ?? 'transparent'} /> : null}
+            iconLeft={value ? <StyledPreview backgroundColor={value} /> : null}
             label={label}
             type="text"
             name={name}
