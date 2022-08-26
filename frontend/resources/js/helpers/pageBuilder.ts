@@ -1,0 +1,1 @@
+export const isPageBuilder = () => window.parent.location.href.includes('page-builder');
