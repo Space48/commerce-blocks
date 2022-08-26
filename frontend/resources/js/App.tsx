@@ -46,7 +46,7 @@ const App = () => {
     }
     return [];
   };
-  
+
   const queryType = {
     type: config?.product_selection_type,
     ids: getQueryIds(config?.product_selection_type)
@@ -100,7 +100,7 @@ const App = () => {
       });
     }
   }, [pageInfo?.hasNextPage, pageInfo?.endCursor]);
-  
+
   const handleSearchChange = useCallback((event) => {
     // @ts-ignore
     setSearchTerm(event.target.value);
@@ -127,7 +127,7 @@ const App = () => {
     event.preventDefault();
     setIsFilterOpen(prev => !prev);
   }, []);
-  
+
   const handleCategorySelection = useCallback((entityId: number) => {
     setCurrentSelectedCategories(prev => {
       if (prev.includes(entityId)) {
@@ -221,7 +221,7 @@ const App = () => {
   useEffect(() => {
     setCurrentPageCursor(pagination.length > 0 ? pagination[pagination.length - 1] : '');
   }, [pagination]);
-  
+
   // first load
   if (!data && fetching) {
     return <Loading />;
@@ -290,6 +290,7 @@ const App = () => {
         isOpen={isQuickViewOpen}
         onRequestClose={handleOnQuickViewClose}
         style={ModalStyles}
+        portalClassName={"s48-commerce-blocks"}
       >
         <QuickView
           product={selectedProduct}

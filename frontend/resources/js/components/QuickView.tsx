@@ -4,6 +4,9 @@ import Slider from 'react-slick';
 import { Product } from '../types';
 import { Image, LinkButton, Name, Prices, Sku, PlaceholderImage } from './Product';
 import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import './slick-reset.scss';
+import './slick-custom.scss';
 import { Devices, getClassName } from '../helpers';
 import { CloseIcon } from './Icons';
 import ConfigContext from '../context/ConfigContext';
@@ -23,7 +26,7 @@ const StyledDiv = styled.div`
   color: ${props => props.textColor ?? 'inherit'};
   display: flex;
   flex-direction: column;
-  
+
   @media ${Devices.tablet} {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -41,17 +44,21 @@ const StyledCloseAnchor = styled.a`
   box-sizing: border-box;
   border-radius: 5px;
   color: ${props => props.iconColor ?? '#000'};
-}`;
+
+  svg {
+    display: grid;
+  }
+`;
 
 const StyledSlider = styled.div`
   min-width: 300px;
   margin-bottom: 40px;
-  
+
   @media ${Devices.tablet} {
     min-width: 350px;
     margin-bottom: 0;
   }
-  
+
   @media ${Devices.desktop} {
     min-width: 400px;
   }
@@ -62,7 +69,7 @@ const StyledProductDiv = styled.div`
     min-width: 200px;
     margin-left: ${props => props.hasImage ? '20px' : '0'};
   }
-  
+
    @media ${Devices.desktop} {
     margin-left: ${props => props.hasImage ? '60px' : '0'};
   }

@@ -7,6 +7,8 @@ import { getClassName } from '../../helpers';
 /** @jsx h */
 
 const StyledButton = styled.button`
+  background: none;
+  border: 0;
   color: ${props => props.iconColor ?? '#000'};
   padding: 5px;
   &:disabled {

@@ -6,7 +6,8 @@ import ProductCard from './ProductCard';
 import Pagination from './Pagination';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import './slick-custom.css';
+import './slick-reset.scss';
+import './slick-custom.scss';
 import { useRef } from 'preact/compat';
 import { Sizes } from '../helpers';
 
