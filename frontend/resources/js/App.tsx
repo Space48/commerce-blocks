@@ -141,6 +141,8 @@ const App = () => {
     resetPagination();
     setIsFilterOpen(prev => !prev);
   }, []);
+  
+  const requiresSearch = () => (queryType.type !== TYPE_SPECIFIC_PRODUCTS && config?.product_selection_search_term === null);
 
   const handleCategorySelection = useCallback((entityId: number) => {
     resetPagination();
@@ -249,7 +251,7 @@ const App = () => {
       )}
       {data && (
         <div>
-          {queryType.type === TYPE_CATEGORY && config?.enable_search && (
+          {requiresSearch() && config?.enable_search && (
             <SearchInput
               searchTerm={searchTerm}
               onChange={handleSearchChange}
