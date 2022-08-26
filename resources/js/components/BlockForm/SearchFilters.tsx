@@ -3,6 +3,7 @@ import {Box, Button, Flex, FlexItem, Input, Select, SelectOption, SelectOptionGr
 import {Bullet} from '../Bullet';
 import {FeatureBadge} from '../FeatureBadge';
 import {theme} from '@bigcommerce/big-design-theme';
+import {uniq} from 'lodash'
 import {
   PRODUCTS_SEARCH_FILTER_CATEGORIES,
   PRODUCTS_SEARCH_FILTER_SEARCH_TERM, PRODUCTS_SEARCH_SELECTION_TYPE_CATEGORY, PRODUCTS_SEARCH_SELECTION_TYPE_SEARCH,
@@ -80,7 +81,7 @@ const SearchFilters = ({storeHash, block, onChange, categories, onDeselectCatego
   const onInputChange = (event) => onChange(event.target.name, event.target.value);
 
   const onNewlySelectedCategories = (ids: number[]) => {
-    onChange('product_selection_category_ids', ids);
+    onChange('product_selection_category_ids', uniq([...block?.product_selection_category_ids ?? [], ...ids]))
   }
 
   useEffect(() => {
