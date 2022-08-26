@@ -8,15 +8,18 @@ interface Props {
 
 const BlockSnippet = ({blockId, snippet}: Props) => {
   return (
-    <Panel header='Snippet' id='snippet-content'>
+    <Panel header='Installation' id='installation'>
+      <p>Copy and paste this code to where you would like show your commerce block.</p>
       {blockId ?
-        <FormGroup>
-          <Textarea
-            readOnly
-            rows={7}
-            value={snippet ?? ''}
-          />
-        </FormGroup>
+        <>
+          <FormGroup>
+            <Textarea
+              readOnly
+              rows={7}
+              value={snippet ?? ''}
+            />
+          </FormGroup>
+        </>
         : <Text>The snippet will be shown once block has been created.</Text>
       }
     </Panel>

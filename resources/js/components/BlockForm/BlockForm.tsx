@@ -51,8 +51,8 @@ const BlockForm = (
   }: Props) => {
   const tabs = [
     {id: 'settings', title: 'Settings', ariaControls: 'settings-content'},
-    {id: 'snippet', title: 'Snippet', ariaControls: 'snippet-content'},
-    {id: 'preview', title: 'Preview', ariaControls: 'preview-content'},
+    {id: 'snippet', title: 'Installation', ariaControls: 'snippet-content'},
+    // {id: 'preview', title: 'Preview', ariaControls: 'preview-content'},
   ];
   const [activeTab, onTabClick] = useTabs(tabs);
   const [showExclusionSection, setShowExclusionSection] = useState(false);
