@@ -25,22 +25,19 @@ const StyledPagination = styled.div`
 
 const Pagination = ({ pages, showPreviousPageBtn, showNextPageBtn, onPaginatePrevious, onPaginateNext }: Props) => (
   <StyledPagination className={getClassName('pagination')}>
-    {(showNextPageBtn) && (
-      <PaginateButton
-        onClick={onPaginatePrevious}
-        disabled={!showPreviousPageBtn}
-      >
-        <ChevronLeft />
-      </PaginateButton>
-    )}
+    <PaginateButton
+      onClick={onPaginatePrevious}
+      disabled={!showPreviousPageBtn}
+    >
+      <ChevronLeft />
+    </PaginateButton>
     <CurrentPage page={pages.length + 1} />
-    {showNextPageBtn && (
-      <PaginateButton
-        onClick={onPaginateNext}
-      >
-        <ChevronRight />
-      </PaginateButton>
-    )}
+    <PaginateButton
+      onClick={onPaginateNext}
+      disabled={!showNextPageBtn}
+    >
+      <ChevronRight />
+    </PaginateButton>
   </StyledPagination>
 )
 ;
