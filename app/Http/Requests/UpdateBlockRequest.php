@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Block;
+use App\Rules\UrlWithNoPath;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -17,7 +18,11 @@ class UpdateBlockRequest extends FormRequest
     {
         return [
             'name' => 'string|max:255',
-            'valid_domain' => 'url|max:255',
+            'valid_domain' => [
+                'url',
+                'max:255',
+                new UrlWithNoPath()
+            ],
             'block_type' => 'string|max:255',
             'channel_id' => 'integer',
             'design_id' => 'nullable|integer',

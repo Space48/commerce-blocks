@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Block;
+use App\Rules\UrlWithNoPath;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -17,7 +18,11 @@ class CreateBlockRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'valid_domain' => 'required|url|max:255',
+            'valid_domain' => [
+                'url',
+                'max:255',
+                new UrlWithNoPath(),
+            ],
             'block_type' => 'required|string|max:255',
             'channel_id' => 'required|integer',
             'design_id' => 'nullable|integer',
@@ -31,7 +36,7 @@ class CreateBlockRequest extends FormRequest
                 'nullable',
                 Rule::in(array_keys(Block::$sortOrders)),
             ],
-            'hide_out_of_stock_products' => 'boolean'
+            'hide_out_of_stock_products' => 'boolean',
         ];
     }
 }
