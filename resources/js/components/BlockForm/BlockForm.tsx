@@ -51,7 +51,7 @@ const BlockForm = (
   }: Props) => {
   const tabs = [
     {id: 'settings', title: 'Settings', ariaControls: 'settings-content'},
-    {id: 'snippet', title: 'Installation', ariaControls: 'snippet-content'},
+    {id: 'installation', title: 'Installation', ariaControls: 'installation-content'},
     // {id: 'preview', title: 'Preview', ariaControls: 'preview-content'},
   ];
   const [activeTab, onTabClick] = useTabs(tabs);
@@ -185,8 +185,8 @@ const BlockForm = (
 
   )
 
-  const renderSnippet = () => (
-    <div id="snippet-content">
+  const renderInstallation = () => (
+    <div id="installation-content">
       <BlockSnippet blockId={blockId} snippet={snippet}/>
     </div>
   )
@@ -247,7 +247,7 @@ const BlockForm = (
           <Box marginTop="large">
             <Form onSubmit={onSubmit}>
               {activeTab === 'settings' && renderSettings()}
-              {activeTab === 'snippet' && renderSnippet()}
+              {activeTab === 'installation' && renderInstallation()}
               {activeTab === 'preview' && renderPreview()}
 
               {renderSave()}
