@@ -44,9 +44,7 @@ class PublishWidget extends BigcommerceJob
 
                 $widgetData = $bc->fetchWidgetTemplates($this->store->access_token, $this->store->store_hash, $channelId);
                 $template = $widgetManager->findTemplate($widgetData);
-
-                Log::info('TEMPLATE', [$template]);
-
+                
                 if ($template) {
                     $bc->updateWidgetTemplate($this->store->access_token, $this->store->store_hash, $template['uuid'], $payload);
                 } else {
