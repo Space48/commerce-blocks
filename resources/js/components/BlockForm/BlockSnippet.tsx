@@ -9,7 +9,7 @@ interface Props {
 const BlockSnippet = ({blockId, snippet}: Props) => {
   return (
     <Panel header='Installation' id='installation'>
-      <p>Copy and paste this code to where you would like show your commerce block.</p>
+      <p>Copy and paste this code to where you would to like show your commerce block.</p>
       {blockId ?
         <>
           <FormGroup>
