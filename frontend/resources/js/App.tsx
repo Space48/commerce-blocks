@@ -290,7 +290,6 @@ const App = () => {
         isOpen={isQuickViewOpen}
         onRequestClose={handleOnQuickViewClose}
         style={ModalStyles}
-        portalClassName={"s48-commerce-blocks"}
       >
         <QuickView
           product={selectedProduct}
