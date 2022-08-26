@@ -24,6 +24,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         BlockCreated::class => [
             UpdateGraphQLAccessToken::class,
+            UpdateWidgetTemplate::class,
         ],
         BlockUpdated::class => [
             UpdateGraphQLAccessToken::class,
