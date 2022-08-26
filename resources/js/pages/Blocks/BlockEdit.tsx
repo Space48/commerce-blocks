@@ -35,7 +35,7 @@ const BlockEdit = () => {
   return (
     <>
       <PageHeader
-        title={block?.name ? `Edit ${block.name}` : 'Edit design'}
+        title={block?.name ? `Edit ${block.name}` : 'Edit block'}
         backLinkText="Blocks"
         backLinkHref={backLinkHref}
       />
