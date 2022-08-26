@@ -16,7 +16,6 @@ const StyledProductCard = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  position: relative;
   &:hover .s48-cb-product__overlay {
     display: flex;
   }
@@ -31,6 +30,11 @@ const StyledOverlayButtons = styled.div`
   align-items: center;
   flex-direction: column;
   padding: 20px;
+  top: 0;
+`;
+
+const StyledImagePlaceholder = styled.div`
+  position: relative;
 `;
 
 const ProductCard = ({ product, onQuickView }: Props) => {
@@ -47,11 +51,17 @@ const ProductCard = ({ product, onQuickView }: Props) => {
 
   return (
     <StyledProductCard className={getClassName('product__card')}>
-      {image ? (
-        <Image src={image.url} altText={image.altText} />
-      ) : (
-        <PlaceholderImage />
-      )}
+      <StyledImagePlaceholder>
+        {image ? (
+          <Image src={image.url} altText={image.altText} />
+        ) : (
+          <PlaceholderImage />
+        )}
+        <StyledOverlayButtons className={getClassName('product__overlay')}>
+          <LinkButton label="Add to Cart" url={product.addToCartUrl} />
+          <Button label="Quick view" onClick={onClick} />
+        </StyledOverlayButtons>
+      </StyledImagePlaceholder>
       <div>
         <Sku sku={product.sku} />
         <Name name={product.name} />
@@ -63,10 +73,6 @@ const ProductCard = ({ product, onQuickView }: Props) => {
           />
         )}
       </div>
-      <StyledOverlayButtons className={getClassName('product__overlay')}>
-        <LinkButton label="Add to Cart" url={product.addToCartUrl} />
-        <Button label="Quick view" onClick={onClick} />
-      </StyledOverlayButtons>
     </StyledProductCard>
   );
 };

@@ -14,6 +14,7 @@ interface Props {
 
 const StyledButton = styled.button`
   background-color: ${props => props.btnColor ?? '#CCC'};
+  border: 0;
   color: ${props => props.btnTextColor ?? 'inherit'};
   font-family: ${props => props.fontFamily ?? 'inherit'};
   font-weight: ${props => props.fontWeight ?? 'inherit'};
@@ -34,7 +35,7 @@ const StyledButton = styled.button`
 
 const LinkButton = ({ label, onClick }: Props) => {
   const config = useContext(ConfigContext);
-  
+
   return (
     <StyledButton
       className={getClassName('product__btn')}
