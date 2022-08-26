@@ -6,6 +6,7 @@ use App\Events\BlockCreated;
 use App\Events\BlockUpdated;
 use App\Listeners\StoreEventSubscriber;
 use App\Listeners\UpdateGraphQLAccessToken;
+use App\Listeners\UpdateWidgetTemplate;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -26,6 +27,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         BlockUpdated::class => [
             UpdateGraphQLAccessToken::class,
+            UpdateWidgetTemplate::class,
         ],
     ];
 

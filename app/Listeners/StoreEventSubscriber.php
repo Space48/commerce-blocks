@@ -63,6 +63,7 @@ class StoreEventSubscriber
     private function subscribeStoreUninstalled($events)
     {
         $storeUninstalledEvents = [
+            DeleteWidgetTemplate::class
         ];
 
         foreach ($storeUninstalledEvents as $storeUninstalledEvent) {
