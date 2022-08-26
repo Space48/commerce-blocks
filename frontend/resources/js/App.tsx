@@ -84,12 +84,20 @@ const App = () => {
     }
   }, [data]);
 
+  const scrollToTop = () => {
+    const blockId = config?.block_name;
+    if (blockId !== undefined) {
+      const element = document.getElementById(blockId);
+      element?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const handlePaginateBack = useCallback(() => {
     setPagination(prev => {
       prev.pop();
       return [...prev];
     });
-
+    scrollToTop();
   }, []);
 
   const handlePaginateForward = useCallback(() => {
@@ -98,6 +106,7 @@ const App = () => {
         prev.push(pageInfo?.endCursor);
         return [...prev];
       });
+      scrollToTop();
     }
   }, [pageInfo?.hasNextPage, pageInfo?.endCursor]);
 

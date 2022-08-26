@@ -11,7 +11,7 @@ const StyledDiv = styled.div`
   color: ${props => props.iconColor ?? '#000'};
   width: 32px;
   height: 32px;
-  margin: 0px auto;
+  margin: 40px auto;
   @keyframes rotation {
     from {
       transform: rotate(0deg);

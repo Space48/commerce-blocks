@@ -23,6 +23,13 @@ const Cover = styled.div`
   left: 0;
 `;
 
+const StyledPreview = styled.div`
+  background-color: ${props => props.backgroundColor};
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+`;
+
 interface Props {
   label: string,
   name: string,
@@ -51,6 +58,7 @@ const ColourInput = (
       <Flex flexDirection="row" alignItems="flex-end">
         <FlexItem marginRight="small">
           <Input
+            iconLeft={value ? <StyledPreview backgroundColor={value} /> : null}
             label={label}
             type="text"
             name={name}
