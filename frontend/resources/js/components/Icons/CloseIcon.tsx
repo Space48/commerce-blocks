@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 /** @jsx h */
 const Icon = styled.div`
-  width: 20px;
-  height: 30px;
+  width: 10px;
+  height: 15px;
   & > svg {
     fill: currentColor
   }

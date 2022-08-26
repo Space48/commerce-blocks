@@ -1,0 +1,12 @@
+
+.s48-cb-container,
+.s48-cb-modal__container {
+    .slick-prev:before, .slick-next:before {
+        background-image: none;
+    }
+
+    .slick-dots li button:hover::before,
+    .slick-dots li.slick-active button:before {
+        background: none;
+    }
+}
