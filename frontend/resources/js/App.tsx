@@ -123,12 +123,19 @@ const App = () => {
     setSortOrder(event.target.value);
   }, []);
 
+  const resetPagination = () => {
+    setCurrentPageCursor('');
+    setPagination([]);
+  };
+
   const handleFilterButtonClick = useCallback((event) => {
     event.preventDefault();
+    resetPagination();
     setIsFilterOpen(prev => !prev);
   }, []);
 
   const handleCategorySelection = useCallback((entityId: number) => {
+    resetPagination();
     setCurrentSelectedCategories(prev => {
       if (prev.includes(entityId)) {
         const index = prev.indexOf(entityId);
