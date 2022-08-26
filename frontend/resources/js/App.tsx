@@ -113,8 +113,7 @@ const App = () => {
   const handleSearchChange = useCallback((event) => {
     // @ts-ignore
     setSearchTerm(event.target.value);
-    setPagination([]);
-    setCurrentPageCursor('');
+    resetPagination();
   }, []);
 
   const handleOnQuickView = useCallback((product) => {
