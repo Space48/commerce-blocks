@@ -14,11 +14,21 @@ return [
     |
     */
 
+    'helpscout' => [
+        'beacon_id' => env('HELPSCOUT_BEACON_ID'),
+    ],
+
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),
         'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
         'scheme' => 'https',
+    ],
+
+    'noticeable' => [
+        'token' => env('NOTICEABLE_TOKEN'),
+        'project_id' => env('NOTICEABLE_PROJECT_ID'),
+        'label_id' => env('NOTICEABLE_LABEL_ID'),
     ],
 
     'postmark' => [
@@ -30,5 +40,4 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-
 ];

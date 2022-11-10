@@ -120,3 +120,7 @@ export interface  DesignOptions {
   content: string;
   value: number | null;
 }
+
+export interface HookParams {
+  store_hash: string;
+}
