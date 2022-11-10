@@ -4,16 +4,25 @@
     "description": "The Laravel Framework.",
     "keywords": ["framework", "laravel"],
     "license": "MIT",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://nova.laravel.com"
+        }
+    ],
     "require": {
-        "php": "^8.1",
+        "php": "~8.1.0",
         "ext-json": "*",
         "ext-redis": "*",
         "doctrine/dbal": "^3.4",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
+        "laravel/nova": "~4.0",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
-        "laravel/ui": "^4.0"
+        "laravel/ui": "^4.0",
+        "maatwebsite/laravel-nova-excel": "^1.3",
+        "psr/simple-cache": "^2.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12",

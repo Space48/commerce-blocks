@@ -142,6 +142,6 @@ class Design extends Model
 
     public function store()
     {
-        return $this->belongsTo(BigcommerceStore::class);
+        return $this->belongsTo(BigcommerceStore::class, 'bigcommerce_store_id', 'id');
     }
 }
