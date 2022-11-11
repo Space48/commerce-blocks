@@ -1,6 +1,6 @@
 {
     "name": "Commerce Blocks",
-    "description": "Sell your products on any website",
+    "description": "Create a browsable shopping experience on any website",
     "repository": "https://github.com/Space48/commerce-blocks",
     "stack": "heroku-22",
     "addons": [

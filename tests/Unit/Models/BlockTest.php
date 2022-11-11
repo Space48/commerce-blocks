@@ -26,7 +26,7 @@ class BlockTest extends TestCase
     {
         /** @var Block $block */
         $block = Block::factory()->make([
-            'valid_domain' => 'www.test.com',
+            'valid_domain' => 'https://www.test.com',
             'graphql_access_token' => 'test',
             'graphql_access_token_domain' => 'https://www.test.com',
             'graphql_access_token_expires_at' => Carbon::now()->addDay()->subMinute(),
@@ -38,7 +38,7 @@ class BlockTest extends TestCase
     {
         /** @var Block $block */
         $block = Block::factory()->make([
-            'valid_domain' => 'www.test.com',
+            'valid_domain' => 'https://www.test.com',
             'graphql_access_token' => 'test',
             'graphql_access_token_domain' => 'https://www.test.com',
             'graphql_access_token_expires_at' => Carbon::now()->addDay()->addMinute(),

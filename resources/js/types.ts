@@ -1,5 +1,4 @@
 import {ButtonProps} from '@bigcommerce/big-design/dist/components/Button/Button';
-import {TablePaginationProps} from '@bigcommerce/big-design';
 
 export interface ContextType {
   appId: string;
