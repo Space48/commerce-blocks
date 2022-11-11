@@ -124,3 +124,16 @@ export interface  DesignOptions {
 export interface HookParams {
   store_hash: string;
 }
+
+export interface TimelineItem {
+  id: string,
+  title: string,
+  description: string,
+  url: string,
+  publicationTime: string
+}
+
+export interface TimelineAction {
+  onClick: () => void,
+  label: string
+}

@@ -1,10 +1,15 @@
 import React from 'react';
 import {Button, GridItem, H3, Link, Small, Text} from '@bigcommerce/big-design';
 import {Circle, GridItemDate, GridItemDescription, GridItemLine, StyledBox, StyledGrid} from './styled';
-import PropTypes from 'prop-types';
+import {TimelineAction, TimelineItem} from '../../types';
 
 
-const Timeline = ({items, actions}) => {
+interface Props {
+  items: TimelineItem[],
+  actions: TimelineAction[]
+}
+
+const Timeline = ({items, actions}: Props) => {
 
   const dateOptions = {year: 'numeric', month: 'long', day: 'numeric'};
 
@@ -22,7 +27,7 @@ const Timeline = ({items, actions}) => {
                 <Text>{publicationDateString}</Text>
               </GridItemDate>
               <GridItemLine>
-                <Circle/>
+                <Circle />
               </GridItemLine>
               <GridItemDescription>
                 <H3><Link href={url} target="_blank">{title}</Link></H3>
@@ -33,8 +38,8 @@ const Timeline = ({items, actions}) => {
         })
       }
       <StyledGrid>
-        <GridItem/>
-        <GridItem/>
+        <GridItem />
+        <GridItem />
         <GridItem marginTop="xxLarge">
           {
             actions && actions.map(({label, onClick}, index) => (
@@ -47,19 +52,5 @@ const Timeline = ({items, actions}) => {
   );
 }
 
-
-Timeline.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
-    title: PropTypes.string,
-    excerpt: PropTypes.string,
-    permalink: PropTypes.string,
-    publicationTime: PropTypes.string
-  })),
-  actions: PropTypes.arrayOf(PropTypes.shape({
-    onClick: PropTypes.func,
-    label: PropTypes.string
-  }))
-};
 
 export default Timeline;
