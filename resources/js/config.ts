@@ -10,7 +10,7 @@ import {
   BlockCreate,
   BlockEdit,
   DesignCreate,
-  DesignEdit
+  DesignEdit, Help, WhatsNew
 } from './pages';
 
 export const routes = [
@@ -25,6 +25,8 @@ export const routes = [
   {path: '/stores/:store_hash/designs/:design_id', component: DesignEdit},
   {path: '/stores/:store_hash/installed', component: InstallationSuccess},
   {path: '/stores/:store_hash/welcome', component: WelcomeNewUser},
+  {path: '/stores/:store_hash/help', component: Help},
+  {path: '/stores/:store_hash/whats-new', component: WhatsNew},
   {path: '/stores/:store_hash/*', component: FourOhFour},
   {path: '*', component: FourOhFour},
 ];
