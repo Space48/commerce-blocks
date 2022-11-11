@@ -63,6 +63,7 @@ class StoreEventSubscriber
     private function subscribeStoreUninstalled($events)
     {
         $storeUninstalledEvents = [
+            SendStoreUninstalledNotification::class,
             DeleteWidgetTemplate::class
         ];
 
