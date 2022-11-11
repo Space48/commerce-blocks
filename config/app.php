@@ -17,6 +17,10 @@ return [
 
     'name' => env('APP_NAME', 'Commerce Blocks by Space 48'),
 
+    'support_docs_url' => env('SUPPORT_DOCS_URL'),
+    'support_docs_faq_url' => env('SUPPORT_DOCS_FAQ_URL'),
+    'support_email' => env('SUPPORT_EMAIL'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -41,7 +45,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------

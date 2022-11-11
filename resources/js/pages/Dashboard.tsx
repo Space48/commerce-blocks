@@ -155,7 +155,10 @@ const Dashboard = () => {
 
   return (
     <>
-      <PageHeader title="Commerce Blocks"/>
+      <PageHeader
+        title="Commerce Blocks"
+        storeHash={store_hash}
+      />
       <PageBody>
         <ContentLoading
           loading={isBlocksLoading || isDesignsLoading}

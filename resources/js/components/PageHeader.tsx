@@ -6,6 +6,7 @@ import {ArrowBackIcon} from '@bigcommerce/big-design-icons';
 import Link from './Link';
 import {Theme} from '../theme';
 import {Location, PageHeaderActions} from '../types';
+import {useStore} from '../hooks';
 
 const HeaderLink = styled(Link)`
   color: ${({theme}) => theme.colors.secondary60};
@@ -29,6 +30,7 @@ interface Props {
 }
 
 const PageHeader = ({title, actions, backLinkHref, backLinkText, storeHash = null, children}: Props) => {
+  const [store] = useStore(storeHash);
   const location = useLocation() as unknown as Location;
   const history = useHistory();
 
@@ -40,8 +42,10 @@ const PageHeader = ({title, actions, backLinkHref, backLinkText, storeHash = nul
     return null;
   }
 
-  const backLocation = getBackLocation();
-  const goBack = () => backLocation ? history.push(backLocation) : history.goBack();
+  const goBack = () => getBackLocation() ? history.push(getBackLocation()) : history.goBack();
+  const billingUrl = storeHash && `/stores/${storeHash}/billing`;
+  const helpUrl = storeHash && `/stores/${storeHash}/help`;
+  const whatsNewUrl = storeHash && `/stores/${storeHash}/whats-new`;
   const homeUrl = storeHash ? `/stores/${storeHash}` : '/stores';
 
   const renderedTitle = useMemo(
@@ -87,6 +91,12 @@ const PageHeader = ({title, actions, backLinkHref, backLinkText, storeHash = nul
           <>
             <FlexItem marginHorizontal="small">
               <HeaderLink to={homeUrl}>Home</HeaderLink>
+            </FlexItem>
+            <FlexItem marginHorizontal="small">
+              <HeaderLink to={whatsNewUrl}>What&apos;s new</HeaderLink>
+            </FlexItem>
+            <FlexItem marginHorizontal="small">
+              <HeaderLink to={helpUrl}>Help</HeaderLink>
             </FlexItem>
           </>
         }
