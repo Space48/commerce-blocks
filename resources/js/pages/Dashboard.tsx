@@ -155,7 +155,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <PageHeader title="Commerce Block Party"/>
+      <PageHeader title="Commerce Blocks"/>
       <PageBody>
         <ContentLoading
           loading={isBlocksLoading || isDesignsLoading}

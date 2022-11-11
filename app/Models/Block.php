@@ -67,6 +67,8 @@ use Illuminate\Support\Str;
  * @method static \Illuminate\Database\Eloquent\Builder|Block whereProductSelectionSearchTerm($value)
  * @property string|null $product_selection_sort_order
  * @method static \Illuminate\Database\Eloquent\Builder|Block whereProductSelectionSortOrder($value)
+ * @property bool $hide_out_of_stock_products
+ * @method static \Illuminate\Database\Eloquent\Builder|Block whereHideOutOfStockProducts($value)
  */
 class Block extends Model
 {
