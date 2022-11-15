@@ -4,7 +4,7 @@ import {useHelpScoutBeacon} from '../hooks';
 import ConfigContext from '../context/ConfigContext';
 
 const HelpPanel = () => {
-  const [, startChat] = useHelpScoutBeacon();
+  const [startChat] = useHelpScoutBeacon();
   const context = useContext(ConfigContext);
 
   return (
