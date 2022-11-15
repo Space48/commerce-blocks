@@ -34,7 +34,7 @@ const Dashboard = () => {
       ...(channelFilter) ? {channel_id: channelFilter} : {}
     }
   );
-  const blocks = blocksResponse?.data?.filter(block => block.name.includes(searchTerm)) ?? [];
+  const blocks = blocksResponse?.data ?? [];
   const blocksErrorMessage = blocksError?.response?.data?.error ?? null;
 
   const pagination = {
