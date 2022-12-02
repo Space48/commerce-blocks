@@ -22,7 +22,6 @@ class BlockCreateController extends Controller
     {
         try {
             $block = $store->blocks()->create($blockRequest->safe()->toArray());
-            BlockCreated::dispatch($block);
         } catch (Throwable $e) {
             return $this->jsonErrorResponse($e->getMessage());
         }

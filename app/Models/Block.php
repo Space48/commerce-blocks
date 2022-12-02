@@ -147,6 +147,9 @@ class Block extends Model
         // Update if token is for a different domain
         if ($this->graphql_access_token_domain !== $this->valid_domain) return true;
 
+        // Update if token is for a different channel
+        if ($this->getOriginal('channel_id') !== $this->channel_id) return true;
+
         // Update if token has less than one day left of life.
         if ($this->graphql_access_token_expires_at->lessThan(Carbon::now()->addDay())) return true;
         return false;
