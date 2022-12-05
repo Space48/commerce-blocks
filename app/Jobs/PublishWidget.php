@@ -32,7 +32,7 @@ class PublishWidget extends BigcommerceJob
 
             foreach($channels['data'] as $channel) {
                 $channelId = (int) $channel['id'];
-                $blocks = Block::whereChannelId($channelId)->get();
+                $blocks = $this->store->blocks()->whereChannelId($channelId)->get();
                 $payload = new Bigcommerce\Request\Payload\WidgetTemplatePayload(
                     $widgetManager->widgetName(),
                     $widgetManager->toHtml($this->store),
