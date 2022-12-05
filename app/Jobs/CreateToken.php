@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Log;
 
 class CreateToken extends BigcommerceJob
 {
+    const MAIN_CHANNEL = 1;
+
     /**
      * Create a new job instance.
      *
@@ -31,9 +33,10 @@ class CreateToken extends BigcommerceJob
     public function handle(Bigcommerce $bc)
     {
         $expiryDate = now()->addDays(30);
+        // while the channel specific graphql route doesn't work, we need to use channel 1 for any tokens
         $payload = new StorefrontApiTokenPayload(
             $this->block->valid_domain,
-            $this->block->channel_id,
+            self::MAIN_CHANNEL,
             $expiryDate->unix()
         );
         /** @var BigcommerceStore $store */
@@ -50,5 +53,10 @@ class CreateToken extends BigcommerceJob
                 'graphql_access_token_domain' => $domain,
             ]);
         });
+
+        Log::info('PUBLISH TOKEN', [
+            'store_hash' => $this->block->store->store_hash,
+            'domain' => $this->block->valid_domain
+        ]);
     }
 }
