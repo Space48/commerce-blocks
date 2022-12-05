@@ -4,7 +4,6 @@ namespace App\Listeners;
 
 use App\Events\BlockEvent;
 use App\Jobs\CreateToken;
-use Illuminate\Support\Facades\Log;
 
 class UpdateGraphQLAccessToken
 {
