@@ -20,7 +20,7 @@ class ConfigurationResource extends JsonResource
         // so that the addToCart URL in the response reflects the channel specific store.
         // However, there's a graphql bug with filters right now, so when it's fixed it will work.
         return [
-            'store_url' => $this->store->domain,
+            'store_url' => sprintf('store-%s.mybigcommerce.com', $this->store->store_hash),
             'block_name' => Str::slug($this->name),
             'block_type' => $this->block_type,
             'access_token' => $this->graphql_access_token,

@@ -1,1 +1,7 @@
-export const isPageBuilder = () => window.parent.location.href.includes('page-builder');
+export const isPageBuilder = () => {
+  try {
+    return window.parent.location.href.includes('page-builder');
+  } catch (e) {
+    return true;
+  }
+};
