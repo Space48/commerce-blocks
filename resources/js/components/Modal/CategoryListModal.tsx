@@ -127,22 +127,23 @@ const CategoryListModal = (
   const treeNodes = useMemo(() => {
     return (!isLoading && !error) ?
       channels.map(channel => {
-        const treeIndex = treesResponse?.data.findIndex(tree => tree.channels.includes(channel.id));
+        // categoryTreesResponse is filtered by channel above, so there will only ever be one channel specific element in the results
+        if (channelFilter === channel.id) {
+          const categories = Object.hasOwn(categoryTreesResponse, 0) ? categoryTreesResponse[0]?.data : [];
+          const categoriesWithSearchAnnotations = addSearchMatchAnnotations(categories, searchTerm);
 
-        const categories = treeIndex >= 0 && Object.hasOwn(categoryTreesResponse, treeIndex) ? categoryTreesResponse[treeIndex]?.data : [];
-        const categoriesWithSearchAnnotations = addSearchMatchAnnotations(categories, searchTerm);
+          const filteredCategories = filterCategoriesBySearchTerm(categoriesWithSearchAnnotations, searchTerm);
+          const categoryTreeNodes = transformCategoriesToTreeNodes(filteredCategories, allCategories);
 
-        const filteredCategories = filterCategoriesBySearchTerm(categoriesWithSearchAnnotations, searchTerm);
-        const categoryTreeNodes = transformCategoriesToTreeNodes(filteredCategories, allCategories);
-
-        return {
-          id: 'channel_' + channel.id,
-          name: channel.name,
-          images: channel.icon_url ? [{url_thumbnail: channel.icon_url}] : [],
-          children: categoryTreeNodes,
-          hasChildThatMatchesSearchTerm: categoryTreeNodes.some(node => node.hasChildThatMatchesSearchTerm || node.nodeMatchesSearchTerm),
+          return {
+            id: 'channel_' + channel.id,
+            name: channel.name,
+            images: channel.icon_url ? [{url_thumbnail: channel.icon_url}] : [],
+            children: categoryTreeNodes,
+            hasChildThatMatchesSearchTerm: categoryTreeNodes.some(node => node.hasChildThatMatchesSearchTerm || node.nodeMatchesSearchTerm),
+          }
         }
-      }).filter(channel => channel.children.length > 0)
+      }).filter(channel => channel?.children.length > 0)
       :
       [];
   }, [
@@ -162,7 +163,7 @@ const CategoryListModal = (
     return findNodesWithChildrenThatMatchSearchTerm(treeNodes);
   }, [treeNodes, findNodesWithChildrenThatMatchSearchTerm]);
 
-  const firstChannel = channelIds.length > 0 ? ['channel_' + channelIds[0]] : [];
+  const firstChannel = channelIds.length > 0 ? ['channel_' + channelFilter] : [];
   const defaultExpanded = nodesWithChildrenThatMatchSearchTerm.length ? nodesWithChildrenThatMatchSearchTerm : firstChannel;
 
   return (
