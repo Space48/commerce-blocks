@@ -38,15 +38,17 @@ class CreateToken extends BigcommerceJob
         );
         /** @var BigcommerceStore $store */
         $store = $this->block->store;
-
         $result = $bc->createStoreFrontApiToken($store->access_token, $store->store_hash, $payload);
-
         $token = $result['data']['token'] ?? throw new \UnexpectedValueException('No token in response');
+        $domain = $this->block->valid_domain;
 
-        $this->block->update([
-            'graphql_access_token' => $token,
-            'graphql_access_token_expires_at' => $expiryDate,
-            'graphql_access_token_domain' => $this->block->valid_domain,
-        ]);
+        // prevent publishing widget on update
+        Block::withoutEvents(function() use ($token, $expiryDate, $domain) {
+            $this->block->update([
+                'graphql_access_token' => $token,
+                'graphql_access_token_expires_at' => $expiryDate,
+                'graphql_access_token_domain' => $domain,
+            ]);
+        });
     }
 }

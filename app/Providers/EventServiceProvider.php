@@ -7,6 +7,8 @@ use App\Events\BlockUpdated;
 use App\Listeners\StoreEventSubscriber;
 use App\Listeners\UpdateGraphQLAccessToken;
 use App\Listeners\UpdateWidgetTemplate;
+use App\Models\Block;
+use App\Observers\BlockObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -34,6 +36,12 @@ class EventServiceProvider extends ServiceProvider
 
     protected $subscribe = [
         StoreEventSubscriber::class,
+    ];
+
+    protected $observers = [
+        Block::class => [
+            BlockObserver::class,
+        ]
     ];
 
     /**

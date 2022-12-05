@@ -24,7 +24,6 @@ class BlockUpdateController extends Controller
     {
         try {
             $block->update($blockRequest->safe()->toArray());
-            BlockUpdated::dispatch($block);
         } catch (Throwable $e) {
             Log::error($e->getMessage(), [$e->getTrace()[0]]);
             return $this->jsonErrorResponse($e->getMessage(), 500);

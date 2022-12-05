@@ -21,7 +21,7 @@ import {blockTypeOptions} from '../../utils/block';
 import {BlockPreview} from './BlockPreview';
 import {BlockSnippet} from './BlockSnippet';
 import {ProductsSearchQueryBuilder} from './ProductsSearchQueryBuilder';
-import {FeatureBadge} from "../FeatureBadge";
+import {FeatureBadge} from '../FeatureBadge';
 
 interface Props {
   blockId?: string | null;

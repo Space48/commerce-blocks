@@ -16,6 +16,9 @@ class ConfigurationResource extends JsonResource
     public function toArray($request)
     {
         $design = new DesignResource($this->design);
+        // todo: store_url should be: sprintf('store-%s-%s.mybigcommerce.com', $this->store->store_hash, $this->channel_id)
+        // so that the addToCart URL in the response reflects the channel specific store.
+        // However, there's a graphql bug with filters right now, so when it's fixed it will work.
         return [
             'store_url' => $this->store->domain,
             'block_name' => Str::slug($this->name),
