@@ -2,7 +2,7 @@ import { h } from 'preact';
 import styled from 'styled-components';
 import Slider from 'react-slick';
 import { Product } from '../types';
-import { Image, LinkButton, Name, Prices, Sku, PlaceholderImage } from './Product';
+import { Image, LinkButton, NameLink, Prices, Sku, PlaceholderImage } from './Product';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './slick-reset.scss';
@@ -17,6 +17,7 @@ import { useContext } from 'preact/compat';
 interface Props {
   product?: Product;
   onClose: (event: any) => void;
+  siteUrl: string | null;
 }
 
 const StyledDiv = styled.div`
@@ -75,7 +76,7 @@ const StyledProductDiv = styled.div`
   }
 `;
 
-const QuickView = ({ product, onClose }: Props) => {
+const QuickView = ({ product, onClose, siteUrl }: Props) => {
   const config = useContext(ConfigContext);
 
   if (!product) {
@@ -91,6 +92,9 @@ const QuickView = ({ product, onClose }: Props) => {
   };
 
   const hasImage = product?.images.edges.length > 0;
+
+  const productUrl = siteUrl ? `${siteUrl}${product.path}` : null;
+  const linkAttributes = productUrl ? { href: productUrl } : {};
 
   return (
     <StyledDiv
@@ -126,7 +130,7 @@ const QuickView = ({ product, onClose }: Props) => {
         hasImage={hasImage}
       >
         <Sku sku={product.sku} />
-        <Name name={product.name} />
+        <NameLink {...linkAttributes}>{product.name}</NameLink>
         {product.prices && (
           <Prices
             msrp={product.prices.retailPrice?.value}

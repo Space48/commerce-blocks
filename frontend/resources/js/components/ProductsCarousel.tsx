@@ -14,6 +14,7 @@ import { Sizes } from '../helpers';
 /** @jsx h */
 
 interface Props {
+  siteUrl: string | null;
   products: ProductNode[];
   pages: string[];
   showPreviousPageBtn: boolean;
@@ -33,6 +34,7 @@ const StyledSlider = styled(Slider)`
 `;
 
 const ProductsCarousel = ({
+  siteUrl,
   products,
   pages,
   showPreviousPageBtn,
@@ -73,7 +75,7 @@ const ProductsCarousel = ({
       <StyledSlider {...settings}>
         {products.map(product => (
           <SlideCard key={product.node.name}>
-            <ProductCard product={product.node} onQuickView={onQuickView} />
+            <ProductCard product={product.node} onQuickView={onQuickView} siteUrl={siteUrl} />
           </SlideCard>
         ))}
       </StyledSlider>

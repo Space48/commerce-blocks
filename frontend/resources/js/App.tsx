@@ -17,7 +17,14 @@ import {
 } from './components';
 import { FiltersNode, LAYOUT_TYPE, Product, SelectedAttributes } from './types';
 import Modal from 'react-modal';
-import { SortOptions as SortOptionItems, ModalStyles, getQuery, TYPE_SPECIFIC_PRODUCTS, TYPE_CATEGORY, TYPE_SEARCH } from './helpers';
+import {
+  SortOptions as SortOptionItems,
+  ModalStyles,
+  getQuery,
+  TYPE_SPECIFIC_PRODUCTS,
+  TYPE_CATEGORY,
+  TYPE_SEARCH
+} from './helpers';
 import ConfigContext from './context/ConfigContext';
 
 /** @jsx h */
@@ -84,6 +91,8 @@ const App = () => {
     }
   }, [data]);
 
+  const siteUrl = useMemo(() => data?.site?.settings?.url?.vanityUrl ?? null, [data]);
+
   const scrollToTop = () => {
     const blockId = config?.block_name;
     if (blockId !== undefined) {
@@ -141,7 +150,7 @@ const App = () => {
     resetPagination();
     setIsFilterOpen(prev => !prev);
   }, []);
-  
+
   const requiresSearch = () => (queryType.type !== TYPE_SPECIFIC_PRODUCTS && config?.product_selection_search_term === null);
 
   const handleCategorySelection = useCallback((entityId: number) => {
@@ -275,6 +284,7 @@ const App = () => {
           )}
           {config?.block_type === LAYOUT_TYPE.Grid && products.length > 0 && (
             <ProductsGrid
+              siteUrl={siteUrl}
               products={products}
               filters={filters}
               columns={config?.design?.columns ?? 3}
@@ -288,6 +298,7 @@ const App = () => {
           )}
           {config?.block_type === LAYOUT_TYPE.Carousel && products.length > 0 && (
             <ProductsCarousel
+              siteUrl={siteUrl}
               products={products}
               slidesToShow={config?.design?.columns ?? 3}
               pages={pagination}
@@ -309,6 +320,7 @@ const App = () => {
         style={ModalStyles}
       >
         <QuickView
+          siteUrl={siteUrl}
           product={selectedProduct}
           onClose={handleOnQuickViewClose}
         />
