@@ -22,7 +22,7 @@ const StyledButton = styled.a`
   display: block;
   text-decoration: none;
   border-radius: 5px;
-  width: 100%;
+  width: auto;
   box-sizing: border-box;
   text-align: center;
   transition: background-color 0.2s ease-in, color 0.2s ease-in;

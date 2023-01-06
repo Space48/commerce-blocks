@@ -8,6 +8,7 @@ import { Devices, getClassName } from '../helpers';
 /** @jsx h */
 
 interface Props {
+  siteUrl: string | null;
   products: ProductNode[];
   filters: FiltersNode[];
   pages: string[];
@@ -25,17 +26,18 @@ const StyledProductsGrid = styled.div`
   grid-template-rows: 1fr;
   grid-column-gap: 40px;
   grid-row-gap: 40px;
-  
+
   @media ${Devices.tablet} {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   @media ${Devices.desktop} {
     grid-template-columns: repeat(${props => props.columns}, 1fr);
   }
 `;
 
 const ProductsGrid = ({
+  siteUrl,
   products,
   filters,
   columns,
@@ -49,7 +51,7 @@ const ProductsGrid = ({
   <Fragment>
     <StyledProductsGrid columns={columns} className={getClassName('products__grid')}>
       {products.map(product => (
-        <ProductCard key={product.node.name} product={product.node} onQuickView={onQuickView} />
+        <ProductCard key={product.node.name} product={product.node} onQuickView={onQuickView} siteUrl={siteUrl} />
       ))}
     </StyledProductsGrid>
     {(showPreviousPageBtn || showNextPageBtn) && (
