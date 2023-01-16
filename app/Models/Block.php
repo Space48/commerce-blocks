@@ -109,6 +109,7 @@ class Block extends Model
         'product_selection_search_term',
         'product_selection_sort_order',
         'hide_out_of_stock_products',
+        'currency_code'
     ];
 
     public static array $blockTypes = [

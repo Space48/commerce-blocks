@@ -5,5 +5,6 @@ export {
 
 export * from './alerts'
 export * from './channels';
+export * from './currencies';
 export * from './laggy';
 export * from './strings';

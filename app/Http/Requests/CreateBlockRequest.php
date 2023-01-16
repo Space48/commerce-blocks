@@ -37,6 +37,7 @@ class CreateBlockRequest extends FormRequest
                 Rule::in(array_keys(Block::$sortOrders)),
             ],
             'hide_out_of_stock_products' => 'boolean',
+            'currency_code' => 'nullable|string|max:255'
         ];
     }
 }

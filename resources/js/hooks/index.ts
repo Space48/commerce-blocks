@@ -24,3 +24,4 @@ export * from './useSWRFetch';
 export * from './useTabs';
 export * from './useTrees';
 export * from './useUser';
+export * from './useCurrencies';

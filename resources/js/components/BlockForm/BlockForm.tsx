@@ -14,8 +14,8 @@ import {
 } from '@bigcommerce/big-design';
 import {useTabs} from '../../hooks';
 import SaveBar from '../SaveBar';
-import {Block, Channel, Design, DesignOptions, Errors, LAYOUT_TYPE} from '../../types';
-import {channelsAsSelectOptions} from '../../utils';
+import {Block, Channel, Currency, Design, DesignOptions, Errors, LAYOUT_TYPE} from '../../types';
+import {channelsAsSelectOptions, currenciesAsSelectOptions} from '../../utils';
 import {AddIcon, DeleteIcon} from '@bigcommerce/big-design-icons';
 import {blockTypeOptions} from '../../utils/block';
 import {BlockPreview} from './BlockPreview';
@@ -34,6 +34,7 @@ interface Props {
   onSubmit: FormEventHandler<HTMLFormElement>;
   errors: Errors;
   isLoading: boolean;
+  currencies: Currency[]
 }
 
 const BlockForm = (
@@ -47,7 +48,8 @@ const BlockForm = (
     onChange,
     onSubmit,
     errors,
-    isLoading
+    isLoading,
+    currencies
   }: Props) => {
   const tabs = [
     {id: 'settings', title: 'Settings', ariaControls: 'settings-content'},
@@ -64,6 +66,9 @@ const BlockForm = (
   const onInputChange = (event) => onChange(event.target.name, event.target.value);
 
   const channelOptions = channelsAsSelectOptions(channels);
+  const currencyOptions = currenciesAsSelectOptions(currencies);
+
+
   const designOptions = useMemo(() => {
     const options : DesignOptions[] = [];
     options.push({content: 'Default', value: null})
@@ -177,6 +182,17 @@ const BlockForm = (
             value={block?.valid_domain ?? ''}
             onChange={onInputChange}
             placeholder="https://www.bigcommerce.com"
+          />
+        </FormGroup>
+        <FormGroup>
+          <Select
+            name="currency_code"
+            label="Currency"
+            required
+            options={currencyOptions}
+            value={block?.currency_code ?? ''}
+            onOptionChange={(value) => onChange('currency_code', value)}
+            placeholder="Default currency"
           />
         </FormGroup>
       </Panel>

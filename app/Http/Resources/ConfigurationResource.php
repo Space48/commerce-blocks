@@ -33,6 +33,7 @@ class ConfigurationResource extends JsonResource
             'product_selection_search_term' => $this->product_selection_search_term,
             'product_selection_sort_order' => $this->product_selection_sort_order,
             'design' => $design->toArray($request),
+            'currency_code' => $this->currency_code,
         ];
     }
 }

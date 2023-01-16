@@ -27,7 +27,8 @@ class BlockResource extends JsonResource
             'product_selection_search_term' => $this->product_selection_search_term,
             'product_selection_sort_order' => $this->product_selection_sort_order,
             'valid_domain' => $this->valid_domain,
-            'hide_out_of_stock_products' => $this->hide_out_of_stock_products
+            'hide_out_of_stock_products' => $this->hide_out_of_stock_products,
+            'currency_code' => $this->currency_code,
         ];
     }
 }

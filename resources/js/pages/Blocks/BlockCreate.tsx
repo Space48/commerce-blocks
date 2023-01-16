@@ -2,7 +2,7 @@ import React from 'react';
 import {useHistory, useLocation, useParams} from 'react-router-dom';
 import {ContentLoading, PageBody, PageHeader} from '../../components';
 import {CREATE} from '../../utils/block';
-import {useBlockForm, useChannels, useDesigns} from '../../hooks';
+import {useBlockForm, useChannels, useCurrencies, useDesigns} from '../../hooks';
 import {Block} from '../../types';
 import {notifyError, notifySuccess} from '../../utils';
 import {BlockForm} from '../../components/BlockForm';
@@ -28,10 +28,12 @@ const BlockCreate = () => {
   );
 
   const [channelsResponse, channelsError, channelsIsLoading] = useChannels(store_hash);
+  const [currencies, currenciesError, currenciesIsLoading] = useCurrencies(store_hash);
+
   const channels = channelsResponse?.data ?? [];
   const channelsErrorMessage = channelsError?.response?.data?.error ?? null;
 
-  const [designs, designError, isDesignsLoading] = useDesigns(store_hash);
+  const [designs, designError, designsIsLoading] = useDesigns(store_hash);
 
   return (
     <>
@@ -42,7 +44,7 @@ const BlockCreate = () => {
       />
       <PageBody>
         <ContentLoading
-          loading={isLoading || channelsIsLoading || isDesignsLoading}
+          loading={isLoading || channelsIsLoading || designsIsLoading || currenciesIsLoading}
           error={channelsErrorMessage ?? designError ?? null}
         >
           <BlockForm
@@ -54,6 +56,7 @@ const BlockCreate = () => {
             onSubmit={onSubmit}
             errors={errors}
             isLoading={isLoading || channelsIsLoading}
+            currencies={currencies}
           />
         </ContentLoading>
       </PageBody>

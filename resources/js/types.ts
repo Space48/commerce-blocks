@@ -40,6 +40,24 @@ export interface Channel {
   icon_url: string;
 }
 
+export interface Currency {
+  id: number,
+  is_default: boolean;
+  last_updated: string;
+  country_iso2: string | null;
+  currency_code: string;
+  auto_updated: boolean;
+  token_location: string;
+  token: string;
+  decimal_token: string;
+  thousands_token: string;
+  decimal_places: number;
+  name: string;
+  enabled: boolean;
+  is_transactional: boolean;
+  currency_exchange_rate: string;
+}
+
 export interface ProductImage {
   url_thumbnail: string;
 }
@@ -64,6 +82,7 @@ export interface Block {
   bigcommerce_store_id?: number | null;
   name?: string,
   channel_id?: number | null;
+  currency_code?: string | null;
   design_id?: number | null;
   design?: Design;
   block_type?: string | null;

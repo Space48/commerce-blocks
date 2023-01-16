@@ -2,7 +2,7 @@ import React from 'react';
 import {useLocation, useParams} from 'react-router-dom';
 import {ContentLoading, PageBody, PageHeader} from '../../components';
 import {UPDATE} from '../../utils/block';
-import {useBlock, useBlockForm, useChannels, useDesigns} from '../../hooks';
+import {useBlock, useBlockForm, useChannels, useCurrencies, useDesigns} from '../../hooks';
 import {notifyError, notifySuccess} from '../../utils';
 import {useSnippet} from '../../hooks/useSnippet';
 import {BlockForm} from '../../components/BlockForm';
@@ -29,6 +29,7 @@ const BlockEdit = () => {
   const block = {...initialBlock, ...blockUpdates};
 
   const [channelsResponse, channelsError, channelsIsLoading] = useChannels(store_hash);
+  const [currencies, currenciesError, currenciesIsLoading] = useCurrencies(store_hash);
   const channels = channelsResponse?.data ?? [];
   const channelsErrorMessage = channelsError?.response?.data?.error ?? null;
 
@@ -41,13 +42,14 @@ const BlockEdit = () => {
       />
       <PageBody>
         <ContentLoading
-          loading={blockIsLoading || channelsIsLoading || snippetIsLoading || isDesignsLoading}
-          error={blockError ?? channelsErrorMessage ?? snippetError ?? designError ?? null}
+          loading={blockIsLoading || channelsIsLoading || snippetIsLoading || isDesignsLoading || currenciesIsLoading}
+          error={blockError ?? channelsErrorMessage ?? snippetError ?? designError ?? currenciesError ?? null}
         >
           <BlockForm
             blockId={block_id}
             storeHash={store_hash}
             channels={channels}
+            currencies={currencies}
             block={block}
             designs={designs}
             snippet={snippet}
