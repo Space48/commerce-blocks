@@ -82,7 +82,7 @@ export interface Block {
   bigcommerce_store_id?: number | null;
   name?: string,
   channel_id?: number | null;
-  currency_code?: string | null;
+  currency_code?: string;
   design_id?: number | null;
   design?: Design;
   block_type?: string | null;

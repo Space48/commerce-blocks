@@ -101,6 +101,12 @@ const BlockForm = (
     onChange('product_selection_sort_order', 'RELEVANCE');
   }, []);
 
+  // Auto-select currency code
+  useEffect(() => {
+    if (block?.currency_code) return;
+    onChange('currency_code', defaultCurrency?.currency_code ?? '');
+  }, []);
+
   const renderSettings = () => (
     <>
       <Panel header='Settings' id='settings-content'>
@@ -190,7 +196,7 @@ const BlockForm = (
             label="Default currency"
             required
             options={currencyOptions}
-            value={block?.currency_code ?? defaultCurrency?.currency_code ?? ''}
+            value={block?.currency_code ?? ''}
             onOptionChange={(value) => onChange('currency_code', value)}
             placeholder="Default currency"
           />
