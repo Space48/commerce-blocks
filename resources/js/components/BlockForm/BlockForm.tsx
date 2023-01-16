@@ -67,7 +67,7 @@ const BlockForm = (
 
   const channelOptions = channelsAsSelectOptions(channels);
   const currencyOptions = currenciesAsSelectOptions(currencies);
-
+  const defaultCurrency = currencies.find(currency => currency.is_default);
 
   const designOptions = useMemo(() => {
     const options : DesignOptions[] = [];
@@ -187,10 +187,10 @@ const BlockForm = (
         <FormGroup>
           <Select
             name="currency_code"
-            label="Currency"
+            label="Default currency"
             required
             options={currencyOptions}
-            value={block?.currency_code ?? ''}
+            value={block?.currency_code ?? defaultCurrency?.currency_code}
             onOptionChange={(value) => onChange('currency_code', value)}
             placeholder="Default currency"
           />

@@ -8,7 +8,7 @@ const getCurrencySelectorCurrencyCode = () => {
   }
 };
 
-const getCurrencyCode = (defaultCurrencyCode): string => defaultCurrencyCode ?? getCurrencySelectorCurrencyCode() ?? 'GBP';
+const getCurrencyCode = (defaultCurrencyCode): string => getCurrencySelectorCurrencyCode() ?? defaultCurrencyCode ?? 'GBP';
 
 export const getConfiguration = async (element) => {
   const { apiUrl, storeHash, blockId } = element?.dataset;
