@@ -190,7 +190,7 @@ const BlockForm = (
             label="Default currency"
             required
             options={currencyOptions}
-            value={block?.currency_code ?? defaultCurrency?.currency_code}
+            value={block?.currency_code ?? defaultCurrency?.currency_code ?? ''}
             onOptionChange={(value) => onChange('currency_code', value)}
             placeholder="Default currency"
           />

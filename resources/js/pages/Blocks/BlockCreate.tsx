@@ -45,7 +45,7 @@ const BlockCreate = () => {
       <PageBody>
         <ContentLoading
           loading={isLoading || channelsIsLoading || designsIsLoading || currenciesIsLoading}
-          error={channelsErrorMessage ?? designError ?? null}
+          error={channelsErrorMessage ?? designError ?? currenciesError ?? null}
         >
           <BlockForm
             storeHash={store_hash}
