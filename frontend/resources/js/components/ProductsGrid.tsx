@@ -1,5 +1,5 @@
 import { Fragment, h } from 'preact';
-import { FiltersNode, Product, ProductNode } from '../types';
+import { CurrencyInfo, FiltersNode, Product, ProductNode } from '../types';
 import ProductCard from './ProductCard';
 import styled from 'styled-components';
 import Pagination from './Pagination';
@@ -18,6 +18,7 @@ interface Props {
   onPaginatePrevious: () => void;
   onPaginateNext: () => void;
   onQuickView: (product: Product) => void;
+  currencyInfo: CurrencyInfo
 }
 
 const StyledProductsGrid = styled.div`
@@ -46,12 +47,13 @@ const ProductsGrid = ({
   showNextPageBtn,
   onPaginatePrevious,
   onPaginateNext,
-  onQuickView
+  onQuickView,
+  currencyInfo
 }: Props) => (
   <Fragment>
     <StyledProductsGrid columns={columns} className={getClassName('products__grid')}>
       {products.map(product => (
-        <ProductCard key={product.node.name} product={product.node} onQuickView={onQuickView} siteUrl={siteUrl} />
+        <ProductCard key={product.node.name} product={product.node} onQuickView={onQuickView} siteUrl={siteUrl} currencyInfo={currencyInfo} />
       ))}
     </StyledProductsGrid>
     {(showPreviousPageBtn || showNextPageBtn) && (

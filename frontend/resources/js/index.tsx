@@ -1,25 +1,9 @@
 import { h, render } from 'preact';
 import { createClient, Provider } from '@urql/preact';
-import axios from 'axios';
 import App from './App';
 import ConfigContext from './context/ConfigContext';
-import { isPageBuilder } from './helpers';
+import { getConfiguration, isPageBuilder, rootElements } from './helpers';
 import PageBuilder from './PageBuilder';
-
-const rootElements = document.getElementsByClassName('s48-commerce-blocks');
-
-const getConfiguration = async (element) => {
-  const { apiUrl, storeHash, blockId } = element?.dataset;
-  if (apiUrl && storeHash && blockId) {
-    try {
-      const config = await axios(`${apiUrl}/api/${storeHash}/block/${blockId}`);
-      return config?.data?.data;
-    }
-    catch (e) {
-      return;
-    }
-  }
-};
 
 const renderPageBuilder = async (element) => {
   // on widget reload/refresh, when the page builder reloads the widget html

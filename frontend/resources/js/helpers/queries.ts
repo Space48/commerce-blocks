@@ -22,18 +22,27 @@ const getAttributeFilter = (attributes) => {
   return `productAttributes: [${filterItems.join(',')}]`;
 };
 
-const getSiteUrlQuery = () => {
-  return `
+const getSiteUrlQuery = (currencyCode) => `
   site {
     settings {
       url {
         vanityUrl
       }
     }
+    currency(currencyCode: ${currencyCode}) {
+      name,
+      code,
+      display {
+        symbol,
+        symbolPlacement,
+        decimalToken,
+        thousandsToken,
+        decimalPlaces
+      }
+    }
  }`;
-};
 
-const getProductQuery = (isProductOnlyQuery = false, ids = []) => {
+const getProductQuery = (isProductOnlyQuery = false, ids = [], currencyCode) => {
   const params: string[] = [
     'first: $pageSize',
     'after: $cursor'
@@ -69,7 +78,7 @@ const getProductQuery = (isProductOnlyQuery = false, ids = []) => {
           }
         }
        }
-       prices(includeTax: true, currencyCode: GBP) {
+       prices(includeTax: true, currencyCode: ${currencyCode}) {
         price {
           value
         }
@@ -89,20 +98,20 @@ const getProductQuery = (isProductOnlyQuery = false, ids = []) => {
 `;
 };
 
-export const productsQuery = (ids, perPage, cursor, hideOutOfStockProducts) => `
+export const productsQuery = (ids, perPage, cursor, hideOutOfStockProducts, currencyCode) => `
   query paginateProducts(
    $pageSize: Int = ${perPage}
    $cursor: String = "${cursor}"
    $hideOfOutOfStock: Boolean = ${hideOutOfStockProducts}
  ) {
    site {
-     ${getProductQuery(true, ids)}
+     ${getProductQuery(true, ids, currencyCode)}
    }
-   ${getSiteUrlQuery()}
+   ${getSiteUrlQuery(currencyCode)}
  }
 `;
 
-export const searchQuery = (categoryIds, perPage, cursor, sortOrder, searchTerm, categoryFilters, attributeFilters, hideOutOfStockProducts) => `
+export const searchQuery = (categoryIds, perPage, cursor, sortOrder, searchTerm, categoryFilters, attributeFilters, hideOutOfStockProducts, currencyCode) => `
   query paginateProducts(
    $pageSize: Int = ${perPage}
    $cursor: String = "${cursor}"
@@ -178,17 +187,17 @@ export const searchQuery = (categoryIds, perPage, cursor, sortOrder, searchTerm,
             }
           }
         }
-        ${getProductQuery(false)}
+        ${getProductQuery(false, [], currencyCode)}
       }
      }
    }
-   ${getSiteUrlQuery()}
+   ${getSiteUrlQuery(currencyCode)}
  }
 `;
 
-export const getQuery = (queryType, perPage, cursor, sortOrder, searchTerm, categoryFilters, attributeFilters, hideOutOfStockProducts) => {
+export const getQuery = (queryType, perPage, cursor, sortOrder, searchTerm, categoryFilters, attributeFilters, hideOutOfStockProducts, currencyCode) => {
   if (queryType.type === TYPE_SPECIFIC_PRODUCTS) {
-    return productsQuery(queryType.ids, perPage, cursor, hideOutOfStockProducts);
+    return productsQuery(queryType.ids, perPage, cursor, hideOutOfStockProducts, currencyCode);
   }
-  return searchQuery(queryType.ids, perPage, cursor, sortOrder, searchTerm, categoryFilters, attributeFilters, hideOutOfStockProducts);
+  return searchQuery(queryType.ids, perPage, cursor, sortOrder, searchTerm, categoryFilters, attributeFilters, hideOutOfStockProducts, currencyCode);
 };

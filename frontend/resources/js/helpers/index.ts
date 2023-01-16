@@ -6,6 +6,9 @@ import { Sizes, Devices } from './responsive';
 import { SortOptions } from './sort';
 import { getClassName } from './className';
 
+export * from './elements';
+export * from './configuration';
+
 export {
   Devices,
   getPriceText,
