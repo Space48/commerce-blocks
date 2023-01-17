@@ -43,6 +43,7 @@ export interface ContextType {
   product_selection_search_term: string;
   product_selection_sort_order: string;
   hide_out_of_stock_products: boolean;
+  currency_code: string;
 }
 
 export interface Product {
@@ -131,4 +132,16 @@ export interface FiltersNode {
 export interface SortOption {
   label: string;
   value: string;
+}
+
+export interface CurrencyInfo {
+  name: string;
+  code: string;
+  display: {
+    symbol: string;
+    symbolPlacement: string;
+    decimalToken: string;
+    thousandsToken: string;
+    decimalPlaces: number;
+  }
 }

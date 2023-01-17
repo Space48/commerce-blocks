@@ -68,6 +68,7 @@ const App = () => {
     currentSelectedCategories,
     currentSelectedAttributes,
     config?.hide_out_of_stock_products ?? false,
+    config?.currency_code
   );
 
   const [result] = useQuery({ query });
@@ -90,6 +91,8 @@ const App = () => {
       return data?.site?.search?.searchProducts?.products?.edges;
     }
   }, [data]);
+
+  const currencyInfo = useMemo(() => data?.site?.currency, [data]);
 
   const siteUrl = useMemo(() => data?.site?.settings?.url?.vanityUrl ?? null, [data]);
 
@@ -294,6 +297,7 @@ const App = () => {
               onPaginatePrevious={handlePaginateBack}
               onPaginateNext={handlePaginateForward}
               onQuickView={handleOnQuickView}
+              currencyInfo={currencyInfo}
             />
           )}
           {config?.block_type === LAYOUT_TYPE.Carousel && products.length > 0 && (
@@ -307,6 +311,7 @@ const App = () => {
               onPaginatePrevious={handlePaginateBack}
               onPaginateNext={handlePaginateForward}
               onQuickView={handleOnQuickView}
+              currencyInfo={currencyInfo}
             />
           )}
           {products.length === 0 && (

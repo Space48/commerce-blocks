@@ -2,7 +2,7 @@ import { h } from 'preact';
 import { useCallback, useMemo } from 'preact/compat';
 import styled from 'styled-components';
 import { NameLink, LinkButton, Image, Sku, Prices, PlaceholderImage, Button } from './Product';
-import { Product } from '../types';
+import {CurrencyInfo, Product} from '../types';
 import { getClassName } from '../helpers';
 
 /** @jsx h */
@@ -11,6 +11,7 @@ interface Props {
   product: Product;
   onQuickView: (product: Product) => void;
   siteUrl: string | null;
+  currencyInfo: CurrencyInfo;
 }
 
 const StyledProductCard = styled.div`
@@ -46,7 +47,7 @@ const ImageContainer = styled.div`
   position: relative;
 `;
 
-const ProductCard = ({ product, onQuickView, siteUrl }: Props) => {
+const ProductCard = ({ product, onQuickView, siteUrl, currencyInfo }: Props) => {
   const getImage = () => product.images.edges.find(product => product.node.isDefault);
 
   const image = useMemo(() => {
@@ -84,6 +85,7 @@ const ProductCard = ({ product, onQuickView, siteUrl }: Props) => {
             msrp={product.prices.retailPrice?.value}
             sale={product.prices.price?.value}
             price={product.prices.basePrice?.value}
+            currencyInfo={currencyInfo}
           />
         )}
       </div>

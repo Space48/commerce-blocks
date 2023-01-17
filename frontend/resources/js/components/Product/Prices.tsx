@@ -4,6 +4,7 @@ import { getPriceText } from '../../helpers/price';
 import { useContext } from 'preact/compat';
 import ConfigContext from '../../context/ConfigContext';
 import { getClassName } from '../../helpers';
+import { CurrencyInfo } from '../../types';
 
 /** @jsx h */
 
@@ -11,6 +12,7 @@ interface Props {
   msrp: number | null;
   price: number;
   sale: number | null;
+  currencyInfo: CurrencyInfo;
 }
 
 const StyledDiv = styled.p`
@@ -25,7 +27,7 @@ const StyledPrice = styled.p`
   margin-bottom: 0px;
 `;
 
-const Price = ({ msrp, price, sale }: Props) => {
+const Price = ({ msrp, price, sale, currencyInfo }: Props) => {
   const config = useContext(ConfigContext);
 
   return (
@@ -40,7 +42,7 @@ const Price = ({ msrp, price, sale }: Props) => {
               fontWeight={config?.design.price_font_weight}
               textColor={config?.design?.price_colour}
             >
-              MSRP: {getPriceText(msrp)}
+              MSRP: {getPriceText(msrp, currencyInfo)}
             </StyledPrice>
           )}
           <StyledPrice
@@ -50,7 +52,7 @@ const Price = ({ msrp, price, sale }: Props) => {
             fontWeight={config?.design.price_font_weight}
             textColor={config?.design?.price_colour}
           >
-            Was: {getPriceText(price)}
+            Was: {getPriceText(price, currencyInfo)}
           </StyledPrice>
           <StyledPrice
             className={getClassName('product__price--sale')}
@@ -59,7 +61,7 @@ const Price = ({ msrp, price, sale }: Props) => {
             fontWeight={config?.design.sale_price_font_weight}
             textColor={config?.design?.sale_price_colour}
           >
-            Now: {getPriceText(sale)}
+            Now: {getPriceText(sale, currencyInfo)}
           </StyledPrice>
         </Fragment>
       ) : (
@@ -70,7 +72,7 @@ const Price = ({ msrp, price, sale }: Props) => {
           fontWeight={config?.design.price_font_weight}
           textColor={config?.design?.price_colour}
         >
-          {getPriceText(price)}
+          {getPriceText(price, currencyInfo)}
         </StyledPrice>
       )}
     </StyledDiv>
