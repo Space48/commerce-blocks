@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import styled from 'styled-components';
 import Slider from 'react-slick';
-import {CurrencyInfo, Product} from '../types';
+import { CurrencyInfo, Product } from '../types';
 import { Image, LinkButton, NameLink, Prices, Sku, PlaceholderImage } from './Product';
 import { Devices, getClassName } from '../helpers';
 import { CloseIcon } from './Icons';
