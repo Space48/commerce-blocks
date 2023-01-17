@@ -1,12 +1,9 @@
 import axios from 'axios';
-import { currencySelector } from './elements';
+import { bodyElement } from './elements';
 
 const getCurrencySelectorCurrencyCode = () => {
-  // the only way I can see to get the active currency selector is by finding the bold item in the dropdown,
-  // then using the data attribute to get the code
-  const option = currencySelector?.querySelector('strong')?.parentElement;
-  if (option && option?.dataset && option?.dataset?.currencyCode) {
-    return option?.dataset.currencyCode;
+  if (bodyElement && bodyElement?.dataset && bodyElement?.dataset?.currencyCode) {
+    return bodyElement?.dataset.currencyCode;
   }
 };
 
