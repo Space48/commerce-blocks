@@ -1,6 +1,6 @@
 @use "sass:meta";
 
-$slick-font-path: "../../../../node_modules/slick-carousel/slick/fonts/" !default;
+$slick-font-path: "slick-carousel/slick/fonts/" !default;
 
 @function slick-font-url($url) {
    @return url($slick-font-path + $url);
@@ -17,7 +17,7 @@ $slick-font-path: "../../../../node_modules/slick-carousel/slick/fonts/" !defaul
 .s48-cb-container,
 .s48-cb-modal__container {
    @include meta.load-css('slick-carousel/slick/slick.scss');
-   @include meta.load-css('slick-carousel/slick/slick-theme.scss');
+   @include meta.load-css('./slick-theme.scss');
    @include meta.load-css('./slick-reset.scss');
    @include meta.load-css('./slick-custom.scss');
 }
