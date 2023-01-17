@@ -6,7 +6,7 @@ import ProductCard from './ProductCard';
 import Pagination from './Pagination';
 import { useRef } from 'preact/compat';
 import { Sizes } from '../helpers';
-import './slick.scss';
+import '../../scss/slick.scss';
 
 /** @jsx h */
 
