@@ -1,12 +1,8 @@
 import { h } from 'preact';
 import styled from 'styled-components';
 import Slider from 'react-slick';
-import { Product } from '../types';
+import { CurrencyInfo, Product } from '../types';
 import { Image, LinkButton, NameLink, Prices, Sku, PlaceholderImage } from './Product';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import './slick-reset.scss';
-import './slick-custom.scss';
 import { Devices, getClassName } from '../helpers';
 import { CloseIcon } from './Icons';
 import ConfigContext from '../context/ConfigContext';
@@ -18,6 +14,7 @@ interface Props {
   product?: Product;
   onClose: (event: any) => void;
   siteUrl: string | null;
+  currencyInfo: CurrencyInfo;
 }
 
 const StyledDiv = styled.div`
@@ -76,7 +73,7 @@ const StyledProductDiv = styled.div`
   }
 `;
 
-const QuickView = ({ product, onClose, siteUrl }: Props) => {
+const QuickView = ({ product, onClose, siteUrl, currencyInfo }: Props) => {
   const config = useContext(ConfigContext);
 
   if (!product) {
@@ -136,6 +133,7 @@ const QuickView = ({ product, onClose, siteUrl }: Props) => {
             msrp={product.prices.retailPrice?.value}
             sale={product.prices.price?.value}
             price={product.prices.basePrice?.value}
+            currencyInfo={currencyInfo}
           />
         )}
         <LinkButton label="Add to Cart" url={product.addToCartUrl} />

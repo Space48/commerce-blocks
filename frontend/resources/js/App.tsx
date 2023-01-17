@@ -328,6 +328,7 @@ const App = () => {
           siteUrl={siteUrl}
           product={selectedProduct}
           onClose={handleOnQuickViewClose}
+          currencyInfo={currencyInfo}
         />
       </Modal>
     </Container>

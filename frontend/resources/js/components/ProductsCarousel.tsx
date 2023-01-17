@@ -1,15 +1,12 @@
 import { Fragment, h } from 'preact';
 import styled from 'styled-components';
 import Slider from 'react-slick';
-import {CurrencyInfo, Product, ProductNode} from '../types';
+import { CurrencyInfo, Product, ProductNode } from '../types';
 import ProductCard from './ProductCard';
 import Pagination from './Pagination';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import './slick-reset.scss';
-import './slick-custom.scss';
 import { useRef } from 'preact/compat';
 import { Sizes } from '../helpers';
+import './slick.scss';
 
 /** @jsx h */
 
