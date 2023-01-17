@@ -1,0 +1,9 @@
+@use "sass:meta";
+
+.s48-cb-container,
+.s48-cb-modal__container {
+   @include meta.load-css('slick-carousel/slick/slick.scss');
+   @include meta.load-css('slick-carousel/slick/slick-theme.scss');
+   @include meta.load-css('./slick-reset.scss');
+   @include meta.load-css('./slick-custom.scss');
+}
